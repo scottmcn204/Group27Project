@@ -1,15 +1,10 @@
+Table table;
 
-String[] strings;
 void setup() {
-  strings = loadStrings("data/flights2k.csv");
-  println(strings.length);
-  for (int i = 0 ; i < strings.length; i++) {
-    println(strings[i]);
+  table = loadTable("data/flights2k.csv", "header");
+  println(table.getRowCount() + " total rows in table");
+  for (TableRow row : table.rows()) {
+    int dist = row.getInt("DISTANCE");
+    println(dist);
   }
-  //println(table.rows());
-  //for (TableRow row : table.rows()) {
-  //  String dist = row.getString("DISTANCE");
-  //  println(dist);
-  //}
-
 }

@@ -26,8 +26,17 @@ void setup() {
   }
   println("Done loading flights."); //<>//
   //Selecting a flight at random to match data, ensuring it has been loaded correctly.
-  int r = (int)random(2000);
-  tempFlight = flights.get(r);
-  println("Selecting a random flight: " + tempFlight.ORIGIN + " to " + 
+  //int r = (int)random(2000);
+  //tempFlight = flights.get(r);
+  //println("Selecting a random flight: " + tempFlight.ORIGIN + " to " + 
+    //tempFlight.DEST + ", distance " + tempFlight.DISTANCE + ".");
+    
+    
+  for (int i = 0; i < (flights.size()); i++){
+    tempFlight = flights.get(i);
+    println(tempFlight.ORIGIN + " to " + 
     tempFlight.DEST + ", distance " + tempFlight.DISTANCE + ".");
+    
+  }  
+  
 }

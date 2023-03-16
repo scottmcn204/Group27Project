@@ -1,7 +1,22 @@
+final int SCREENX = 3000;
+final int SCREENY = 1000;
 Table table;
 Flight tempFlight;
 ArrayList<Flight> flights;
+PFont myFont;
+float textXpos = 0;
+float textYpos = 0;
+
+
+void settings()
+{
+  size(SCREENX,SCREENY);
+}
 void setup() {
+  background(255);
+  myFont = createFont("Arial", 9);
+ 
+  
   
   flights = new ArrayList<Flight>();
   table = loadTable("data/flights2k.csv", "header");
@@ -31,12 +46,25 @@ void setup() {
   //println("Selecting a random flight: " + tempFlight.ORIGIN + " to " + 
     //tempFlight.DEST + ", distance " + tempFlight.DISTANCE + ".");
     
-    
-  for (int i = 0; i < (flights.size()); i++){
+  textFont(myFont,9);
+  fill(0); 
+
+    for (int i = 0; i < (flights.size()); i++){ //<>//
     tempFlight = flights.get(i);
+      if (textYpos >=  (SCREENY-20)){
+      textXpos += 130;
+      textYpos = 0;
+      
+    }
+    text(tempFlight.ORIGIN + " to " + 
+    tempFlight.DEST + ", distance " + tempFlight.DISTANCE + ".", textXpos, textYpos);
+    textYpos += 10;
+    
+    
+    
+    
     println(tempFlight.ORIGIN + " to " + 
     tempFlight.DEST + ", distance " + tempFlight.DISTANCE + ".");
     
-  }  
-  
+  } 
 }

@@ -1,22 +1,26 @@
-final int SCREENX = 3000;
-final int SCREENY = 1000;
+import grafica.*;
+
+final int SCREENX = 900;
+final int SCREENY = 600;
 Table table;
 Flight tempFlight;
 ArrayList<Flight> flights;
 PFont myFont;
 float textXpos = 0;
 float textYpos = 0;
-
+GPlot testPlot;
 
 void settings()
 {
   size(SCREENX,SCREENY);
 }
 void setup() {
-  background(255);
-  myFont = createFont("Arial", 9);
- 
+  background(180);
+  myFont = createFont("Arial", 32);
   
+  testPlot = new GPlot(this, 25, 150);
+  testPlot.setTitleText("Flight Distances");
+  GPointsArray dists = new GPointsArray(5);
   
   flights = new ArrayList<Flight>();
   table = loadTable("data/flights2k.csv", "header");
@@ -40,15 +44,22 @@ void setup() {
     flights.add(tempFlight);
   }
   println("Done loading flights."); //<>//
-  //Selecting a flight at random to match data, ensuring it has been loaded correctly.
-  //int r = (int)random(2000);
-  //tempFlight = flights.get(r);
-  //println("Selecting a random flight: " + tempFlight.ORIGIN + " to " + 
-    //tempFlight.DEST + ", distance " + tempFlight.DISTANCE + ".");
-    
-  textFont(myFont,9);
-  fill(0); 
-
+  
+  textFont(myFont,32);
+  fill(255); 
+  text("Dashboard", 25, 40);
+  
+  for (int i = 0; i < 5; i++) {
+    tempFlight = flights.get(i);
+    PVector testVector = new PVector((float)tempFlight.DEPT_TIME, (float)tempFlight.ARR_TIME);
+    dists.add(testVector, tempFlight.MKT_CARRIER);
+  }
+  testPlot.getYAxis().getAxisLabel().setText("Distance");
+  testPlot.getXAxis().getAxisLabel().setText("Airline");
+  testPlot.setPoints(dists);
+  testPlot.startHistograms(GPlot.VERTICAL);
+  
+/*
     for (int i = 0; i < (flights.size()); i++){ //<>//
     tempFlight = flights.get(i);
       if (textYpos >=  (SCREENY-20)){
@@ -65,6 +76,14 @@ void setup() {
     
     println(tempFlight.ORIGIN + " to " + 
     tempFlight.DEST + ", distance " + tempFlight.DISTANCE + ".");
-    
-  } 
+*/
+}
+
+void draw() {
+    testPlot.beginDraw();
+    testPlot.drawBox();
+    testPlot.drawYAxis();
+    testPlot.drawTitle();
+    testPlot.drawHistograms();
+    testPlot.endDraw();
 }

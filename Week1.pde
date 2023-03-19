@@ -1,5 +1,6 @@
-import grafica.*;
 
+import org.gicentre.utils.stat.*;    // For chart classes.
+ 
 final int SCREENX = 900;
 final int SCREENY = 600;
 Table table;
@@ -8,8 +9,10 @@ ArrayList<Flight> flights;
 PFont myFont;
 float textXpos = 0;
 float textYpos = 0;
-GPlot testPlot;
+float arrivals[];
+String dests[];
 
+BarChart barChart;
 void settings()
 {
   size(SCREENX,SCREENY);
@@ -17,11 +20,7 @@ void settings()
 void setup() {
   background(180);
   myFont = createFont("Arial", 32);
-  
-  testPlot = new GPlot(this, 25, 150);
-  testPlot.setTitleText("Flight Distances");
-  GPointsArray dists = new GPointsArray(5);
-  
+
   flights = new ArrayList<Flight>();
   table = loadTable("data/flights2k.csv", "header");
   println(table.getRowCount() + " total rows in table");
@@ -44,46 +43,33 @@ void setup() {
     flights.add(tempFlight);
   }
   println("Done loading flights."); //<>//
-  
-  textFont(myFont,32);
+  dests = new String[] {"ABQ","ADQ","ALB","ANC","ATL"};
+  arrivals = new float[5];
+  for (int i =0; i< flights.size(); i++){
+    for (int j = 0; j < 5; j++){
+      tempFlight = flights.get(i);
+      if (tempFlight.DEST.equals(dests[j])){
+        arrivals[j] += 1;
+      }
+    }
+  }
+  textFont(myFont,32); //<>//
   fill(255); 
   text("Dashboard", 25, 40);
-  
-  for (int i = 0; i < 5; i++) {
-    tempFlight = flights.get(i);
-    PVector testVector = new PVector((float)tempFlight.DEPT_TIME, (float)tempFlight.ARR_TIME);
-    dists.add(testVector, tempFlight.MKT_CARRIER);
-  }
-  testPlot.getYAxis().getAxisLabel().setText("Distance");
-  testPlot.getXAxis().getAxisLabel().setText("Airline");
-  testPlot.setPoints(dists);
-  testPlot.startHistograms(GPlot.VERTICAL);
-  
-/*
-    for (int i = 0; i < (flights.size()); i++){ //<>//
-    tempFlight = flights.get(i);
-      if (textYpos >=  (SCREENY-20)){
-      textXpos += 130;
-      textYpos = 0;
-      
-    }
-    text(tempFlight.ORIGIN + " to " + 
-    tempFlight.DEST + ", distance " + tempFlight.DISTANCE + ".", textXpos, textYpos);
-    textYpos += 10;
-    
-    
-    
-    
-    println(tempFlight.ORIGIN + " to " + 
-    tempFlight.DEST + ", distance " + tempFlight.DISTANCE + ".");
-*/
+  barChart = new BarChart(this);
+  barChart.setData(arrivals);
+     
+  // Axis scaling
+  barChart.setMinValue(0);
+  barChart.setMaxValue(120);
+     
+  barChart.showValueAxis(true);
+  barChart.showCategoryAxis(true);
+  barChart.setBarLabels(dests);
 }
 
-void draw() {
-    testPlot.beginDraw();
-    testPlot.drawBox();
-    testPlot.drawYAxis();
-    testPlot.drawTitle();
-    testPlot.drawHistograms();
-    testPlot.endDraw();
-}
+void draw()
+{
+  background(255);
+  barChart.draw(15,15,width-300,height-100); 
+} //<>//

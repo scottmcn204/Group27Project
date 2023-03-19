@@ -54,10 +54,15 @@ void setup() {
       }
     }
   }
+  
   cp5.addSlider("sliderValue")
-     .setPosition(600,50)
+     .setPosition(20,500)
      .setRange(0,50)
-     .setSize(150, 40);
+     .setSize(150, 40)
+     .setColorForeground(color(#AADEDC))
+     .setColorActive(color(#71A2A1))
+     .setColorBackground(color(#425A5A))
+     .setColorValue(color(0))
      ;
    //<>//
  
@@ -71,13 +76,15 @@ void setup() {
   barChart.showValueAxis(true);
   barChart.showCategoryAxis(true);
   barChart.setBarLabels(dests);
+  barChart.setBarColour(color(200,80,80,150));
 }
 
 void draw()
 {
   background(255);
   textFont(myFont,16);
-  barChart.draw(20,50,width-600,height-200); 
+  barChart.draw(20,50,width-600,height-200);
+  text("Amount of Arrivals per Airport", 200, 485);
   fill(12); 
   textFont(myFont,24);
   text("Dashboard", 25, 30);

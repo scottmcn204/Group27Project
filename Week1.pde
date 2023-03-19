@@ -1,7 +1,7 @@
-
 import org.gicentre.utils.stat.*;    // For chart classes.
+import controlP5.*;
  
-final int SCREENX = 900;
+final int SCREENX = 1200;
 final int SCREENY = 600;
 Table table;
 Flight tempFlight;
@@ -11,7 +11,8 @@ float textXpos = 0;
 float textYpos = 0;
 float arrivals[];
 String dests[];
-
+ControlP5 cp5;
+int sliderValue = 0;
 BarChart barChart;
 void settings()
 {
@@ -19,8 +20,8 @@ void settings()
 }
 void setup() {
   background(180);
-  myFont = createFont("Arial", 32);
-
+  myFont = createFont("Arial", 16);
+  cp5 = new ControlP5(this);
   flights = new ArrayList<Flight>();
   table = loadTable("data/flights2k.csv", "header");
   println(table.getRowCount() + " total rows in table");
@@ -45,17 +46,21 @@ void setup() {
   println("Done loading flights."); //<>//
   dests = new String[] {"ABQ","ADQ","ALB","ANC","ATL"};
   arrivals = new float[5];
-  for (int i =0; i< flights.size(); i++){
-    for (int j = 0; j < 5; j++){
+  for (int i =0; i< flights.size(); i++) {
+    for (int j = 0; j < 5; j++) {
       tempFlight = flights.get(i);
-      if (tempFlight.DEST.equals(dests[j])){
+      if (tempFlight.DEST.equals(dests[j])) {
         arrivals[j] += 1;
       }
     }
   }
-  textFont(myFont,32); //<>//
-  fill(255); 
-  text("Dashboard", 25, 40);
+  cp5.addSlider("sliderValue")
+     .setPosition(600,50)
+     .setRange(0,50)
+     .setSize(150, 40);
+     ;
+   //<>//
+ 
   barChart = new BarChart(this);
   barChart.setData(arrivals);
      
@@ -71,5 +76,10 @@ void setup() {
 void draw()
 {
   background(255);
-  barChart.draw(15,15,width-300,height-100); 
+  textFont(myFont,16);
+  barChart.draw(20,50,width-600,height-200); 
+  fill(12); 
+  textFont(myFont,24);
+  text("Dashboard", 25, 30);
+  barChart.setMaxValue(100 + sliderValue);
 } //<>//

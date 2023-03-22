@@ -39,4 +39,5 @@ class Flight {
     this.DIVERTED = diverted;
     this.DISTANCE = distance;
   }
+  
 }

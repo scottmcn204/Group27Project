@@ -23,7 +23,7 @@ void setup() {
   myFont = createFont("Arial", 16);
   cp5 = new ControlP5(this);
   flights = new ArrayList<Flight>();
-  table = loadTable("data/flights2k.csv", "header");
+  table = loadTable("data/flights_full.csv", "header");
   println(table.getRowCount() + " total rows in table");
   
   for (TableRow row : table.rows()) {
@@ -57,7 +57,7 @@ void setup() {
   
   cp5.addSlider("sliderValue")
      .setPosition(20,500)
-     .setRange(0,50)
+     .setRange(0,100)
      .setSize(150, 40)
      .setColorForeground(color(#AADEDC))
      .setColorActive(color(#71A2A1))
@@ -71,7 +71,7 @@ void setup() {
      
   // Axis scaling
   barChart.setMinValue(0);
-  barChart.setMaxValue(120);
+  barChart.setMaxValue(1000);
      
   barChart.showValueAxis(true);
   barChart.showCategoryAxis(true);
@@ -88,5 +88,5 @@ void draw()
   fill(12); 
   textFont(myFont,24);
   text("Dashboard", 25, 30);
-  barChart.setMaxValue(100 + sliderValue);
+  barChart.setMaxValue(500 + sliderValue * 400);
 } //<>//

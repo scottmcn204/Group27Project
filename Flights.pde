@@ -19,4 +19,33 @@ class Flights {
     }
     println("Done loading flights.");
   }
+  
+    int[] getDistances(){
+    ArrayList<Flight> onTime = new ArrayList<Flight>();
+    
+    for (int i=0; i < flights.size(); i++){
+      if ((!flights.get(i).diverted) && (!flights.get(i).cancelled)){
+        onTime.add(flights.get(i));
+      }
+    }
+    int[] distances = new int[onTime.size()];
+    for (int i =0; i<onTime.size(); i++){
+      distances[i] = onTime.get(i).distance;
+    }
+    return distances;
+  }
+    int[] getTimes(){
+    ArrayList<Flight> OnTime = new ArrayList<Flight>();
+    
+    for (int i=0; i < flights.size(); i++){
+      if ((!flights.get(i).diverted) && (!flights.get(i).cancelled)){
+        OnTime.add(flights.get(i));
+      }
+    }
+    int[] times = new int[OnTime.size()];
+    for (int i =0; i<OnTime.size(); i++){
+      times[i] = OnTime.get(i).actualDepartureTime;
+    }
+    return times;
+  }
 }

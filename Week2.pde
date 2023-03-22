@@ -5,7 +5,8 @@ final int SCREENX = 1800;
 final int SCREENY = 900;
 Table table;
 Flight tempFlight;
-
+int times[];
+int distances[];
 PFont myFont;
 float textXpos = 0;
 float textYpos = 0;
@@ -17,6 +18,7 @@ int zoom = 0;
 BarChart barChart;
 Chart myPieChart;
 Flights flights;
+XYChart scatterplot;
 boolean doneLoading;
 
 void settings()
@@ -90,7 +92,29 @@ void slowLoad() {
   barChart.showCategoryAxis(true);
   barChart.setBarLabels(dests);
   barChart.setBarColour(color(200, 80, 80, 150));
+  
+  times = flights.getTimes();
+  distances = flights.getDistances();
+  
+  scatterplot = new XYChart(this);
+   scatterplot.setData(parseFloat(distances),parseFloat(times));
+  
+  // Axis formatting and labels.
+  scatterplot.showXAxis(true); 
+  scatterplot.showYAxis(true); 
+  scatterplot.setXAxisLabel("Distances");
+  scatterplot.setYAxisLabel("Times");
+ 
+  // Symbol styles
+  scatterplot.setPointColour(color(180,50,50,100));
+  scatterplot.setPointSize(2);
+  scatterplot.setMaxX(6000);
+  scatterplot.setMinX(300);
+ 
   doneLoading = true;
+  
+  
+  
 }
 
 void draw()
@@ -122,6 +146,7 @@ void draw()
     rect(800,160,20,20);
     fill(12);
     text(("cancelled (" + int(status[2]) + " out of " + flights.flights.size() + ")"), 825, 175);
+    scatterplot.draw(1100,40,600,400);
   }
   
   

@@ -1,18 +1,19 @@
-import org.gicentre.utils.stat.*;    // For chart classes. //<>// //<>// //<>// //<>//
+import org.gicentre.utils.stat.*;    //<>//
 import controlP5.*;
 
-final int SCREENX = 1200;
-final int SCREENY = 600;
+final int SCREENX = 1800;
+final int SCREENY = 900;
 Table table;
 Flight tempFlight;
-//ArrayList<Flight> flights;
+
 PFont myFont;
 float textXpos = 0;
 float textYpos = 0;
 float arrivals[];
+float status[];
 String dests[];
 ControlP5 cp5;
-int sliderValue = 0;
+int zoom = 0;
 BarChart barChart;
 Chart myPieChart;
 Flights flights;
@@ -33,6 +34,7 @@ void slowLoad() {
   flights = new Flights();
   dests = new String[] {"ABQ", "ADQ", "ALB", "ANC", "ATL"};
   arrivals = new float[5];
+  status = new float[3]; // 0 = on time, 1 = diverted, 2 = cancelled
   for (int i =0; i< flights.flights.size(); i++) {
     for (int j = 0; j < 5; j++) {
       tempFlight = flights.flights.get(i);
@@ -41,8 +43,20 @@ void slowLoad() {
       }
     }
   }
+  for (int i= 0; i < flights.flights.size(); i++){
+    tempFlight = flights.flights.get(i);
+    if (tempFlight.diverted){
+      status[1] += 1;
+    }
+    else if (tempFlight.cancelled){
+      status[2] += 1;
+    }
+    else{
+      status[0] += 1;
+    }
+  }
 
-  cp5.addSlider("sliderValue")
+  cp5.addSlider("zoom")
     .setPosition(20, 500)
     .setRange(0, 100)
     .setSize(150, 40)
@@ -53,16 +67,18 @@ void slowLoad() {
 
 
   myPieChart = cp5.addChart("pie")
-    .setPosition(800, 200)
+    .setPosition(775, 200)
     .setSize(300, 300)
     .setRange(0, 5000)
     .setView(Chart.PIE)
+    .setCaptionLabel("DIVERTED")
     ;
   myPieChart.getColor().setBackground(color(255, 100));
   myPieChart.addDataSet("flights");
-  myPieChart.setColors("flights", color(255, 0, 255), color(255, 0, 0) );
-  myPieChart.setData("flights", arrivals);
-  //<>// //<>//
+  myPieChart.setColors("flights", color(#3BE8E6), color(#FFAF1A), color(#20396A));
+  myPieChart.setData("flights", status);
+ //<>//
+ //<>//
   barChart = new BarChart(this);
   barChart.setData(arrivals);
 
@@ -85,13 +101,28 @@ void draw()
     text("Loading...", SCREENX/2 - 90, SCREENY/2 - 100);
     fill(12);
   } else {
-    background(255);
+    background(color(222,225,230));
     textFont(myFont, 16);
-    barChart.draw(40, 50, width-600, height-200);
+    barChart.draw(40, 50, 600, 400);
     text("Amount of Arrivals per Airport", 200, 485);
     fill(12);
     textFont(myFont, 24);
     text("Dashboard", 25, 30);
-    barChart.setMaxValue(500 + sliderValue * 400);
+    barChart.setMaxValue(500 + zoom * 400);
+    fill(#3BE8E6);
+    rect(800,100,20,20);
+    fill(12);
+    textFont(myFont, 16);
+    text(("on time (" + int(status[0]) + " out of " + flights.flights.size() + ")"), 825,115);
+    fill(#FFAF1A);
+    rect(800,130,20,20);
+    fill(12);
+    text(("diverted (" + int(status[1]) + " out of " + flights.flights.size() + ")"), 825, 145);
+    fill(#20396A);
+    rect(800,160,20,20);
+    fill(12);
+    text(("cancelled (" + int(status[2]) + " out of " + flights.flights.size() + ")"), 825, 175);
   }
+  
+  
 }

@@ -1,11 +1,11 @@
-import org.gicentre.utils.stat.*;    // For chart classes. //<>// //<>// //<>//
+import org.gicentre.utils.stat.*;    //<>//
 import controlP5.*;
 
 final int SCREENX = 1800;
 final int SCREENY = 900;
 Table table;
 Flight tempFlight;
-//ArrayList<Flight> flights;
+
 PFont myFont;
 float textXpos = 0;
 float textYpos = 0;
@@ -38,17 +38,17 @@ void slowLoad() {
   for (int i =0; i< flights.flights.size(); i++) {
     for (int j = 0; j < 5; j++) {
       tempFlight = flights.flights.get(i);
-      if (tempFlight.DEST.equals(dests[j])) {
+      if (tempFlight.destinationAirport.equals(dests[j])) {
         arrivals[j] += 1;
       }
     }
   }
   for (int i= 0; i < flights.flights.size(); i++){
     tempFlight = flights.flights.get(i);
-    if (tempFlight.DIVERTED){
+    if (tempFlight.diverted){
       status[1] += 1;
     }
-    else if (tempFlight.CANCELLED){
+    else if (tempFlight.cancelled){
       status[2] += 1;
     }
     else{
@@ -77,9 +77,8 @@ void slowLoad() {
   myPieChart.addDataSet("flights");
   myPieChart.setColors("flights", color(#3BE8E6), color(#FFAF1A), color(#20396A));
   myPieChart.setData("flights", status);
-
-
-  //<>//
+ //<>//
+ //<>//
   barChart = new BarChart(this);
   barChart.setData(arrivals);
 

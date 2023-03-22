@@ -1,4 +1,5 @@
 class Flight {
+  String date;
   String airlineCarrier;
   int flightNumber;
   String originAirport;
@@ -17,10 +18,11 @@ class Flight {
   boolean diverted;
   int distance;
 
-  Flight(String airlineCarrier, int flightNumber, String originAirport, String originCity,
+  Flight(String date, String airlineCarrier, int flightNumber, String originAirport, String originCity,
    String originState, int originWAC, String destinationAirport, String destinationCity, String destinationState,
    int destinationWAC, int CRSDepartureTime, int actualDepartureTime, int CRSArrivalTime, int actualArrivalTime, boolean cancelled,
    boolean diverted, int distance) {
+    this.date = date;
     this.airlineCarrier = airlineCarrier;
     this.flightNumber = flightNumber;
     this.originAirport = originAirport;

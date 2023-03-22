@@ -1,4 +1,4 @@
-import org.gicentre.utils.stat.*;    // For chart classes. //<>// //<>// //<>//
+import org.gicentre.utils.stat.*;    // For chart classes. //<>// //<>// //<>// //<>//
 import controlP5.*;
 
 final int SCREENX = 1200;
@@ -36,7 +36,7 @@ void slowLoad() {
   for (int i =0; i< flights.flights.size(); i++) {
     for (int j = 0; j < 5; j++) {
       tempFlight = flights.flights.get(i);
-      if (tempFlight.DEST.equals(dests[j])) {
+      if (tempFlight.destinationAirport.equals(dests[j])) {
         arrivals[j] += 1;
       }
     }
@@ -62,7 +62,7 @@ void slowLoad() {
   myPieChart.addDataSet("flights");
   myPieChart.setColors("flights", color(255, 0, 255), color(255, 0, 0) );
   myPieChart.setData("flights", arrivals);
-  //<>//
+  //<>// //<>//
   barChart = new BarChart(this);
   barChart.setData(arrivals);
 

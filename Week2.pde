@@ -134,17 +134,17 @@ void draw()
     fill(250);
     textFont(myFont, 16);
 
-    text(("on time (" + int(status[0]) + " out of " + totalArrivals + ")"), 825,115);
+    text(("on time (" + int(status[0]) + " out of " + totalArrivals + ")"), 725,115);
     fill(#FFAF1A);
     rect(700,130,20,20);
     fill(250);
 
-    text(("diverted (" + int(status[1]) + " out of " + totalArrivals + ")"), 825, 145);
+    text(("diverted (" + int(status[1]) + " out of " + totalArrivals + ")"), 725, 145);
 
     fill(#20396A);
     rect(700,160,20,20);
     fill(250);
-    text(("cancelled (" + int(status[2]) + " out of " + totalArrivals + ")"), 825, 175);
+    text(("cancelled (" + int(status[2]) + " out of " + totalArrivals + ")"), 725, 175);
 
     //scatterplot.setMaxX(6000 - (focus*50));
     //scatterplot.draw(1150,50,500,400);

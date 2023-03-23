@@ -1,4 +1,4 @@
-import org.gicentre.utils.stat.*;    //<>//
+import org.gicentre.utils.stat.*;    //<>// //<>//
 import controlP5.*;
 
 final int SCREENX = 1500;
@@ -21,6 +21,7 @@ Chart myPieChart;
 Flights flights;
 XYChart scatterplot;
 boolean doneLoading;
+int totalArrivals;
 
 void settings()
 {
@@ -43,21 +44,23 @@ void slowLoad() {
       tempFlight = flights.flights.get(i);
       if (tempFlight.destinationAirport.equals(dests[j])) {
         arrivals[j] += 1;
+        if (tempFlight.diverted){
+          status[1] += 1;
+        }
+        else if (tempFlight.cancelled){
+          status[2] += 1;
+        }
+        else{
+          status[0] += 1;
+        }
       }
     }
   }
-  for (int i= 0; i < flights.flights.size(); i++){
-    tempFlight = flights.flights.get(i);
-    if (tempFlight.diverted){
-      status[1] += 1;
-    }
-    else if (tempFlight.cancelled){
-      status[2] += 1;
-    }
-    else{
-      status[0] += 1;
-    }
+  
+  for (int i = 0; i<5; i++){
+    totalArrivals += arrivals[i];
   }
+
 
   cp5.addSlider("zoom")
     .setPosition(30, 520)
@@ -70,6 +73,7 @@ void slowLoad() {
     
     
    cp5.addSlider("date")
+
     .setPosition(1000, 475)
     .setRange(0, 31)
     .setSize(150, 40)
@@ -82,7 +86,7 @@ void slowLoad() {
   myPieChart = cp5.addChart("pie")
     .setPosition(675, 200)
     .setSize(300, 300)
-    .setRange(0, 5000)
+    .setRange(0, 1000)
     .setView(Chart.PIE)
     .setCaptionLabel("DIVERTED")
     ;
@@ -90,8 +94,6 @@ void slowLoad() {
   myPieChart.addDataSet("flights");
   myPieChart.setColors("flights", color(#3BE8E6), color(#FFAF1A), color(#20396A));
   myPieChart.setData("flights", status);
- //<>//
- //<>//
   barChart = new BarChart(this);
   barChart.setData(arrivals);
 
@@ -107,25 +109,6 @@ void slowLoad() {
   barChart.setAxisValuesColour(250);
   times = flights.getTimes();
   distances = flights.getDistances();
-/*  
-  scatterplot = new XYChart(this);
-   scatterplot.setData(parseFloat(distances),parseFloat(times));
-  
-  // Axis formatting and labels.
-  scatterplot.showXAxis(true); 
-  scatterplot.showYAxis(true); 
-  scatterplot.setYFormat("#,###");
-  scatterplot.setXAxisLabel("Distance covered (km)");
-  scatterplot.setYAxisLabel("Duration of flight");
-  scatterplot.setAxisLabelColour(250);
-  scatterplot.setAxisValuesColour(250);
-  // Symbol styles
-  scatterplot.setPointColour(color(180,50,50,100));
-  scatterplot.setPointSize(2);
-  scatterplot.setMaxX(6000);
-  scatterplot.setMinX(300);
-  scatterplot.setMaxY(1000);
-*/
   doneLoading = true;
 }
 
@@ -150,15 +133,19 @@ void draw()
     rect(700,100,20,20);
     fill(250);
     textFont(myFont, 16);
-    text(("on time (" + int(status[0]) + " out of " + flights.flights.size() + ")"), 725,115);
+
+    text(("on time (" + int(status[0]) + " out of " + totalArrivals + ")"), 825,115);
     fill(#FFAF1A);
     rect(700,130,20,20);
     fill(250);
-    text(("diverted (" + int(status[1]) + " out of " + flights.flights.size() + ")"), 725, 145);
+
+    text(("diverted (" + int(status[1]) + " out of " + totalArrivals + ")"), 825, 145);
+
     fill(#20396A);
     rect(700,160,20,20);
     fill(250);
-    text(("cancelled (" + int(status[2]) + " out of " + flights.flights.size() + ")"), 725, 175);
+    text(("cancelled (" + int(status[2]) + " out of " + totalArrivals + ")"), 825, 175);
+
     //scatterplot.setMaxX(6000 - (focus*50));
     //scatterplot.draw(1150,50,500,400);
   }

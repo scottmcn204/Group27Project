@@ -1,7 +1,7 @@
 import org.gicentre.utils.stat.*;    //<>// //<>//
 import controlP5.*;
 
-final int SCREENX = 1800;
+final int SCREENX = 1500;
 final int SCREENY = 900;
 Table table;
 Flight tempFlight;
@@ -63,7 +63,7 @@ void slowLoad() {
 
 
   cp5.addSlider("zoom")
-    .setPosition(20, 500)
+    .setPosition(30, 520)
     .setRange(0, 100)
     .setSize(150, 40)
     .setColorForeground(color(#AADEDC))
@@ -73,8 +73,9 @@ void slowLoad() {
     
     
    cp5.addSlider("date")
-    .setPosition(1300, 450)
-    .setRange(0, 100)
+
+    .setPosition(1000, 475)
+    .setRange(0, 31)
     .setSize(150, 40)
     .setColorForeground(color(#AADEDC))
     .setColorActive(color(#71A2A1))
@@ -83,7 +84,7 @@ void slowLoad() {
 
 
   myPieChart = cp5.addChart("pie")
-    .setPosition(775, 200)
+    .setPosition(675, 200)
     .setSize(300, 300)
     .setRange(0, 1000)
     .setView(Chart.PIE)
@@ -93,8 +94,6 @@ void slowLoad() {
   myPieChart.addDataSet("flights");
   myPieChart.setColors("flights", color(#3BE8E6), color(#FFAF1A), color(#20396A));
   myPieChart.setData("flights", status);
- //<>// //<>//
- //<>// //<>//
   barChart = new BarChart(this);
   barChart.setData(arrivals);
 
@@ -110,8 +109,6 @@ void slowLoad() {
   barChart.setAxisValuesColour(250);
   times = flights.getTimes();
   distances = flights.getDistances();
-  
-
   doneLoading = true;
 }
 
@@ -126,25 +123,29 @@ void draw()
   } else {
     background(50);
     textFont(myFont, 16);
-    barChart.draw(40, 50, 600, 400);
+    barChart.draw(30, 50, 500, 400);
     fill(250);
-    text("Amount of Arrivals per Airport", 200, 485);
+    text("Amount of Arrivals per Airport", 150, 485);
     textFont(myFont, 24);
     text("Dashboard", 25, 30);
     barChart.setMaxValue(500 + zoom * 400);
     fill(#3BE8E6);
-    rect(800,100,20,20);
+    rect(700,100,20,20);
     fill(250);
     textFont(myFont, 16);
+
     text(("on time (" + int(status[0]) + " out of " + totalArrivals + ")"), 825,115);
     fill(#FFAF1A);
-    rect(800,130,20,20);
+    rect(700,130,20,20);
     fill(250);
+
     text(("diverted (" + int(status[1]) + " out of " + totalArrivals + ")"), 825, 145);
+
     fill(#20396A);
-    rect(800,160,20,20);
+    rect(700,160,20,20);
     fill(250);
     text(("cancelled (" + int(status[2]) + " out of " + totalArrivals + ")"), 825, 175);
+
     //scatterplot.setMaxX(6000 - (focus*50));
     //scatterplot.draw(1150,50,500,400);
   }

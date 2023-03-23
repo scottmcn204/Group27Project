@@ -44,7 +44,13 @@ class Flights {
     }
     int[] times = new int[OnTime.size()];
     for (int i =0; i<OnTime.size(); i++){
-      times[i] = OnTime.get(i).actualDepartureTime;
+      Flight temp = OnTime.get(i);
+      if (temp.actualDepartureTime <= temp.actualArrivalTime){
+        times[i] = temp.actualArrivalTime - temp.actualDepartureTime;
+      }
+      else{
+        times[i] = (2400 - temp.actualDepartureTime) + temp.actualArrivalTime;
+      }
     }
     return times;
   }

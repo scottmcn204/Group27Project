@@ -15,6 +15,7 @@ float status[];
 String dests[];
 ControlP5 cp5;
 int zoom = 0;
+int focus = 0;
 BarChart barChart;
 Chart myPieChart;
 Flights flights;
@@ -66,6 +67,16 @@ void slowLoad() {
     .setColorActive(color(#71A2A1))
     .setColorBackground(color(#425A5A))
     .setColorValue(color(0));
+    
+    
+   cp5.addSlider("focus")
+    .setPosition(1300, 450)
+    .setRange(0, 100)
+    .setSize(150, 40)
+    .setColorForeground(color(#AADEDC))
+    .setColorActive(color(#71A2A1))
+    .setColorBackground(color(#425A5A))
+    .setColorValue(color(0));
 
 
   myPieChart = cp5.addChart("pie")
@@ -102,14 +113,16 @@ void slowLoad() {
   // Axis formatting and labels.
   scatterplot.showXAxis(true); 
   scatterplot.showYAxis(true); 
-  scatterplot.setXAxisLabel("Distances");
-  scatterplot.setYAxisLabel("Times");
+  scatterplot.setYFormat("#,###");
+  scatterplot.setXAxisLabel("Distance covered (km)");
+  scatterplot.setYAxisLabel("Duration of flight");
  
   // Symbol styles
   scatterplot.setPointColour(color(180,50,50,100));
   scatterplot.setPointSize(2);
   scatterplot.setMaxX(6000);
   scatterplot.setMinX(300);
+  scatterplot.setMaxY(1000);
  
   doneLoading = true;
   
@@ -146,7 +159,8 @@ void draw()
     rect(800,160,20,20);
     fill(12);
     text(("cancelled (" + int(status[2]) + " out of " + flights.flights.size() + ")"), 825, 175);
-    scatterplot.draw(1100,40,600,400);
+    scatterplot.setMaxX(6000 - (focus*50));
+    scatterplot.draw(1150,50,500,400);
   }
   
   

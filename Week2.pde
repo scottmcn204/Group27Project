@@ -1,4 +1,4 @@
-import org.gicentre.utils.stat.*;    //<>//
+import org.gicentre.utils.stat.*;    //<>// //<>//
 import controlP5.*;
 
 final int SCREENX = 1800;
@@ -15,7 +15,7 @@ float status[];
 String dests[];
 ControlP5 cp5;
 int zoom = 0;
-int focus = 0;
+int date = 0;
 BarChart barChart;
 Chart myPieChart;
 Flights flights;
@@ -72,7 +72,7 @@ void slowLoad() {
     .setColorValue(color(0));
     
     
-   cp5.addSlider("focus")
+   cp5.addSlider("date")
     .setPosition(1300, 450)
     .setRange(0, 100)
     .setSize(150, 40)
@@ -93,8 +93,8 @@ void slowLoad() {
   myPieChart.addDataSet("flights");
   myPieChart.setColors("flights", color(#3BE8E6), color(#FFAF1A), color(#20396A));
   myPieChart.setData("flights", status);
- //<>//
- //<>//
+ //<>// //<>//
+ //<>// //<>//
   barChart = new BarChart(this);
   barChart.setData(arrivals);
 

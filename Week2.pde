@@ -103,7 +103,8 @@ void slowLoad() {
   barChart.showCategoryAxis(true);
   barChart.setBarLabels(dests);
   barChart.setBarColour(color(200, 80, 80, 150));
-  
+  barChart.setAxisLabelColour(250);
+  barChart.setAxisValuesColour(250);
   times = flights.getTimes();
   distances = flights.getDistances();
   
@@ -116,7 +117,8 @@ void slowLoad() {
   scatterplot.setYFormat("#,###");
   scatterplot.setXAxisLabel("Distance covered (km)");
   scatterplot.setYAxisLabel("Duration of flight");
- 
+  scatterplot.setAxisLabelColour(250);
+  scatterplot.setAxisValuesColour(250);
   // Symbol styles
   scatterplot.setPointColour(color(180,50,50,100));
   scatterplot.setPointSize(2);
@@ -125,43 +127,40 @@ void slowLoad() {
   scatterplot.setMaxY(1000);
  
   doneLoading = true;
-  
-  
-  
 }
 
 void draw()
 {
   if (!doneLoading) {
-    background(255);
+    background(50);
     textFont(myFont, 50);
+    fill(250);
     text("Loading...", SCREENX/2 - 90, SCREENY/2 - 100);
-    fill(12);
+    
   } else {
-    background(color(222,225,230));
+    background(50);
     textFont(myFont, 16);
     barChart.draw(40, 50, 600, 400);
+    fill(250);
     text("Amount of Arrivals per Airport", 200, 485);
-    fill(12);
     textFont(myFont, 24);
     text("Dashboard", 25, 30);
     barChart.setMaxValue(500 + zoom * 400);
     fill(#3BE8E6);
     rect(800,100,20,20);
-    fill(12);
+    fill(250);
     textFont(myFont, 16);
     text(("on time (" + int(status[0]) + " out of " + flights.flights.size() + ")"), 825,115);
     fill(#FFAF1A);
     rect(800,130,20,20);
-    fill(12);
+    fill(250);
     text(("diverted (" + int(status[1]) + " out of " + flights.flights.size() + ")"), 825, 145);
     fill(#20396A);
     rect(800,160,20,20);
-    fill(12);
+    fill(250);
     text(("cancelled (" + int(status[2]) + " out of " + flights.flights.size() + ")"), 825, 175);
     scatterplot.setMaxX(6000 - (focus*50));
     scatterplot.draw(1150,50,500,400);
   }
-  
   
 }

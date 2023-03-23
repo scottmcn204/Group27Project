@@ -140,7 +140,7 @@ void draw()
   } else {
     background(50);
     textFont(myFont, 16);
-    barChart.draw(40, 50, 600, 400);
+    barChart.draw(25, 50, 500, 400);
     fill(250);
     text("Amount of Arrivals per Airport", 200, 485);
     textFont(myFont, 24);

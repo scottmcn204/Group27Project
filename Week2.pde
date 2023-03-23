@@ -70,7 +70,7 @@ void slowLoad() {
     
     
    cp5.addSlider("focus")
-    .setPosition(1300, 450)
+    .setPosition(1300, 475)
     .setRange(0, 100)
     .setSize(150, 40)
     .setColorForeground(color(#AADEDC))

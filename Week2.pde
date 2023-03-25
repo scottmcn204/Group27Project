@@ -165,7 +165,7 @@ void setLineGraphData(int week) {
        float totalDelayed[] = new float[10];
        for (int j = 0; j < flights.flights.size(); j++) {
          for (int i = 0; i < 10; i++) {
-           if (flights.flights.get(j).date <= 10 && flights.flights.get(j).isLate())
+           if (flights.flights.get(j).date == i + 1 && flights.flights.get(j).isLate())
              totalDelayed[i]++;
          }
        }
@@ -177,8 +177,7 @@ void setLineGraphData(int week) {
        float totalDelayed2[] = new float[7];
        for (int j = 0; j < flights.flights.size(); j++) {
          for (int i = 0; i < 7; i++) {
-           if (flights.flights.get(j).date > 10 &&
-                 flights.flights.get(j).date < 18 && flights.flights.get(j).isLate())
+           if (flights.flights.get(j).date == i + 11 && flights.flights.get(j).isLate())
              totalDelayed2[i]++;
          }
        }
@@ -190,8 +189,7 @@ void setLineGraphData(int week) {
        float totalDelayed3[] = new float[7];
        for (int j = 0; j < flights.flights.size(); j++) {
          for (int i = 0; i < 7; i++) {
-           if (flights.flights.get(j).date > 17 &&
-                 flights.flights.get(j).date < 25 && flights.flights.get(j).isLate())
+           if (flights.flights.get(j).date == i + 18 && flights.flights.get(j).isLate())
              totalDelayed3[i]++;
          }
        }
@@ -203,8 +201,7 @@ void setLineGraphData(int week) {
        float totalDelayed4[] = new float[7];
        for (int j = 0; j < flights.flights.size(); j++) {
          for (int i = 0; i < 7; i++) {
-           if (flights.flights.get(j).date > 24 &&
-                 flights.flights.get(j).date < 32 && flights.flights.get(j).isLate())
+           if (flights.flights.get(j).date == i + 25 && flights.flights.get(j).isLate())
              totalDelayed4[i]++;
          }
        }

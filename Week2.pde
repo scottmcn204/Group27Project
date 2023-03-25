@@ -1,4 +1,4 @@
-import org.gicentre.utils.stat.*;    //<>// //<>//
+import org.gicentre.utils.stat.*; //<>//
 import controlP5.*;
 
 final int SCREENX = 1500;
@@ -12,15 +12,18 @@ float textXpos = 0;
 float textYpos = 0;
 float arrivals[];
 float status[];
+float late[];
 String dests[];
 ControlP5 cp5;
 int zoom = 0;
 int date = 0;
 BarChart chart;
 chartBar arrivalsAirports;
+int week = 0;
+BarChart barChart;
 Chart myPieChart;
 Flights flights;
-XYChart scatterplot;
+XYChart lateFlightChart;
 boolean doneLoading;
 int totalArrivals;
 
@@ -42,6 +45,10 @@ void slowLoad() {
   status = new float[3]; // 0 = on time, 1 = diverted, 2 = cancelled
 
   for (int i =0; i< flights.flights.size(); i++) {
+    tempFlight = flights.flights.get(i);
+    if (tempFlight.isLate()) {
+      
+    }
     for (int j = 0; j < 5; j++) {
       tempFlight = flights.flights.get(i);
       if (tempFlight.destinationAirport.equals(dests[j])) {
@@ -76,10 +83,10 @@ void slowLoad() {
     .setColorValue(color(0));
     
     
-   cp5.addSlider("date")
+   cp5.addSlider("week")
 
     .setPosition(1000, 475)
-    .setRange(0, 31)
+    .setRange(1, 4)
     .setSize(150, 40)
     .setColorForeground(color(#AADEDC))
     .setColorActive(color(#71A2A1))
@@ -102,6 +109,13 @@ void slowLoad() {
   // times = flights.getTimes();
   //distances = flights.getDistances();
   doneLoading = true;
+  
+  lateFlightChart = new XYChart(this);
+  lateFlightChart.showXAxis(true);
+  lateFlightChart.showYAxis(true);
+  lateFlightChart.setMinY(0);
+  lateFlightChart.setPointSize(5);
+  lateFlightChart.setLineWidth(2);
 }
 
 void draw()
@@ -137,9 +151,64 @@ void draw()
     rect(700,160,20,20);
     fill(250);
     text(("cancelled (" + int(status[2]) + " out of " + totalArrivals + ")"), 725, 175);
-
+    setLineGraphData(week);
+    lateFlightChart.draw(950, 30, 500, 400);
     //scatterplot.setMaxX(6000 - (focus*50));
     //scatterplot.draw(1150,50,500,400);
   }
-  
+}
+void setLineGraphData(int week) {
+   switch (week) {
+     case 1:
+       float days[] = new float[10];
+       for (int i = 1; i <= days.length; i++) days[i - 1] = i;
+       float totalDelayed[] = new float[10];
+       for (int j = 0; j < flights.flights.size(); j++) {
+         for (int i = 0; i < 10; i++) {
+           if (flights.flights.get(j).date <= 10 && flights.flights.get(j).isLate())
+             totalDelayed[i]++;
+         }
+       }
+       lateFlightChart.setData(days, totalDelayed);
+       break;
+     case 2:
+       float days2[] = new float[7];
+       for (int i = 1; i <= days2.length; i++) days2[i - 1] = i + 10;
+       float totalDelayed2[] = new float[7];
+       for (int j = 0; j < flights.flights.size(); j++) {
+         for (int i = 0; i < 7; i++) {
+           if (flights.flights.get(j).date > 10 &&
+                 flights.flights.get(j).date < 18 && flights.flights.get(j).isLate())
+             totalDelayed2[i]++;
+         }
+       }
+       lateFlightChart.setData(days2, totalDelayed2);
+       break;
+     case 3:
+       float days3[] = new float[7];
+       for (int i = 1; i <= days3.length; i++) days3[i - 1] = i + 17;
+       float totalDelayed3[] = new float[7];
+       for (int j = 0; j < flights.flights.size(); j++) {
+         for (int i = 0; i < 7; i++) {
+           if (flights.flights.get(j).date > 17 &&
+                 flights.flights.get(j).date < 25 && flights.flights.get(j).isLate())
+             totalDelayed3[i]++;
+         }
+       }
+       lateFlightChart.setData(days3, totalDelayed3);
+       break;
+     case 4:
+       float days4[] = new float[7];
+       for (int i = 1; i <= days4.length; i++) days4[i - 1] = i + 24;
+       float totalDelayed4[] = new float[7];
+       for (int j = 0; j < flights.flights.size(); j++) {
+         for (int i = 0; i < 7; i++) {
+           if (flights.flights.get(j).date > 24 &&
+                 flights.flights.get(j).date < 32 && flights.flights.get(j).isLate())
+             totalDelayed4[i]++;
+         }
+       }
+       lateFlightChart.setData(days4, totalDelayed4);
+       break;
+   }
 }

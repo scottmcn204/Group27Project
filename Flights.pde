@@ -20,7 +20,7 @@ class Flights {
     println("Done loading flights.");
   }
   
-    int[] getDistances(){
+  int[] getDistances() {
     ArrayList<Flight> onTime = new ArrayList<Flight>();
     
     for (int i=0; i < flights.size(); i++){
@@ -34,7 +34,7 @@ class Flights {
     }
     return distances;
   }
-    int[] getTimes(){
+  int[] getTimes() {
     ArrayList<Flight> OnTime = new ArrayList<Flight>();
     
     for (int i=0; i < flights.size(); i++){

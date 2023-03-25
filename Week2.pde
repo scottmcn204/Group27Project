@@ -4,6 +4,7 @@ import controlP5.*;
 final int SCREENX = 1800;
 final int SCREENY = 900;
 Table table;
+MapScreen mainMap;
 Flight tempFlight;
 int times[];
 int distances[];
@@ -34,6 +35,7 @@ void setup() {
   thread("slowLoad");
 }
 void slowLoad() {
+  mainMap = new MapScreen();
   flights = new Flights();
   dests = new String[] {"ABQ", "ADQ", "ALB", "ANC", "ATL"};
   arrivals = new float[5];
@@ -125,12 +127,14 @@ void slowLoad() {
   scatterplot.setMaxX(6000);
   scatterplot.setMinX(300);
   scatterplot.setMaxY(1000);
+  mainMap.setup();
  
   doneLoading = true;
 }
 
 void draw()
 {
+  
   if (!doneLoading) {
     background(50);
     textFont(myFont, 50);
@@ -161,6 +165,8 @@ void draw()
     text(("cancelled (" + int(status[2]) + " out of " + flights.flights.size() + ")"), 825, 175);
     scatterplot.setMaxX(6000 - (focus*50));
     scatterplot.draw(1150,50,500,400);
+    
+    mainMap.draw();
   }
   
 }

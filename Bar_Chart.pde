@@ -13,10 +13,12 @@ class chartBar{
   barChart.showValueAxis(true);
   barChart.showCategoryAxis(true);
   barChart.setBarLabels(labels);
-  barChart.setBarColour(color(200, 80, 80, 150));
+  barChart.setBarColour(color(#C1E5B7));
   barChart.setAxisLabelColour(250);
   barChart.setAxisValuesColour(250);
-  
+  barChart.setCategoryAxisLabel("Number of arrivals per airport");
+  barChart.setBarGap(4.2);
+
  }
  
  void setData(float[] data, String[] labels){
@@ -25,7 +27,7 @@ class chartBar{
  }
  
  void draw(){
-   barChart.draw(15, 50, 500, 400);
-   barChart.setMaxValue(500 + zoom * 400);
+   barChart.draw(900, 70, 600, 400);
+   barChart.setMaxValue(1000 + zoom * 300);
  }
 }

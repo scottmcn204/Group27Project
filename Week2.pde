@@ -74,7 +74,7 @@ void slowLoad() {
   arrivalsAirports = new chartBar(chart,arrivals, dests);
 
   cp5.addSlider("zoom")
-    .setPosition(30, 520)
+    .setPosition(1025, 520)
     .setRange(0, 100)
     .setSize(150, 40)
     .setColorForeground(color(#AADEDC))
@@ -85,7 +85,7 @@ void slowLoad() {
     
    cp5.addSlider("week")
 
-    .setPosition(1000, 475)
+    .setPosition(500, 520)
     .setRange(1, 4)
     .setSize(150, 40)
     .setColorForeground(color(#AADEDC))
@@ -95,7 +95,7 @@ void slowLoad() {
 
 
   myPieChart = cp5.addChart("pie")
-    .setPosition(675, 200)
+    .setPosition(30, 100)
     .setSize(300, 300)
     .setRange(0, 1000)
     .setView(Chart.PIE)
@@ -103,7 +103,7 @@ void slowLoad() {
     ;
   myPieChart.getColor().setBackground(color(255, 100));
   myPieChart.addDataSet("flights");
-  myPieChart.setColors("flights", color(#3BE8E6), color(#FFAF1A), color(#20396A));
+  myPieChart.setColors("flights", color(#B7E1E5), color(#FFAF1A), color(#20396A));
   myPieChart.setData("flights", status);
 
   // times = flights.getTimes();
@@ -114,8 +114,14 @@ void slowLoad() {
   lateFlightChart.showXAxis(true);
   lateFlightChart.showYAxis(true);
   lateFlightChart.setMinY(0);
-  lateFlightChart.setPointSize(5);
-  lateFlightChart.setLineWidth(2);
+  lateFlightChart.setPointSize(7);
+  lateFlightChart.setLineWidth(2.5);
+  lateFlightChart.setAxisLabelColour(250);
+  lateFlightChart.setAxisValuesColour(250);
+  lateFlightChart.setLineColour(color(#FF00A2));
+  lateFlightChart.setPointColour(color(255));
+  lateFlightChart.setXAxisLabel("Days of Selected Week");
+  lateFlightChart.setYAxisLabel("Number of Late Flights");
 }
 
 void draw()
@@ -131,28 +137,27 @@ void draw()
     textFont(myFont, 16);
     arrivalsAirports.draw();
     fill(250);
-    text("Number of Arrivals per Airport", 150, 485);
     textFont(myFont, 24);
     text("Dashboard", 25, 30);
     
-    fill(#3BE8E6);
-    rect(700,100,20,20);
+    fill(#B7E1E5);
+    rect(60,450,20,20);
     fill(250);
     textFont(myFont, 16);
 
-    text(("on time (" + int(status[0]) + " out of " + totalArrivals + ")"), 725,115);
+    text(("on time (" + int(status[0]) + " out of " + totalArrivals + ")"), 90,465);
     fill(#FFAF1A);
-    rect(700,130,20,20);
+    rect(60,480,20,20);
     fill(250);
 
-    text(("diverted (" + int(status[1]) + " out of " + totalArrivals + ")"), 725, 145);
+    text(("diverted (" + int(status[1]) + " out of " + totalArrivals + ")"), 90, 495);
 
     fill(#20396A);
-    rect(700,160,20,20);
+    rect(60,510,20,20);
     fill(250);
-    text(("cancelled (" + int(status[2]) + " out of " + totalArrivals + ")"), 725, 175);
+    text(("cancelled (" + int(status[2]) + " out of " + totalArrivals + ")"), 90, 525);
     setLineGraphData(week);
-    lateFlightChart.draw(950, 30, 500, 400);
+    lateFlightChart.draw(425, 70, 500, 400);
     //scatterplot.setMaxX(6000 - (focus*50));
     //scatterplot.draw(1150,50,500,400);
   }

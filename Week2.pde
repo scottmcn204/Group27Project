@@ -16,7 +16,8 @@ String dests[];
 ControlP5 cp5;
 int zoom = 0;
 int date = 0;
-BarChart barChart;
+BarChart chart;
+chartBar arrivalsAirports;
 Chart myPieChart;
 Flights flights;
 XYChart scatterplot;
@@ -39,6 +40,7 @@ void slowLoad() {
   dests = new String[] {"ABQ", "ADQ", "ALB", "ANC", "ATL"};
   arrivals = new float[5];
   status = new float[3]; // 0 = on time, 1 = diverted, 2 = cancelled
+
   for (int i =0; i< flights.flights.size(); i++) {
     for (int j = 0; j < 5; j++) {
       tempFlight = flights.flights.get(i);
@@ -60,7 +62,9 @@ void slowLoad() {
   for (int i = 0; i<5; i++){
     totalArrivals += arrivals[i];
   }
-
+  
+  chart = new BarChart(this);
+  arrivalsAirports = new chartBar(chart,arrivals, dests);
 
   cp5.addSlider("zoom")
     .setPosition(30, 520)
@@ -94,21 +98,9 @@ void slowLoad() {
   myPieChart.addDataSet("flights");
   myPieChart.setColors("flights", color(#3BE8E6), color(#FFAF1A), color(#20396A));
   myPieChart.setData("flights", status);
-  barChart = new BarChart(this);
-  barChart.setData(arrivals);
 
-  // Axis scaling
-  barChart.setMinValue(0);
-  barChart.setMaxValue(1000);
-
-  barChart.showValueAxis(true);
-  barChart.showCategoryAxis(true);
-  barChart.setBarLabels(dests);
-  barChart.setBarColour(color(200, 80, 80, 150));
-  barChart.setAxisLabelColour(250);
-  barChart.setAxisValuesColour(250);
-  times = flights.getTimes();
-  distances = flights.getDistances();
+  // times = flights.getTimes();
+  //distances = flights.getDistances();
   doneLoading = true;
 }
 
@@ -123,12 +115,12 @@ void draw()
   } else {
     background(50);
     textFont(myFont, 16);
-    barChart.draw(30, 50, 500, 400);
+    arrivalsAirports.draw();
     fill(250);
-    text("Amount of Arrivals per Airport", 150, 485);
+    text("Number of Arrivals per Airport", 150, 485);
     textFont(myFont, 24);
     text("Dashboard", 25, 30);
-    barChart.setMaxValue(500 + zoom * 400);
+    
     fill(#3BE8E6);
     rect(700,100,20,20);
     fill(250);

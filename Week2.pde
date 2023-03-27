@@ -108,24 +108,6 @@ void slowLoad() {
   times = flights.getTimes();
   distances = flights.getDistances();
 
-  //scatterplot = new XYChart(this);
-  // scatterplot.setData(parseFloat(distances),parseFloat(times));
-
-  //// Axis formatting and labels.
-  //scatterplot.showXAxis(true);
-  //scatterplot.showYAxis(true);
-  //scatterplot.setYFormat("#,###");
-  //scatterplot.setXAxisLabel("Distance covered (km)");
-  //scatterplot.setYAxisLabel("Duration of flight");
-  //scatterplot.setAxisLabelColour(250);
-  //scatterplot.setAxisValuesColour(250);
-  //// Symbol styles
-  //scatterplot.setPointColour(color(180,50,50,100));
-  //scatterplot.setPointSize(2);
-  //scatterplot.setMaxX(6000);
-  //scatterplot.setMinX(300);
-  //scatterplot.setMaxY(1000);
-
   PFont font = createFont("arial", 20);
 
   cp5 = new ControlP5(this);
@@ -136,34 +118,6 @@ void slowLoad() {
     .setFont(font)
     .setFocus(true)
     .setColor(color(255));
-
-
-  cp5.addBang("clear")
-    .setPosition(SCREENX - 170, 100)
-    .setSize(80, 40)
-    .getCaptionLabel().align(ControlP5.CENTER, ControlP5.CENTER);
-
-
-  l = cp5.addListBox("myList")
-    .setPosition(100, 100)
-    .setSize(120, 120)
-    .setItemHeight(15)
-    .setBarHeight(15)
-    .setColorBackground(color(255, 128))
-    .setColorActive(color(0))
-    .setColorForeground(color(255, 100, 0))
-    ;
-
-  ////l.captionLabel().toUpperCase(true);
-  //l.captionLabel().set("A Listbox");
-  //l.captionLabel().setColor(0xffff0000);
-  //l.captionLabel().style().marginTop = 3;
-  //l.valueLabel().style().marginTop = 3;
-
-  //for (int i=0; i<80; i++) {
-  //  ListBoxItem lbi = l.addItem("item "+i, i);
-  //  lbi.setColorBackground(0xffff0000);
-  //}
 
   textFont(font);
 
@@ -198,7 +152,19 @@ void draw()
     rect(800, 160, 20, 20);
     fill(250);
     text(("cancelled (" + int(status[2]) + " out of " + flights.flights.size() + ")"), 825, 175);
-    //scatterplot.setMaxX(6000 - (focus*50));
-    //scatterplot.draw(1150,50,500,400);
+    println(textValue);
+  }
+}
+
+void search() {
+  int counter = 0;
+  for (int i = 0; (i < flights.flights.size()); i++) {
+    if (flights.flights.get(i).originCity.contains(textValue)) {
+      println(flights.flights.get(i).originCity);
+      counter++;
+    }
+    if (counter >= 4) {
+      break;
+    }
   }
 }

@@ -2,6 +2,7 @@
 
 class MapScreen
 {
+  ArrayList Pin;
 final float BACKGROUND_WIDTH =(SCREENX*0.75); 
 final float BAKCGROUND_HEIGHT =(SCREENY*0.75);
 PImage backgroundMap;

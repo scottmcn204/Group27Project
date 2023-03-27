@@ -38,7 +38,7 @@ void setup() {
 }
 void slowLoad() {
   mainMap = new MapScreen();
-  testPin = new Pin(400, 400);
+  testPin = new Pin(400, 400, 2);
   flights = new Flights();
   dests = new String[] {"ABQ", "ADQ", "ALB", "ANC", "ATL"};
   arrivals = new float[5];

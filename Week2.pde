@@ -1,8 +1,8 @@
 import org.gicentre.utils.stat.*; //<>// //<>// //<>//
 import controlP5.*;
 
-final int SCREENX = 1800;
-final int SCREENY = 900;
+final int SCREENX = 1500;
+final int SCREENY = 800;
 Table table;
 Flight tempFlight;
 int times[];
@@ -21,8 +21,10 @@ Chart myPieChart;
 Flights flights;
 //XYChart scatterplot;
 boolean doneLoading;
-String textValue ="";
+String input ="";
 ListBox l;
+ArrayList<Flight> searchResults;
+int p;
 
 void settings()
 {
@@ -34,6 +36,7 @@ void setup() {
   myFont = createFont("Arial", 16);
   cp5 = new ControlP5(this);
   thread("slowLoad");
+  searchResults = new ArrayList<Flight>();
 }
 void slowLoad() {
   flights = new Flights();
@@ -59,69 +62,33 @@ void slowLoad() {
     }
   }
 
-  cp5.addSlider("zoom")
-    .setPosition(20, 500)
-    .setRange(0, 100)
-    .setSize(150, 40)
-    .setColorForeground(color(#AADEDC))
-    .setColorActive(color(#71A2A1))
-    .setColorBackground(color(#425A5A))
-    .setColorValue(color(0));
-
-
-  //cp5.addSlider("focus")
-  // .setPosition(1300, 450)
-  // .setRange(0, 100)
-  // .setSize(150, 40)
-  // .setColorForeground(color(#AADEDC))
-  // .setColorActive(color(#71A2A1))
-  // .setColorBackground(color(#425A5A))
-  // .setColorValue(color(0));
-
-
-  myPieChart = cp5.addChart("pie")
-    .setPosition(775, 200)
-    .setSize(300, 300)
-    .setRange(0, 5000)
-    .setView(Chart.PIE)
-    .setCaptionLabel("DIVERTED")
-    ;
-  myPieChart.getColor().setBackground(color(255, 100));
-  myPieChart.addDataSet("flights");
-  myPieChart.setColors("flights", color(#3BE8E6), color(#FFAF1A), color(#20396A));
-  myPieChart.setData("flights", status);
-
-
-  barChart = new BarChart(this);
-  barChart.setData(arrivals);
-
-  // Axis scaling
-  barChart.setMinValue(0);
-  barChart.setMaxValue(1000);
-
-  barChart.showValueAxis(true);
-  barChart.showCategoryAxis(true);
-  barChart.setBarLabels(dests);
-  barChart.setBarColour(color(200, 80, 80, 150));
-  barChart.setAxisLabelColour(250);
-  barChart.setAxisValuesColour(250);
-  times = flights.getTimes();
-  distances = flights.getDistances();
-
   PFont font = createFont("arial", 20);
 
   cp5 = new ControlP5(this);
 
   cp5.addTextfield("")
-    .setPosition(SCREENX - 400, 100)
-    .setSize(200, 40)
+    .setPosition(700, 100)
+    .setSize(300, 50)
     .setFont(font)
     .setFocus(true)
     .setColor(color(255));
-
   textFont(font);
 
+  l = cp5.addListBox("results")
+    .setPosition(700, 150)
+    .setSize(300, 400)
+    .setItemHeight(25)
+    .setColorBackground(color(255, 128))
+    .setColorActive(color(0))
+    .setColorForeground(color(255, 100, 0));
+  p = 0;
+
   doneLoading = true;
+}
+void keyPressed() {
+  if (key == 13) {
+    search();
+  }
 }
 void draw()
 {
@@ -133,37 +100,32 @@ void draw()
   } else {
     background(50);
     textFont(myFont, 16);
-    barChart.draw(40, 50, 600, 400);
     fill(250);
-    text("Amount of Arrivals per Airport", 200, 485);
     textFont(myFont, 24);
-    text("Dashboard", 25, 30);
-    barChart.setMaxValue(500 + zoom * 400);
-    fill(#3BE8E6);
-    rect(800, 100, 20, 20);
-    fill(250);
+    text("Search Bar", 25, 30);
     textFont(myFont, 16);
-    text(("on time (" + int(status[0]) + " out of " + flights.flights.size() + ")"), 825, 115);
-    fill(#FFAF1A);
-    rect(800, 130, 20, 20);
-    fill(250);
-    text(("diverted (" + int(status[1]) + " out of " + flights.flights.size() + ")"), 825, 145);
-    fill(#20396A);
-    rect(800, 160, 20, 20);
-    fill(250);
-    text(("cancelled (" + int(status[2]) + " out of " + flights.flights.size() + ")"), 825, 175);
-    println(textValue);
+    for (int i = 0; (i < searchResults.size()); i++) {
+      l.addItem(searchResults.get(i).originCity + " -> " + searchResults.get(i).destinationCity, p++);
+    }
+  }
+}
+
+void controlEvent(ControlEvent theEvent) {
+  if (theEvent.isAssignableFrom(Textfield.class)) {
+    search();
   }
 }
 
 void search() {
+  searchResults = new ArrayList<Flight>();
   int counter = 0;
+  l.clear();
   for (int i = 0; (i < flights.flights.size()); i++) {
-    if (flights.flights.get(i).originCity.contains(textValue)) {
-      println(flights.flights.get(i).originCity);
+    if (flights.flights.get(i).originCity.toLowerCase().contains(cp5.get(Textfield.class, "").getText().toLowerCase())) {
+      searchResults.add(flights.flights.get(i));
       counter++;
     }
-    if (counter >= 4) {
+    if (counter >= 200) {
       break;
     }
   }

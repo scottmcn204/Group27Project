@@ -21,7 +21,7 @@ BarChart chart;
 chartBar arrivalsAirports;
 int week = 0;
 BarChart barChart;
-Chart myPieChart;
+PieChart statusPie;
 Flights flights;
 XYChart lateFlightChart;
 boolean doneLoading;
@@ -93,18 +93,9 @@ void slowLoad() {
     .setColorBackground(color(#425A5A))
     .setColorValue(color(0));
 
+  statusPie = new PieChart(status, 30, 100);
 
-  myPieChart = cp5.addChart("pie")
-    .setPosition(30, 100)
-    .setSize(300, 300)
-    .setRange(0, 1000)
-    .setView(Chart.PIE)
-    .setCaptionLabel("DIVERTED")
-    ;
-  myPieChart.getColor().setBackground(color(255, 100));
-  myPieChart.addDataSet("flights");
-  myPieChart.setColors("flights", color(#B7E1E5), color(#FFAF1A), color(#20396A));
-  myPieChart.setData("flights", status);
+ 
 
   // times = flights.getTimes();
   //distances = flights.getDistances();
@@ -140,22 +131,8 @@ void draw()
     textFont(myFont, 24);
     text("Dashboard", 25, 30);
     
-    fill(#B7E1E5);
-    rect(60,450,20,20);
-    fill(250);
-    textFont(myFont, 16);
+    statusPie.draw(60, 450);
 
-    text(("on time (" + int(status[0]) + " out of " + totalArrivals + ")"), 90,465);
-    fill(#FFAF1A);
-    rect(60,480,20,20);
-    fill(250);
-
-    text(("diverted (" + int(status[1]) + " out of " + totalArrivals + ")"), 90, 495);
-
-    fill(#20396A);
-    rect(60,510,20,20);
-    fill(250);
-    text(("cancelled (" + int(status[2]) + " out of " + totalArrivals + ")"), 90, 525);
     setLineGraphData(week);
     lateFlightChart.draw(425, 70, 500, 400);
     //scatterplot.setMaxX(6000 - (focus*50));

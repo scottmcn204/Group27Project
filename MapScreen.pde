@@ -11,10 +11,15 @@ PImage backgroundMap;
   void setup()
   {
     myPins = new ArrayList<Pin>();
-    Pin pin1, pin2, pin3, pin4, pin5, pin6, pin7, pin8, pin9, pin10;
+    Pin pin1;
+    Pin pin2;
+    Pin pin3, pin4, pin5, pin6, pin7, pin8, pin9, pin10;
+    Pin pin11, pin12, pin13, pin14, pin15, pin16, pin17;
+    Pin pin18, pin19, pin20, pin21, pin22, pin23, pin24, pin25, pin26, pin27, pin28, pin29, pin30, pin31, pin32, pin33, pin34, pin35, pin36,
+    pin37, pin38, pin39, pin40, pin41, pin42, pin43, pin44, pin45, pin46, pin47, pin48, pin49, pin50;
     pin1 = new Pin( 1220, 500, 1);
     pin2 = new Pin( 400, 680, 2);
-    pin3 = new Pin
+    
     myPins.add(pin1);
     myPins.add(pin2);
     readData();

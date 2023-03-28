@@ -6,8 +6,6 @@ final int SCREENY = 900;
 Table table;
 MapScreen mainMap;
 Flight tempFlight;
-
-Pin testPin;
 int times[];
 int distances[];
 PFont myFont;
@@ -38,7 +36,6 @@ void setup() {
 }
 void slowLoad() {
   mainMap = new MapScreen();
-  testPin = new Pin(400, 400, 2);
   flights = new Flights();
   dests = new String[] {"ABQ", "ADQ", "ALB", "ANC", "ATL"};
   arrivals = new float[5];
@@ -131,7 +128,7 @@ void slowLoad() {
   scatterplot.setMinX(300);
   scatterplot.setMaxY(1000);
   mainMap.setup();
-  testPin.setup();
+  
  
   doneLoading = true;
 }
@@ -171,7 +168,13 @@ void draw()
     scatterplot.draw(1150,50,500,400);
     
     mainMap.draw();
-    testPin.draw();
+    
   }
   
+}
+
+void mouseMoved(){
+  if(doneLoading){
+  mainMap.getHoverEvent();
+  }
 }

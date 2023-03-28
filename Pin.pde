@@ -1,7 +1,8 @@
 class Pin{
   
-  final float CIRCLE_RADIUS = 10;
+  final float CIRCLE_RADIUS = 20;
   final float LINE_LENGTH = 6;
+  final int EVENT_NULL = 0;
   
   int event;
   float circleX;// xlocation of pin circle 
@@ -32,11 +33,20 @@ class Pin{
    }
    void mouseOver(){
      lineColor = color(255);
+     println("HOVER"+event);
    }
    
    void mouseNotOver(){
      lineColor = color(0);
    }
+   
+  int getEvent(int mX, int mY){
+     if(mX>(circleX-CIRCLE_RADIUS) && mX < circleX+ CIRCLE_RADIUS && mY >(circleY - CIRCLE_RADIUS) && mY < circleY +CIRCLE_RADIUS){
+        return event;
+     }
+     return EVENT_NULL;
+  }
+     
+   }
   
-  
-}
+ 

@@ -125,7 +125,7 @@ void search() {
       searchResults.add(flights.flights.get(i));
       counter++;
     }
-    if (counter >= 200) {
+    if (counter >= 20) {
       break;
     }
   }

@@ -1,5 +1,6 @@
 class Flights {
   ArrayList<Flight> flights = new ArrayList<Flight>();
+  ArrayList<String> airports = new ArrayList<String>();
   Flights() {
     table = loadTable("data/flights_full.csv", "header");
     println(table.getRowCount() + " total rows in table");
@@ -16,6 +17,12 @@ class Flights {
         row.getInt("DEP_TIME"), row.getInt("CRS_ARR_TIME"), row.getInt("ARR_TIME"),
         cancelled, diverted, row.getInt("DISTANCE"));
       this.flights.add(tempFlight);
+    }
+    table = loadTable("data/airports.csv","header");
+    println(table.getRowCount() + " total airports in table");
+    for (TableRow row : table.rows()) {
+      String tempAirport = row.getString("ORIGIN_CITY_NAME");
+      this.airports.add(tempAirport);
     }
     println("Done loading flights.");
   }

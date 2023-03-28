@@ -23,7 +23,7 @@ Flights flights;
 boolean doneLoading;
 String input ="";
 ListBox l;
-ArrayList<Flight> searchResults;
+ArrayList<String> searchResults;
 int p;
 
 void settings()
@@ -36,7 +36,7 @@ void setup() {
   myFont = createFont("Arial", 16);
   cp5 = new ControlP5(this);
   thread("slowLoad");
-  searchResults = new ArrayList<Flight>();
+  searchResults = new ArrayList<String>();
 }
 void slowLoad() {
   flights = new Flights();
@@ -105,7 +105,7 @@ void draw()
     text("Search Bar", 25, 30);
     textFont(myFont, 16);
     for (int i = 0; (i < searchResults.size()); i++) {
-      l.addItem(searchResults.get(i).originCity + " -> " + searchResults.get(i).destinationCity, p++);
+      l.addItem(searchResults.get(i), p++); 
     }
   }
 }
@@ -117,12 +117,12 @@ void controlEvent(ControlEvent theEvent) {
 }
 
 void search() {
-  searchResults = new ArrayList<Flight>();
+  searchResults = new ArrayList<String>();
   int counter = 0;
   l.clear();
-  for (int i = 0; (i < flights.flights.size()); i++) {
-    if (flights.flights.get(i).originCity.toLowerCase().contains(cp5.get(Textfield.class, "").getText().toLowerCase())) {
-      searchResults.add(flights.flights.get(i));
+  for (int i = 0; (i < flights.airports.size()); i++) {
+    if (flights.airports.get(i).toLowerCase().contains(cp5.get(Textfield.class, "").getText().toLowerCase())) {
+      searchResults.add(flights.airports.get(i));
       counter++;
     }
     if (counter >= 20) {

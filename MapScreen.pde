@@ -80,7 +80,8 @@ final int EVENT_NULL = 0;
        break;
        
        default:
-       println("clcikednoton1");
+       println("clciked!");
+       break;
        
      }
    }

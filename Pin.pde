@@ -1,6 +1,6 @@
 class Pin{
   
-  final float CIRCLE_RADIUS = 20;
+  final float CIRCLE_RADIUS = 15;
   final float LINE_LENGTH = 6;
   final int EVENT_NULL = 0;
   

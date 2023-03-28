@@ -178,3 +178,9 @@ void mouseMoved(){
   mainMap.getHoverEvent();
   }
 }
+void mousePressed(){
+  if(doneLoading){
+    mainMap.getMousePress();
+  }
+  
+}

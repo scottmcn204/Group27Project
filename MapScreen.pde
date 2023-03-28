@@ -68,5 +68,23 @@ final int EVENT_NULL = 0;
      else aPin.mouseNotOver();
    }
  }
+ void getMousePress(){
+   int event;
+   
+   for(int i =0; i<myPins.size(); i++){
+     Pin aPin = (Pin) myPins.get(i);
+     event = aPin.getEvent(mouseX, mouseY);
+     switch(event) {
+       case 1: 
+       println("clickedOn1");
+       break;
+       
+       default:
+       println("clcikednoton1");
+       
+     }
+   }
+   
+ }
   
 }

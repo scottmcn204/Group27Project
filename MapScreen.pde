@@ -23,6 +23,7 @@ PImage backgroundMap;
     
     myPins.add(pin1);
     myPins.add(pin2);
+    myPins.add(pin6);
     readData();
     //WebMercator map = new WebMercator();
     

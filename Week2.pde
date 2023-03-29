@@ -76,12 +76,14 @@ void slowLoad() {
 
   l = cp5.addListBox("results")
     .setPosition(700, 150)
-    .setSize(300, 400)
+    .setSize(300, 200)
     .setItemHeight(25)
     .setColorBackground(color(255, 128))
     .setColorActive(color(0))
     .setColorForeground(color(255, 100, 0));
   p = 0;
+  
+  searchResults.addAll(flights.airports);
 
   doneLoading = true;
 }
@@ -117,16 +119,11 @@ void controlEvent(ControlEvent theEvent) {
 }
 
 void search() {
-  searchResults = new ArrayList<String>();
-  int counter = 0;
+  searchResults.removeAll(searchResults);
   l.clear();
   for (int i = 0; (i < flights.airports.size()); i++) {
     if (flights.airports.get(i).toLowerCase().contains(cp5.get(Textfield.class, "").getText().toLowerCase())) {
       searchResults.add(flights.airports.get(i));
-      counter++;
-    }
-    if (counter >= 20) {
-      break;
     }
   }
 }

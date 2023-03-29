@@ -85,10 +85,10 @@ final int EVENT_NULL = 0;
      if(event != EVENT_NULL){
      switch(event) {
        case 1: 
-       flightCompareTable.add("DFW");
+       flightCompareTable.add("Dallas/Fort Worth, TX");
        break;
        case 2:
-       flightCompareTable.add("ATL");
+       flightCompareTable.add("Atlanta, GA");
        break;
        default: 
        println("no");

@@ -1,4 +1,4 @@
-import org.gicentre.utils.stat.*;    //<>//
+import org.gicentre.utils.stat.*; //<>// //<>//
 import controlP5.*;
 
 final int SCREENX = 1800;
@@ -29,7 +29,7 @@ void settings()
 }
 void setup() {
   doneLoading = false;
-  background(178,210,221);
+  background(178, 210, 221);
   myFont = createFont("Arial", 16);
   cp5 = new ControlP5(this);
   thread("slowLoad");
@@ -48,51 +48,50 @@ void slowLoad() {
       }
     }
   }
-  for (int i= 0; i < flights.flights.size(); i++){
+  for (int i= 0; i < flights.flights.size(); i++) {
     tempFlight = flights.flights.get(i);
-    if (tempFlight.diverted){
+    if (tempFlight.diverted) {
       status[1] += 1;
-    }
-    else if (tempFlight.cancelled){
+    } else if (tempFlight.cancelled) {
       status[2] += 1;
-    }
-    else{
+    } else {
       status[0] += 1;
     }
   }
- //<>// //<>//
+  //<>//
   mainMap.setup();
-  
- 
+
+
   doneLoading = true;
 }
 
 void draw()
 {
-  
+
   if (!doneLoading) {
-    background(178,210,221);
+    background(178, 210, 221);
     textFont(myFont, 50);
     fill(250);
     text("Loading...", SCREENX/2 - 90, SCREENY/2 - 100);
-    
   } else {
-    background(178,210,221);
-    textFont(myFont, 16);    
+    background(178, 210, 221);
+    textFont(myFont, 16);
     mainMap.draw();
-    
   }
-  
+  if (mainMap.flightCompareTable != null ){
+    for (int i = 0; (i < mainMap.flightCompareTable.size()); i++) {
+      text(mainMap.flightCompareTable.get(i), 1000, 400 + (i * 20));
+    }
+  }
 }
 
-void mouseMoved(){
-  if(doneLoading){
-  mainMap.getHoverEvent();
+void mouseMoved() {
+  if (doneLoading) {
+    mainMap.getHoverEvent();
   }
 }
-void mousePressed(){
-  if(doneLoading){
+void mousePressed() {
+  if (doneLoading) {
     mainMap.getMousePress();
   }
-  
 }

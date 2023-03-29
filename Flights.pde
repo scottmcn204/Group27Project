@@ -1,5 +1,6 @@
 class Flights {
   ArrayList<Flight> flights = new ArrayList<Flight>();
+  ArrayList<String> airports = new ArrayList<String>();
   Flights() {
     table = loadTable("data/flights_full.csv", "header");
     println(table.getRowCount() + " total rows in table");
@@ -17,38 +18,43 @@ class Flights {
         cancelled, diverted, row.getInt("DISTANCE"));
       this.flights.add(tempFlight);
     }
+    table = loadTable("data/airports.csv", "header");
+    println(table.getRowCount() + " total airports in table");
+    for (TableRow row : table.rows()) {
+      String tempAirport = row.getString("ORIGIN_CITY_NAME");
+      this.airports.add(tempAirport);
+    }
     println("Done loading flights.");
   }
-  
-    int[] getDistances(){
+
+  int[] getDistances() {
     ArrayList<Flight> onTime = new ArrayList<Flight>();
-    
-    for (int i=0; i < flights.size(); i++){
-      if ((!flights.get(i).diverted) && (!flights.get(i).cancelled)){
+
+    for (int i=0; i < flights.size(); i++) {
+      if ((!flights.get(i).diverted) && (!flights.get(i).cancelled)) {
         onTime.add(flights.get(i));
       }
     }
     int[] distances = new int[onTime.size()];
-    for (int i =0; i<onTime.size(); i++){
+    for (int i =0; i<onTime.size(); i++) {
       distances[i] = onTime.get(i).distance;
     }
     return distances;
   }
-    int[] getTimes(){
+  int[] getTimes() {
     ArrayList<Flight> OnTime = new ArrayList<Flight>();
-    
-    for (int i=0; i < flights.size(); i++){
-      if ((!flights.get(i).diverted) && (!flights.get(i).cancelled)){
+
+    for (int i=0; i < flights.size(); i++) {
+      if ((!flights.get(i).diverted) && (!flights.get(i).cancelled)) {
         OnTime.add(flights.get(i));
       }
     }
     int[] times = new int[OnTime.size()];
-    for (int i =0; i<OnTime.size(); i++){
+    for (int i =0; i<OnTime.size(); i++) {
       Flight temp = OnTime.get(i);
-      if (temp.actualDepartureTime <= temp.actualArrivalTime){
+      if (temp.actualDepartureTime <= temp.actualArrivalTime) {
         times[i] = temp.actualArrivalTime - temp.actualDepartureTime;
-      }
-      else{
+      } else {
         times[i] = (2400 - temp.actualDepartureTime) + temp.actualArrivalTime;
       }
     }

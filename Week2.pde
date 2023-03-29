@@ -1,4 +1,4 @@
-import org.gicentre.utils.stat.*; //<>// //<>//
+import org.gicentre.utils.stat.*; //<>// //<>// //<>//
 import controlP5.*;
 
 final int SCREENX = 1800;
@@ -22,6 +22,9 @@ Chart myPieChart;
 Flights flights;
 XYChart scatterplot;
 boolean doneLoading;
+ArrayList<String> searchResults;
+int p;
+ListBox l;
 
 void settings()
 {
@@ -32,6 +35,7 @@ void setup() {
   background(178, 210, 221);
   myFont = createFont("Arial", 16);
   cp5 = new ControlP5(this);
+  searchResults = new ArrayList<String>();
   thread("slowLoad");
 }
 void slowLoad() {
@@ -58,7 +62,27 @@ void slowLoad() {
       status[0] += 1;
     }
   }
-  //<>//
+
+  PFont font = createFont("arial", 20);
+
+  cp5.addTextfield(" ")
+    .setPosition(1400, 100)
+    .setSize(300, 50)
+    .setFont(font)
+    .setFocus(true)
+    .setColor(color(255));
+  textFont(font);
+
+  l = cp5.addListBox("results")
+    .setPosition(1400, 150)
+    .setSize(300, 200)
+    .setItemHeight(25)
+    .setColorBackground(color(255, 128))
+    .setColorActive(color(0))
+    .setColorForeground(color(255, 100, 0));
+  p = 0;
+
+  searchResults.addAll(flights.airports);
   mainMap.setup();
 
 
@@ -78,9 +102,31 @@ void draw()
     textFont(myFont, 16);
     mainMap.draw();
   }
-  if (mainMap.flightCompareTable != null ){
+  if (searchResults != null) {
+    for (int i = 0; (i < searchResults.size()); i++) {
+      l.addItem(searchResults.get(i), p++);
+    }
+  }
+
+  if (mainMap.flightCompareTable != null ) {
     for (int i = 0; (i < mainMap.flightCompareTable.size()); i++) {
-      text(mainMap.flightCompareTable.get(i), 1000, 400 + (i * 20));
+      text(mainMap.flightCompareTable.get(i), 1400, 400 + (i * 20));
+    }
+  }
+}
+void controlEvent(ControlEvent theEvent) {
+  if (theEvent.isAssignableFrom(Textfield.class)) {
+    search();
+  }
+  mainMap.flightCompareTable.add(searchResults.get((int)l.getValue()));
+}
+
+void search() {
+  searchResults.removeAll(searchResults);
+  l.clear();
+  for (int i = 0; (i < flights.airports.size()); i++) {
+    if (flights.airports.get(i).toLowerCase().contains(cp5.get(Textfield.class, " ").getText().toLowerCase())) {
+      searchResults.add(flights.airports.get(i));
     }
   }
 }
@@ -93,5 +139,10 @@ void mouseMoved() {
 void mousePressed() {
   if (doneLoading) {
     mainMap.getMousePress();
+  }
+}
+void keyPressed() {
+  if (key == 13) {
+    search();
   }
 }

@@ -190,7 +190,10 @@ void controlEvent(ControlEvent theEvent) {
     if (theEvent.isAssignableFrom(Textfield.class)) {
       search();
     }
-    mainMap.flightCompareTable.add(searchResults.get((int)l.getValue()));
+    if(keyPressed == false){
+          mainMap.flightCompareTable.add(searchResults.get((int)l.getValue()));
+    }
+
   }
 }
 

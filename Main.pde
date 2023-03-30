@@ -209,16 +209,20 @@ void mouseMoved() {
 }
 
 void mousePressed() {
+  int event;
   if (doneLoading && selectedScreen == 0) {
     mainMap.getMousePress();
-    int event = button1.getEvent(mouseX, mouseY);
+    event = button1.getEvent(mouseX, mouseY);
     if (event == 1) selectedScreen = 1;
   } else if (doneLoading && selectedScreen == 1) {
-    int event = button2.getEvent(mouseX, mouseY);
-    if (event == 2) selectedScreen = 0;
+    event = button2.getEvent(mouseX, mouseY);
+    if (event == 2){
+      selectedScreen = 0;
+      mainMap.clearCompare();
+    }
   }
   if (doneLoading && selectedScreen == 0) {
-    int event = clearButton.getEvent(mouseX, mouseY);
+    event = clearButton.getEvent(mouseX, mouseY);
     if (event == 8) mainMap.clearCompare();
   }
 }

@@ -153,7 +153,7 @@ void draw()
 
       if (mainMap.flightCompareTable != null ) {
         for (int i = 0; (i < mainMap.flightCompareTable.size()); i++) {
-          text(mainMap.flightCompareTable.get(i), 1400, 400 + (i * 20));
+          text(mainMap.flightCompareTable.get(i), 1250, 400 + (i * 20));
         }
       }
     } else {

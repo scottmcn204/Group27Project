@@ -33,7 +33,7 @@ ArrayList<String> searchResults;
 int p;
 ListBox l;
 int selectedScreen = 0;
-Button button1, button2;
+Button button1, button2, clearButton;
 void settings()
 {
   size(SCREENX, SCREENY);
@@ -51,6 +51,10 @@ void setup() {
     "To Dashboard", color(255), myFont, 1);
   button2 = new Button(45, 750, 180, 40,
     "To Map", color(255), myFont, 2);
+  clearButton = new Button(1400, 340, 180, 40,
+    "Clear", color(255), myFont, 8);
+
+
   thread("slowLoad");
 }
 void slowLoad() {
@@ -140,6 +144,8 @@ void slowLoad() {
   lateFlightChart.setXAxisLabel("Days of Selected Week");
   lateFlightChart.setYAxisLabel("Number of Late Flights");
 
+  mainMap.clearCompare();
+
   doneLoading = true;
 }
 
@@ -158,6 +164,7 @@ void draw()
       mainMap.draw();
       cp5Map.draw();
       button1.draw();
+      clearButton.draw();
       if (searchResults != null) {
         for (int i = 0; (i < searchResults.size()); i++) {
           l.addItem(searchResults.get(i), p++);
@@ -190,10 +197,9 @@ void controlEvent(ControlEvent theEvent) {
     if (theEvent.isAssignableFrom(Textfield.class)) {
       search();
     }
-    if(keyPressed == false){
-          mainMap.flightCompareTable.add(searchResults.get((int)l.getValue()));
+    if (keyPressed == false) {
+      mainMap.flightCompareTable.add(searchResults.get((int)l.getValue()));
     }
-
   }
 }
 
@@ -213,22 +219,25 @@ void mouseMoved() {
     int event = button1.getEvent(mouseX, mouseY);
     if (event == 1) button1.hovered = true;
     else button1.hovered = false;
-  }
-  else if (doneLoading && selectedScreen == 1) {
+  } else if (doneLoading && selectedScreen == 1) {
     int event = button2.getEvent(mouseX, mouseY);
     if (event == 2) button2.hovered = true;
     else button2.hovered = false;
   }
 }
+
 void mousePressed() {
   if (doneLoading && selectedScreen == 0) {
     mainMap.getMousePress();
     int event = button1.getEvent(mouseX, mouseY);
     if (event == 1) selectedScreen = 1;
-  }
-  else if (doneLoading && selectedScreen == 1) {
+  } else if (doneLoading && selectedScreen == 1) {
     int event = button2.getEvent(mouseX, mouseY);
     if (event == 2) selectedScreen = 0;
+  }
+  if (doneLoading && selectedScreen == 0) {
+    int event = clearButton.getEvent(mouseX, mouseY);
+    if (event == 8) mainMap.clearCompare();
   }
 }
 void keyPressed() {

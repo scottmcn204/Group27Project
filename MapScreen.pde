@@ -39,7 +39,9 @@ class MapScreen
       aPin.setup();
     }
   }
-
+  void clearCompare(){
+    flightCompareTable.removeAll(flightCompareTable);
+  }
 
 
   void draw()

@@ -1,5 +1,5 @@
 class Flight {
-  String date;
+  int date; //day only since month-year are the same
   String airlineCarrier;
   int flightNumber;
   String originAirport;
@@ -22,7 +22,9 @@ class Flight {
    String originState, int originWAC, String destinationAirport, String destinationCity, String destinationState,
    int destinationWAC, int CRSDepartureTime, int actualDepartureTime, int CRSArrivalTime, int actualArrivalTime, boolean cancelled,
    boolean diverted, int distance) {
-    this.date = date;
+    String[] splitDate = date.split(" ");
+    String[] splitDay = splitDate[0].split("/");
+    this.date = Integer.parseInt(splitDay[1]);
     this.airlineCarrier = airlineCarrier;
     this.flightNumber = flightNumber;
     this.originAirport = originAirport;
@@ -41,5 +43,15 @@ class Flight {
     this.diverted = diverted;
     this.distance = distance;
   }
-  
+  /*isLate determines whether a flight is late or not by comparing CRS and
+      actual arrival times. Returns false if a flight is diverted/cancelled.
+  */
+  boolean isLate() {
+    if (this.diverted || this.cancelled) return false;
+    else {
+      int difference = Math.abs(this.actualArrivalTime -  this.CRSArrivalTime);
+      if (difference >= 50) return true;
+      else return false;
+    }
+  }
 }

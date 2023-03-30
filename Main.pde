@@ -213,7 +213,9 @@ void mousePressed() {
   if (doneLoading && selectedScreen == 0) {
     mainMap.getMousePress();
     event = button1.getEvent(mouseX, mouseY);
-    if (event == 1) selectedScreen = 1;
+    if (event == 1) {
+      selectedScreen = 1;
+    }
   } else if (doneLoading && selectedScreen == 1) {
     event = button2.getEvent(mouseX, mouseY);
     if (event == 2){

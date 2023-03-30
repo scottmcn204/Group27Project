@@ -5,7 +5,7 @@ class Pin {
   final int EVENT_NULL = 0;
 
   int event;
-  boolean hasBeenPressed;
+  private boolean hasBeenPressed;
   float circleX;// xlocation of pin circle
   float circleY; // y pos of pin circle
   float lineX; // actual x cord of airport
@@ -56,9 +56,13 @@ class Pin {
     fillColor = color(255);
   }
   int getEvent(int mX, int mY) {
-    if (mX>(circleX-CIRCLE_RADIUS) && mX < circleX+ CIRCLE_RADIUS && mY >(circleY - CIRCLE_RADIUS) && mY < circleY +CIRCLE_RADIUS) {
+
+     if (mX>(circleX-CIRCLE_RADIUS) && mX < circleX+ CIRCLE_RADIUS && mY >(circleY - CIRCLE_RADIUS) && mY < circleY +CIRCLE_RADIUS) {
       return event;
     }
+   
+   else{
     return EVENT_NULL;
+   }
   }
 }

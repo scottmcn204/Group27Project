@@ -1,8 +1,10 @@
 import org.gicentre.utils.stat.*; //<>//
 import controlP5.*;
 
-final int SCREENX = 1800;
-final int SCREENY = 900;
+
+//7/8 downscale from 1800
+final int SCREENX = 1575;
+final int SCREENY = 787;
 Table table;
 MapScreen mainMap;
 Flight tempFlight;

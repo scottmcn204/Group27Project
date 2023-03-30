@@ -20,11 +20,11 @@ class MapScreen
       pin29, pin30, pin31, pin32, pin33, pin34, pin35, pin36, pin37,
       pin38, pin39, pin40, pin41, pin42, pin43, pin44, pin45, pin46,
       pin47, pin48, pin49, pin50;
-    pin1 = new Pin( 792, 699, 1);//DFW
-    pin2 = new Pin(1020, 680, 2);// ATL
-    pin3 = new Pin( 920, 490, 3);//ORD
-    pin4 = new Pin(643, 528, 4);//DEN
-    pin6 = new Pin( 400, 680, 6);//LAX
+    pin1 = new Pin( 693, 611.625, 1);//DFW
+    pin2 = new Pin(892.5, 595, 2);// ATL
+    pin3 = new Pin( 805, 428.75, 3);//ORD
+    pin4 = new Pin(562.625,462, 4);//DEN
+    pin6 = new Pin( 350, 595, 6);//LAX
 
     myPins.add(pin1);
     myPins.add(pin2);
@@ -76,9 +76,12 @@ class MapScreen
     for (int i =0; i<myPins.size(); i++) {
       Pin aPin = (Pin)myPins.get(i);
       event = aPin.getEvent(mouseX, mouseY);
-      aPin.mousePress();
+      
+      
+      
 
       if (event != EVENT_NULL) {
+        aPin.mousePress();
         switch(event) {
         case 1:
           flightCompareTable.add("Dallas/Fort Worth, TX");
@@ -89,7 +92,8 @@ class MapScreen
         default:
           println("no");
         }
-      } else {
+      } 
+      else {
         aPin.mouseNotPressed();
       }
     }

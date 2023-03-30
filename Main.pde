@@ -178,7 +178,7 @@ void draw()
       button2.draw();
       statusPie.draw(60, 450);
 
-      setLineGraphData(week);
+      setLineGraphData(week, dests);
       lateFlightChart.draw(425, 70, 500, 400);
     }
   }
@@ -231,55 +231,79 @@ void keyPressed() {
     search();
   }
 }
-void setLineGraphData(int week) {
-  switch (week) {
-  case 1:
-    float days[] = new float[10];
-    for (int i = 1; i <= days.length; i++) days[i - 1] = i;
-    float totalDelayed[] = new float[10];
-    for (int j = 0; j < flights.flights.size(); j++) {
-      for (int i = 0; i < 10; i++) {
-        if (flights.flights.get(j).date == i + 1 && flights.flights.get(j).isLate())
-          totalDelayed[i]++;
-      }
-    }
-    lateFlightChart.setData(days, totalDelayed);
-    break;
-  case 2:
-    float days2[] = new float[7];
-    for (int i = 1; i <= days2.length; i++) days2[i - 1] = i + 10;
-    float totalDelayed2[] = new float[7];
-    for (int j = 0; j < flights.flights.size(); j++) {
-      for (int i = 0; i < 7; i++) {
-        if (flights.flights.get(j).date == i + 11 && flights.flights.get(j).isLate())
-          totalDelayed2[i]++;
-      }
-    }
-    lateFlightChart.setData(days2, totalDelayed2);
-    break;
-  case 3:
-    float days3[] = new float[7];
-    for (int i = 1; i <= days3.length; i++) days3[i - 1] = i + 17;
-    float totalDelayed3[] = new float[7];
-    for (int j = 0; j < flights.flights.size(); j++) {
-      for (int i = 0; i < 7; i++) {
-        if (flights.flights.get(j).date == i + 18 && flights.flights.get(j).isLate())
-          totalDelayed3[i]++;
-      }
-    }
-    lateFlightChart.setData(days3, totalDelayed3);
-    break;
-  case 4:
-    float days4[] = new float[7];
-    for (int i = 1; i <= days4.length; i++) days4[i - 1] = i + 24;
-    float totalDelayed4[] = new float[7];
-    for (int j = 0; j < flights.flights.size(); j++) {
-      for (int i = 0; i < 7; i++) {
-        if (flights.flights.get(j).date == i + 25 && flights.flights.get(j).isLate())
-          totalDelayed4[i]++;
-      }
-    }
-    lateFlightChart.setData(days4, totalDelayed4);
-    break;
-  }
+void setLineGraphData(int week, String[] airports) {
+   switch (week) {
+     case 1:
+       float days[] = new float[10];
+       for (int i = 1; i <= days.length; i++) days[i - 1] = i;
+       float totalDelayed[] = new float[10];
+       for (int j = 0; j < flights.flights.size(); j++) {
+           for (int k = 0; k < airports.length; k++) {
+             Flight temp =flights.flights.get(j);
+            if (temp.destinationAirport.equals(dests[k]))
+       ``    for (int i = 0; i < 10; i++) {
+               if (temp.date == i + 1 && temp.isLate()){
+               
+                 totalDelayed[i]++;
+               }
+             }
+         }
+       }
+       lateFlightChart.setData(days, totalDelayed);
+       break;
+     case 2:
+       float days2[] = new float[7];
+       for (int i = 1; i <= days2.length; i++) days2[i - 1] = i + 10;
+       float totalDelayed2[] = new float[7];
+       for (int j = 0; j < flights.flights.size(); j++) {
+         for (int k = 0; k < airports.length; k++) {
+            Flight temp =flights.flights.get(j);
+           if (temp.destinationAirport.equals(dests[k])){
+           for (int i = 0; i < 7; i++) {
+             if (flights.flights.get(j).date == i + 11 && flights.flights.get(j).isLate()){
+             totalDelayed2[i]++;
+           }
+           }
+         }
+         }
+       }
+       lateFlightChart.setData(days2, totalDelayed2);
+       break;
+     case 3:
+       float days3[] = new float[7];
+       for (int i = 1; i <= days3.length; i++) days3[i - 1] = i + 17;
+       float totalDelayed3[] = new float[7];
+       for (int j = 0; j < flights.flights.size(); j++) {
+         for (int k = 0; k < airports.length; k++) {
+             Flight temp =flights.flights.get(j);
+            if (temp.destinationAirport.equals(dests[k])){
+         for (int i = 0; i < 7; i++) {
+           if (flights.flights.get(j).date == i + 18 && flights.flights.get(j).isLate()){
+             totalDelayed3[i]++;
+         }
+       }
+            }
+         }
+       }
+       lateFlightChart.setData(days3, totalDelayed3);
+       break;
+     case 4:
+       float days4[] = new float[7];
+       for (int i = 1; i <= days4.length; i++) days4[i - 1] = i + 24;
+       float totalDelayed4[] = new float[7];
+       for (int j = 0; j < flights.flights.size(); j++) {
+         for (int k = 0; k < airports.length; k++) {
+             Flight temp =flights.flights.get(j);
+            if (temp.destinationAirport.equals(dests[k])){
+         for (int i = 0; i < 7; i++) {
+           if (flights.flights.get(j).date == i + 25 && flights.flights.get(j).isLate()){
+             totalDelayed4[i]++;
+         }
+         }
+            }
+         }
+       }
+       lateFlightChart.setData(days4, totalDelayed4);
+       break;
+   }
 }

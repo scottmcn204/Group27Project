@@ -198,7 +198,7 @@ void search() {
   searchResults.removeAll(searchResults);
   l.clear();
   for (int i = 0; (i < flights.airports.size()); i++) {
-    if (flights.airports.get(i).toLowerCase().contains(cp5.get(Textfield.class, " ").getText().toLowerCase())) {
+    if (flights.airports.get(i).toLowerCase().contains(cp5Map.get(Textfield.class, " ").getText().toLowerCase())) {
       searchResults.add(flights.airports.get(i));
     }
   }

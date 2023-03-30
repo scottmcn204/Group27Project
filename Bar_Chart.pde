@@ -4,15 +4,15 @@ import controlP5.*;
 class chartBar{       
   BarChart barChart;
   
-  chartBar(BarChart chart, float[] data, String[] labels){
+  chartBar(BarChart chart){
   barChart = chart;
-  barChart.setData(data);
+  //barChart.setData(data);
   barChart.setMinValue(0);
   barChart.setMaxValue(1000);
   
   barChart.showValueAxis(true);
   barChart.showCategoryAxis(true);
-  barChart.setBarLabels(labels);
+  //barChart.setBarLabels(labels);
   barChart.setBarColour(color(#C1E5B7));
   barChart.setAxisLabelColour(250);
   barChart.setAxisValuesColour(250);
@@ -21,8 +21,13 @@ class chartBar{
 
  }
  
- void setData(float[] data, String[] labels){
-   barChart.setBarLabels(labels);
+ void setData(float[] data, ArrayList<String> labels){
+   String[] airports = new String[labels.size()];
+   for (int i = 0; i < labels.size(); i++){
+     airports[i] = labels.get(i);
+   }
+   
+   barChart.setBarLabels(airports);
    barChart.setData(data);
  }
  

@@ -61,28 +61,9 @@ void slowLoad() {
   mainMap = new MapScreen();
   flights = new Flights();
   dests = new String[] {"ABQ", "ADQ", "ALB", "ANC", "ATL"};
-  arrivals = new float[5];
   status = new float[3]; // 0 = on time, 1 = diverted, 2 = cancelled
-  for (int i =0; i< flights.flights.size(); i++) {
-    tempFlight = flights.flights.get(i);
 
-    for (int j = 0; j < 5; j++) {
-      tempFlight = flights.flights.get(i);
-      if (tempFlight.destinationAirport.equals(dests[j])) {
-        arrivals[j] += 1;
-        if (tempFlight.diverted) {
-          status[1] += 1;
-        } else if (tempFlight.cancelled) {
-          status[2] += 1;
-        } else {
-          status[0] += 1;
-        }
-      }
-    }
-  }
-  for (int i = 0; i<5; i++) {
-    totalArrivals += arrivals[i];
-  }
+
 
   PFont font = createFont("arial", 20);
 
@@ -107,7 +88,7 @@ void slowLoad() {
   mainMap.setup();
 
   chart = new BarChart(this);
-  arrivalsAirports = new chartBar(chart, arrivals, dests);
+  arrivalsAirports = new chartBar(chart);
 
   cp5.addSlider("zoom")
     .setPosition(1025, 520)
@@ -151,7 +132,6 @@ void slowLoad() {
 
 void draw()
 {
-
   if (!doneLoading) {
     background(178, 210, 221);
     textFont(myFont, 50);
@@ -179,15 +159,17 @@ void draw()
     } else {
       background(50);
       textFont(myFont, 16);
-      arrivalsAirports.draw();
       cp5.draw();
       fill(250);
       textFont(myFont, 24);
       text("Dashboard", 25, 30);
       button2.draw();
+      getData(mainMap.flightCompareTable);
+      statusPie.changeData(status);
       statusPie.draw(60, 450);
-
-      setLineGraphData(week);
+      arrivalsAirports.setData(arrivals, mainMap.flightCompareTable);
+      arrivalsAirports.draw();
+      setLineGraphData(week,  mainMap.flightCompareTable);
       lateFlightChart.draw(425, 70, 500, 400);
     }
   }
@@ -245,55 +227,108 @@ void keyPressed() {
     search();
   }
 }
-void setLineGraphData(int week) {
-  switch (week) {
-  case 1:
-    float days[] = new float[10];
-    for (int i = 1; i <= days.length; i++) days[i - 1] = i;
-    float totalDelayed[] = new float[10];
-    for (int j = 0; j < flights.flights.size(); j++) {
-      for (int i = 0; i < 10; i++) {
-        if (flights.flights.get(j).date == i + 1 && flights.flights.get(j).isLate())
-          totalDelayed[i]++;
+void setLineGraphData(int week, ArrayList<String> airports) {
+   switch (week) {
+     case 1:
+       float days[] = new float[10];
+       for (int i = 1; i <= days.length; i++) days[i - 1] = i;
+       float totalDelayed[] = new float[10];
+       for (int j = 0; j < flights.flights.size(); j++) {
+           for (int k = 0; k < airports.size(); k++) {
+             Flight temp =flights.flights.get(j);
+            if (temp.originCity.equals(airports.get(k)))
+       ``    for (int i = 0; i < 10; i++) {
+               if (temp.date == i + 1 && temp.isLate()){
+               
+                 totalDelayed[i]++;
+               }
+             }
+         }
+       }
+       lateFlightChart.setData(days, totalDelayed);
+       break;
+     case 2:
+       float days2[] = new float[7];
+       for (int i = 1; i <= days2.length; i++) days2[i - 1] = i + 10;
+       float totalDelayed2[] = new float[7];
+       for (int j = 0; j < flights.flights.size(); j++) {
+         for (int k = 0; k < airports.size(); k++) {
+            Flight temp =flights.flights.get(j);
+           if (temp.originCity.equals(airports.get(k))){
+           for (int i = 0; i < 7; i++) {
+             if (flights.flights.get(j).date == i + 11 && flights.flights.get(j).isLate()){
+             totalDelayed2[i]++;
+           }
+           }
+         }
+         }
+       }
+       lateFlightChart.setData(days2, totalDelayed2);
+       break;
+     case 3:
+       float days3[] = new float[7];
+       for (int i = 1; i <= days3.length; i++) days3[i - 1] = i + 17;
+       float totalDelayed3[] = new float[7];
+       for (int j = 0; j < flights.flights.size(); j++) {
+         for (int k = 0; k < airports.size(); k++) {
+             Flight temp =flights.flights.get(j);
+            if (temp.originCity.equals(airports.get(k))){
+         for (int i = 0; i < 7; i++) {
+           if (flights.flights.get(j).date == i + 18 && flights.flights.get(j).isLate()){
+             totalDelayed3[i]++;
+         }
+       }
+            }
+         }
+       }
+       lateFlightChart.setData(days3, totalDelayed3);
+       break;
+     case 4:
+       float days4[] = new float[7];
+       for (int i = 1; i <= days4.length; i++) days4[i - 1] = i + 24;
+       float totalDelayed4[] = new float[7];
+       for (int j = 0; j < flights.flights.size(); j++) {
+         for (int k = 0; k < airports.size(); k++) {
+             Flight temp =flights.flights.get(j);
+            if (temp.originCity.equals(airports.get(k))){
+         for (int i = 0; i < 7; i++) {
+           if (flights.flights.get(j).date == i + 25 && flights.flights.get(j).isLate()){
+             totalDelayed4[i]++;
+         }
+         }
+            }
+         }
+       }
+       lateFlightChart.setData(days4, totalDelayed4);
+       break;
+   }
+}
+
+void getData(ArrayList<String> airports){
+    arrivals = new float[mainMap.flightCompareTable.size()];
+    for (int i =0; i < 3; i++){
+      status[i] = 0;
+    }
+    totalArrivals = 0;
+  
+    for (int i =0; i< flights.flights.size(); i++) {
+    tempFlight = flights.flights.get(i);
+
+    for (int j = 0; j < airports.size(); j++) {
+      tempFlight = flights.flights.get(i);
+      if (tempFlight.originCity.equals(airports.get(j))) {
+        arrivals[j] += 1;
+        if (tempFlight.diverted) {
+          status[1] += 1;
+        } else if (tempFlight.cancelled) {
+          status[2] += 1;
+        } else {
+          status[0] += 1;
+        }
       }
     }
-    lateFlightChart.setData(days, totalDelayed);
-    break;
-  case 2:
-    float days2[] = new float[7];
-    for (int i = 1; i <= days2.length; i++) days2[i - 1] = i + 10;
-    float totalDelayed2[] = new float[7];
-    for (int j = 0; j < flights.flights.size(); j++) {
-      for (int i = 0; i < 7; i++) {
-        if (flights.flights.get(j).date == i + 11 && flights.flights.get(j).isLate())
-          totalDelayed2[i]++;
-      }
-    }
-    lateFlightChart.setData(days2, totalDelayed2);
-    break;
-  case 3:
-    float days3[] = new float[7];
-    for (int i = 1; i <= days3.length; i++) days3[i - 1] = i + 17;
-    float totalDelayed3[] = new float[7];
-    for (int j = 0; j < flights.flights.size(); j++) {
-      for (int i = 0; i < 7; i++) {
-        if (flights.flights.get(j).date == i + 18 && flights.flights.get(j).isLate())
-          totalDelayed3[i]++;
-      }
-    }
-    lateFlightChart.setData(days3, totalDelayed3);
-    break;
-  case 4:
-    float days4[] = new float[7];
-    for (int i = 1; i <= days4.length; i++) days4[i - 1] = i + 24;
-    float totalDelayed4[] = new float[7];
-    for (int j = 0; j < flights.flights.size(); j++) {
-      for (int i = 0; i < 7; i++) {
-        if (flights.flights.get(j).date == i + 25 && flights.flights.get(j).isLate())
-          totalDelayed4[i]++;
-      }
-    }
-    lateFlightChart.setData(days4, totalDelayed4);
-    break;
+  }
+    for (int i = 0; i< airports.size(); i++) {
+    totalArrivals += arrivals[i];
   }
 }

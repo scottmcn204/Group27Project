@@ -51,7 +51,7 @@ void setup() {
     "To Dashboard", color(255), myFont, 1);
   button2 = new Button(45, 750, 180, 40,
     "To Map", color(255), myFont, 2);
-  clearButton = new Button(1400, 340, 180, 40,
+  clearButton = new Button(1250, 340, 180, 40,
     "Clear", color(255), myFont, 8);
 
 
@@ -68,7 +68,7 @@ void slowLoad() {
   PFont font = createFont("arial", 20);
 
   cp5Map.addTextfield(" ")
-    .setPosition(1400, 100)
+    .setPosition(1250, 100)
     .setSize(300, 50)
     .setFont(font)
     .setFocus(true)
@@ -76,7 +76,7 @@ void slowLoad() {
   textFont(font);
 
   l = cp5Map.addListBox("results")
-    .setPosition(1400, 150)
+    .setPosition(1250, 150)
     .setSize(300, 200)
     .setItemHeight(25)
     .setColorBackground(color(255, 128))

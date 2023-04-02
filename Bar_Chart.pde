@@ -18,7 +18,6 @@ class chartBar{
   barChart.setAxisValuesColour(250);
   barChart.setCategoryAxisLabel("Number of arrivals per airport");
   barChart.setBarGap(4.2);
-
  }
  
  void setData(float[] data, ArrayList<String> labels){

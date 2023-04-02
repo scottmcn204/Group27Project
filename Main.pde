@@ -167,6 +167,7 @@ void draw()
       statusPie.draw(60, 450);
       arrivalsAirports.draw();
       lateFlightChart.draw(425, 70, 500, 400);
+      setLineGraphData(week,  mainMap.flightCompareTable);
     }
   }
 }
@@ -217,7 +218,7 @@ void mousePressed() {
       getData(mainMap.flightCompareTable);
       arrivalsAirports.setData(arrivals, mainMap.flightCompareTable);
       statusPie.changeData(status);
-      setLineGraphData(week,  mainMap.flightCompareTable);
+      
     }
   } else if (doneLoading && selectedScreen == 1) {
     event = button2.getEvent(mouseX, mouseY);

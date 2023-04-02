@@ -24,6 +24,7 @@ class PieChart{
   }
   
   void draw(int xPos, int yPos){
+    stroke(0);
     fill(#3BE8E6);
     rect(xPos,yPos,20,20);
     fill(250);

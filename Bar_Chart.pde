@@ -26,9 +26,8 @@ class chartBar{
    for (int i = 0; i < labels.size(); i++){
      airports[i] = labels.get(i);
    }
-   
-   barChart.setBarLabels(airports);
    barChart.setData(data);
+   barChart.setBarLabels(airports);
  }
  
  void draw(){

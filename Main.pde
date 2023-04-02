@@ -49,7 +49,7 @@ void setup() {
   searchResults = new ArrayList<String>();
   button1 = new Button(45, 30, 180, 40,
     "To Dashboard", color(255), myFont, 1);
-  button2 = new Button(45, 750, 180, 40,
+  button2 = new Button(45, 700, 180, 40,
     "To Map", color(255), myFont, 2);
   clearButton = new Button(1250, 340, 180, 40,
     "Clear", color(255), myFont, 8);
@@ -164,12 +164,8 @@ void draw()
       textFont(myFont, 24);
       text("Dashboard", 25, 30);
       button2.draw();
-      getData(mainMap.flightCompareTable);
-      statusPie.changeData(status);
       statusPie.draw(60, 450);
-      arrivalsAirports.setData(arrivals, mainMap.flightCompareTable);
       arrivalsAirports.draw();
-      setLineGraphData(week,  mainMap.flightCompareTable);
       lateFlightChart.draw(425, 70, 500, 400);
     }
   }
@@ -201,6 +197,9 @@ void mouseMoved() {
     int event = button1.getEvent(mouseX, mouseY);
     if (event == 1) button1.hovered = true;
     else button1.hovered = false;
+    event = clearButton.getEvent(mouseX, mouseY);
+    if (event == 8) clearButton.hovered = true;
+    else clearButton.hovered = false;
   } else if (doneLoading && selectedScreen == 1) {
     int event = button2.getEvent(mouseX, mouseY);
     if (event == 2) button2.hovered = true;
@@ -215,6 +214,10 @@ void mousePressed() {
     event = button1.getEvent(mouseX, mouseY);
     if (event == 1) {
       selectedScreen = 1;
+      getData(mainMap.flightCompareTable);
+      arrivalsAirports.setData(arrivals, mainMap.flightCompareTable);
+      statusPie.changeData(status);
+      setLineGraphData(week,  mainMap.flightCompareTable);
     }
   } else if (doneLoading && selectedScreen == 1) {
     event = button2.getEvent(mouseX, mouseY);
@@ -311,7 +314,7 @@ void setLineGraphData(int week, ArrayList<String> airports) {
 }
 
 void getData(ArrayList<String> airports){
-    arrivals = new float[mainMap.flightCompareTable.size()];
+    arrivals = new float[airports.size()];
     for (int i =0; i < 3; i++){
       status[i] = 0;
     }

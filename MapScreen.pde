@@ -86,10 +86,12 @@ class MapScreen
         aPin.mousePress();
         switch(event) {
         case 1:
-          flightCompareTable.add("Dallas/Fort Worth, TX");
+          if (flightCompareTable.size() < 6)
+            flightCompareTable.add("Dallas/Fort Worth, TX");
           break;
         case 2:
-          flightCompareTable.add("Atlanta, GA");
+          if (flightCompareTable.size() < 6)
+            flightCompareTable.add("Atlanta, GA");
           break;
         default:
           println("no");

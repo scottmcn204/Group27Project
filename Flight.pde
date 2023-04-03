@@ -55,5 +55,31 @@ class Flight {
     }
   }
   
+ double CO2emission(){
+   double CO2;
+   if (!(this.diverted || this.cancelled)){
+     int minDep = (actualDepartureTime % 100);
+     int hoursDep = (actualDepartureTime / 100);
+     int minArr = (actualArrivalTime % 100);
+     int hoursArr = (actualArrivalTime / 100);
+     int hours;
+     int minutes = minDep + minArr;
+     if (hoursDep > hoursArr){
+       hours = hoursArr + (24 - hoursDep);
+     }
+     else{
+       hours = hoursArr - hoursDep; 
+     }
+     
+     int seconds = (minutes * 60) + (hours * 3600);
+     CO2 = (3.2 * seconds)*3.1;
+   }
+   else{
+     CO2 = 0;
+   }
+   
+   
+   return CO2;
+ }
   
 }

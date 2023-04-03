@@ -54,7 +54,7 @@ void setup() {
   clearButton = new Button(1250, 550, 180, 40,
     "Clear", color(255), myFont, 8);
   btnCompareAll = new Button(1250, 650, 180, 40,
-    "Compare All", color(255), myFont, 9);
+    "View CO2 emission", color(255), myFont, 9);
 
   thread("slowLoad");
 }

@@ -96,10 +96,20 @@ class MapScreen
         default:
           println("no");
         }
+        mainMap.removeDuplicateAirports();
       } 
       else {
         aPin.mouseNotPressed();
       }
     }
+  }
+  void removeDuplicateAirports(){
+    ArrayList<String> tempList = new ArrayList<String>();
+    for(String element : flightCompareTable){
+      if(!tempList.contains(element)){
+        tempList.add(element);
+      }
+    }
+    flightCompareTable = tempList;
   }
 }

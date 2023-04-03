@@ -55,7 +55,7 @@ class Flight {
     }
   }
   
- float CO2emission(){
+ float getCO2emission(){
    float CO2;
    if (!(this.diverted || this.cancelled)){
      int minDep = (actualDepartureTime % 100);

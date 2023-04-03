@@ -20,7 +20,8 @@ class chartBar{
   barChart.setBarGap(4.2);
  }
  
- void setData(float[] data, ArrayList<String> labels){
+ void setData(float[] data, ArrayList<String> labels, String label){
+    barChart.setCategoryAxisLabel(label);
    String[] airports = new String[labels.size()];
    for (int i = 0; i < labels.size(); i++){
      boolean found = false;

@@ -191,7 +191,7 @@ void draw()
       textFont(myFont, 16);
       button2.draw();
       getEmission(mainMap.flightCompareTable);
-      emissionCO2.setData(emissions, mainMap.flightCompareTable);
+      emissionCO2.setData(emissions, mainMap.flightCompareTable, "CO2 emission per airport (megatonnes)");
       emissionCO2.draw();
       cp5zoom.draw();
     }
@@ -250,7 +250,7 @@ void mousePressed() {
       if (mainMap.flightCompareTable.size() >= 1) {
         selectedScreen = 1;
         getData(mainMap.flightCompareTable);
-        arrivalsAirports.setData(arrivals, mainMap.flightCompareTable);
+        arrivalsAirports.setData(arrivals, mainMap.flightCompareTable,  "Number of arrivals per airport");
         statusPie.changeData(status);
       }
       else println("You cannot access the Dashboard without selecting flights!");
@@ -392,12 +392,12 @@ void getEmission(ArrayList<String> airports){
     for (int j = 0; j < airports.size(); j++) {
       tempFlight = flights.flights.get(i);
       if (tempFlight.originCity.equals(airports.get(j))) {
-        emissions [j] += tempFlight.CO2emission();
+        emissions [j] += tempFlight.getCO2emission();
       }
     }
   }
   for (int i=0; i< airports.size();i++){
-    emissions[i] = emissions[i] / 100000;
+    emissions[i] = emissions[i] / 1000000;
   }
   
 }

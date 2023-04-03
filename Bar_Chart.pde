@@ -23,7 +23,17 @@ class chartBar{
  void setData(float[] data, ArrayList<String> labels){
    String[] airports = new String[labels.size()];
    for (int i = 0; i < labels.size(); i++){
-     airports[i] = labels.get(i);
+     boolean found = false;
+     int count = 0;
+     while (!found){
+       Flight temp = flights.flights.get(count);
+       if (temp.originCity.equals(labels.get(i))){
+         airports[i] = temp.originAirport;
+         found = true;
+       }
+       count += 1;
+     }
+    
    }
    barChart.setData(data);
    barChart.setBarLabels(airports);

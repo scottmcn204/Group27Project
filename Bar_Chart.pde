@@ -4,7 +4,7 @@ import controlP5.*;
 class chartBar{       
   BarChart barChart;
   
-  chartBar(BarChart chart){
+  chartBar(BarChart chart, String label){
   barChart = chart;
   //barChart.setData(data);
   barChart.setMinValue(0);
@@ -16,7 +16,7 @@ class chartBar{
   barChart.setBarColour(color(#C1E5B7));
   barChart.setAxisLabelColour(250);
   barChart.setAxisValuesColour(250);
-  barChart.setCategoryAxisLabel("Number of arrivals per airport");
+  barChart.setCategoryAxisLabel(label);
   barChart.setBarGap(4.2);
  }
  

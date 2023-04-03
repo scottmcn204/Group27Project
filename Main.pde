@@ -1,4 +1,4 @@
-import org.gicentre.utils.stat.*; //<>//
+import org.gicentre.utils.stat.*; //<>// //<>//
 import controlP5.*;
 
 
@@ -17,10 +17,12 @@ float arrivals[];
 float status[];
 float late[];
 String dests[];
-ControlP5 cp5, cp5Map;
+float emissions[];
+ControlP5 cp5, cp5Map, cp5zoom;
 int zoom = 0;
 int date = 0;
 BarChart chart;
+chartBar emissionCO2;
 chartBar arrivalsAirports;
 int week = 0;
 BarChart barChart;
@@ -33,7 +35,7 @@ ArrayList<String> searchResults;
 int p;
 ListBox l;
 int selectedScreen = 0;
-Button button1, button2, btnCompareAll, clearButton;
+Button button1, button2,  btnCO2, clearButton;
 void settings()
 {
   size(SCREENX, SCREENY);
@@ -43,8 +45,10 @@ void setup() {
   background(178, 210, 221);
   myFont = createFont("Arial", 16);
   cp5 = new ControlP5(this);
+  cp5zoom = new ControlP5(this);
   cp5Map = new ControlP5(this);
   cp5.setAutoDraw(false);
+  cp5zoom.setAutoDraw(false);
   cp5Map.setAutoDraw(false);
   searchResults = new ArrayList<String>();
   button1 = new Button(1250, 600, 180, 40,
@@ -53,7 +57,7 @@ void setup() {
     "To Map", color(255), myFont, 2);
   clearButton = new Button(1250, 550, 180, 40,
     "Clear", color(255), myFont, 8);
-  btnCompareAll = new Button(1250, 650, 180, 40,
+  btnCO2 = new Button(1250, 650, 180, 40,
     "View CO2 emission", color(255), myFont, 9);
 
   thread("slowLoad");
@@ -91,9 +95,11 @@ void slowLoad() {
   mainMap.setup();
 
   chart = new BarChart(this);
-  arrivalsAirports = new chartBar(chart);
+  arrivalsAirports = new chartBar(chart, "Number of arrivals per airport");
+  emissionCO2 = new chartBar(chart, "CO2 emission per airport (Mkg)");
+  
 
-  cp5.addSlider("zoom")
+  cp5zoom.addSlider("zoom")
     .setPosition(1025, 520)
     .setRange(0, 100)
     .setSize(150, 40)
@@ -148,7 +154,7 @@ void draw()
       cp5Map.draw();
       button1.draw();
       clearButton.draw();
-      btnCompareAll.draw();
+      btnCO2.draw();
       text("Selected cities:", 1250, 367);
       text("Search:", 1250, 93);
       stroke(255);
@@ -166,10 +172,11 @@ void draw()
           text(mainMap.flightCompareTable.get(i), 1250, 400 + (i * 20));
         }
       }
-    } else {
+    } else if (selectedScreen == 1){
       background(50);
       textFont(myFont, 16);
       cp5.draw();
+      cp5zoom.draw();
       fill(250);
       textFont(myFont, 24);
       text("Dashboard", 25, 30);
@@ -178,6 +185,15 @@ void draw()
       arrivalsAirports.draw();
       lateFlightChart.draw(425, 70, 500, 400);
       setLineGraphData(week,  mainMap.flightCompareTable);
+    }
+    else {
+      background(50);
+      textFont(myFont, 16);
+      button2.draw();
+      getEmission(mainMap.flightCompareTable);
+      emissionCO2.setData(emissions, mainMap.flightCompareTable);
+      emissionCO2.draw();
+      cp5zoom.draw();
     }
   }
 }
@@ -215,9 +231,9 @@ void mouseMoved() {
     event = clearButton.getEvent(mouseX, mouseY);
     if (event == 8) clearButton.hovered = true;
     else clearButton.hovered = false;
-    event = btnCompareAll.getEvent(mouseX, mouseY);
-    if (event == 9) btnCompareAll.hovered = true;
-    else btnCompareAll.hovered = false;
+    event =  btnCO2.getEvent(mouseX, mouseY);
+    if (event == 9)  btnCO2.hovered = true;
+    else  btnCO2.hovered = false;
   } else if (doneLoading && selectedScreen == 1) {
     int event = button2.getEvent(mouseX, mouseY);
     if (event == 2) button2.hovered = true;
@@ -238,14 +254,20 @@ void mousePressed() {
         statusPie.changeData(status);
       }
       else println("You cannot access the Dashboard without selecting flights!");
-    }
-  } else if (doneLoading && selectedScreen == 1) {
+    }else{
+       event =  btnCO2.getEvent(mouseX, mouseY);
+      if (event == 9) {
+        selectedScreen = 2;
+      }
+     }
+  } else if ((doneLoading && selectedScreen == 1) || (doneLoading && selectedScreen == 2)) {
     event = button2.getEvent(mouseX, mouseY);
     if (event == 2){
       selectedScreen = 0;
       mainMap.clearCompare();
     }
-  }
+    }
+
   if (doneLoading && selectedScreen == 0) {
     event = clearButton.getEvent(mouseX, mouseY);
     if (event == 8) mainMap.clearCompare();
@@ -361,4 +383,21 @@ void getData(ArrayList<String> airports){
     for (int i = 0; i< airports.size(); i++) {
     totalArrivals += arrivals[i];
   }
+}
+void getEmission(ArrayList<String> airports){
+    emissions = new float[airports.size()];
+    for (int i =0; i< flights.flights.size(); i++) {
+    tempFlight = flights.flights.get(i);
+
+    for (int j = 0; j < airports.size(); j++) {
+      tempFlight = flights.flights.get(i);
+      if (tempFlight.originCity.equals(airports.get(j))) {
+        emissions [j] += tempFlight.CO2emission();
+      }
+    }
+  }
+  for (int i=0; i< airports.size();i++){
+    emissions[i] = emissions[i] / 100000;
+  }
+  
 }

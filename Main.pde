@@ -187,8 +187,10 @@ void controlEvent(ControlEvent theEvent) {
       search();
     }
     if (keyPressed == false) {
-      if (mainMap.flightCompareTable.size() < 6)
+      if (mainMap.flightCompareTable.size() < 6){
         mainMap.flightCompareTable.add(searchResults.get((int)l.getValue()));
+        mainMap.removeDuplicateAirports();
+      }
       else println("Cannot add more than 6 cities!");
     }
   }
@@ -248,6 +250,7 @@ void mousePressed() {
     event = clearButton.getEvent(mouseX, mouseY);
     if (event == 8) mainMap.clearCompare();
   }
+  
 }
 void keyPressed() {
   if (key == 13 && selectedScreen == 0) {

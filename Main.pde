@@ -33,7 +33,7 @@ ArrayList<String> searchResults;
 int p;
 ListBox l;
 int selectedScreen = 0;
-Button button1, button2, clearButton;
+Button button1, button2, btnCompareAll, clearButton;
 void settings()
 {
   size(SCREENX, SCREENY);
@@ -47,13 +47,14 @@ void setup() {
   cp5.setAutoDraw(false);
   cp5Map.setAutoDraw(false);
   searchResults = new ArrayList<String>();
-  button1 = new Button(45, 30, 180, 40,
-    "To Dashboard", color(255), myFont, 1);
+  button1 = new Button(1250, 600, 180, 40,
+    "Compare Selected", color(255), myFont, 1);
   button2 = new Button(45, 700, 180, 40,
     "To Map", color(255), myFont, 2);
-  clearButton = new Button(1250, 340, 180, 40,
+  clearButton = new Button(1250, 550, 180, 40,
     "Clear", color(255), myFont, 8);
-
+  btnCompareAll = new Button(1250, 650, 180, 40,
+    "Compare All", color(255), myFont, 9);
 
   thread("slowLoad");
 }
@@ -80,8 +81,10 @@ void slowLoad() {
     .setSize(300, 200)
     .setItemHeight(25)
     .setColorBackground(color(255, 128))
-    .setColorActive(color(0))
-    .setColorForeground(color(255, 100, 0));
+    .setColorActive(color(245))
+    .setColorForeground(color(255, 100, 0))
+    .setColorValueLabel(color(0))
+    .setColorLabel(color(0));
   p = 0;
 
   searchResults.addAll(flights.airports);
@@ -145,6 +148,13 @@ void draw()
       cp5Map.draw();
       button1.draw();
       clearButton.draw();
+      btnCompareAll.draw();
+      text("Selected cities:", 1250, 367);
+      text("Search:", 1250, 93);
+      stroke(255);
+      fill(255);
+      rect(1250,375,270,150);
+      fill(0);
       if (searchResults != null) {
         for (int i = 0; (i < searchResults.size()); i++) {
           l.addItem(searchResults.get(i), p++);
@@ -177,7 +187,9 @@ void controlEvent(ControlEvent theEvent) {
       search();
     }
     if (keyPressed == false) {
-      mainMap.flightCompareTable.add(searchResults.get((int)l.getValue()));
+      if (mainMap.flightCompareTable.size() < 6)
+        mainMap.flightCompareTable.add(searchResults.get((int)l.getValue()));
+      else println("Cannot add more than 6 cities!");
     }
   }
 }
@@ -201,6 +213,9 @@ void mouseMoved() {
     event = clearButton.getEvent(mouseX, mouseY);
     if (event == 8) clearButton.hovered = true;
     else clearButton.hovered = false;
+    event = btnCompareAll.getEvent(mouseX, mouseY);
+    if (event == 9) btnCompareAll.hovered = true;
+    else btnCompareAll.hovered = false;
   } else if (doneLoading && selectedScreen == 1) {
     int event = button2.getEvent(mouseX, mouseY);
     if (event == 2) button2.hovered = true;
@@ -214,11 +229,13 @@ void mousePressed() {
     mainMap.getMousePress();
     event = button1.getEvent(mouseX, mouseY);
     if (event == 1) {
-      selectedScreen = 1;
-      getData(mainMap.flightCompareTable);
-      arrivalsAirports.setData(arrivals, mainMap.flightCompareTable);
-      statusPie.changeData(status);
-      
+      if (mainMap.flightCompareTable.size() >= 1) {
+        selectedScreen = 1;
+        getData(mainMap.flightCompareTable);
+        arrivalsAirports.setData(arrivals, mainMap.flightCompareTable);
+        statusPie.changeData(status);
+      }
+      else println("You cannot access the Dashboard without selecting flights!");
     }
   } else if (doneLoading && selectedScreen == 1) {
     event = button2.getEvent(mouseX, mouseY);
@@ -247,7 +264,7 @@ void setLineGraphData(int week, ArrayList<String> airports) {
            for (int k = 0; k < airports.size(); k++) {
              Flight temp =flights.flights.get(j);
             if (temp.originCity.equals(airports.get(k)))
-       ``    for (int i = 0; i < 10; i++) {
+             for (int i = 0; i < 10; i++) {
                if (temp.date == i + 1 && temp.isLate()){
                
                  totalDelayed[i]++;

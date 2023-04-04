@@ -16,7 +16,7 @@ class Button {
   void draw() {
     if (hovered) stroke(255); else stroke(0);
     fill(widgetColor);
-    rect(x,y,width,height);
+    rect(x,y,width,height, 8, 8, 8, 8);
     fill(labelColor);
     text(label, x+10, y+height-10);
   }

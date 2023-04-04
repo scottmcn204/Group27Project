@@ -209,7 +209,7 @@ void draw()
       arrivalsAirports.draw(900, 70, 300, zoom);
       lateFlightChart.draw(425, 70, 500, 400);
       setLineGraphData(week, mainMap.flightCompareTable);
-      rect(46, 585, 270, 150);
+      rect(46, 585, 270, 150, 8, 8, 8, 8);
       fill(0);
       if (mainMap.flightCompareTable != null ) {
         for (int i = 0; (i < mainMap.flightCompareTable.size()); i++) {

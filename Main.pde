@@ -53,8 +53,8 @@ void setup() {
   searchResults = new ArrayList<String>();
   button1 = new Button(1250, 600, 180, 40,
     "Compare Selected", color(255), myFont, 1);
-  button2 = new Button(45, 700, 180, 40,
-    "To Map", color(255), myFont, 2);
+  button2 = new Button(1300, 700, 180, 40,
+    "Back To Map", color(255), myFont, 2);
   clearButton = new Button(1250, 550, 180, 40,
     "Clear", color(255), myFont, 8);
   btnCO2 = new Button(1250, 650, 180, 40,
@@ -185,6 +185,15 @@ void draw()
       arrivalsAirports.draw(900, 70, 300);
       lateFlightChart.draw(425, 70, 500, 400);
       setLineGraphData(week,  mainMap.flightCompareTable);
+      rect(46,585,270,150);
+      fill(0);
+      if (mainMap.flightCompareTable != null ) {
+        for (int i = 0; (i < mainMap.flightCompareTable.size()); i++) {
+          text(mainMap.flightCompareTable.get(i), 50, 610 + (i * 20));
+        }
+      }
+      fill(255);
+      text("Selected cities:", 46, 575);
     }
     else {
       background(50);

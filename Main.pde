@@ -1,5 +1,6 @@
 import org.gicentre.utils.stat.*; //<>// //<>// //<>//
 import controlP5.*;
+import gifAnimation.*;
 
 
 //7/8 downscale from 1800
@@ -37,12 +38,15 @@ int p;
 ListBox l;
 int selectedScreen = 0;
 Button button1, button2,  btnCO2, clearButton;
+Gif planeAnimation;
 void settings()
 {
   size(SCREENX, SCREENY);
 }
 void setup() {
   doneLoading = false;
+  planeAnimation = new Gif(this, "planeFast.gif");
+  planeAnimation.play();
   background(178, 210, 221);
   myFont = createFont("Arial", 16);
   cp5 = new ControlP5(this);
@@ -158,7 +162,9 @@ void draw()
     surface.setTitle("Loading...");
     textFont(myFont, 50);
     fill(250);
-    text("Loading...", SCREENX/2 - 90, SCREENY/2 - 100);
+    text("Loading your Flights...", SCREENX/2 - 200, SCREENY/2 - 100);
+    image(planeAnimation, 680, 300);
+    
   } else {
     if (selectedScreen == 0) {
       background(178, 210, 221);

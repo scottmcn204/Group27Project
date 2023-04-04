@@ -18,9 +18,10 @@ float status[];
 float late[];
 String dests[];
 float emissions[];
-ControlP5 cp5, cp5Map, cp5zoom;
+ControlP5 cp5, cp5Map, cp5zoom, cp5focus;
 int zoom = 0;
 int date = 0;
+int focus = 0;
 BarChart chart;
 chartBar emissionCO2;
 chartBar arrivalsAirports;
@@ -46,9 +47,11 @@ void setup() {
   myFont = createFont("Arial", 16);
   cp5 = new ControlP5(this);
   cp5zoom = new ControlP5(this);
+  cp5focus = new ControlP5(this);
   cp5Map = new ControlP5(this);
   cp5.setAutoDraw(false);
   cp5zoom.setAutoDraw(false);
+   cp5focus.setAutoDraw(false);
   cp5Map.setAutoDraw(false);
   searchResults = new ArrayList<String>();
   button1 = new Button(1250, 600, 180, 40,
@@ -101,6 +104,15 @@ void slowLoad() {
 
   cp5zoom.addSlider("zoom")
     .setPosition(1025, 520)
+    .setRange(0, 100)
+    .setSize(150, 40)
+    .setColorForeground(color(#AADEDC))
+    .setColorActive(color(#71A2A1))
+    .setColorBackground(color(#425A5A))
+    .setColorValue(color(0));
+    
+  cp5focus.addSlider("focus")
+    .setPosition(175, 520)
     .setRange(0, 100)
     .setSize(150, 40)
     .setColorForeground(color(#AADEDC))
@@ -182,7 +194,7 @@ void draw()
       text("Dashboard", 25, 30);
       button2.draw();
       statusPie.draw(60, 450);
-      arrivalsAirports.draw(900, 70, 300);
+      arrivalsAirports.draw(900, 70, 300, zoom);
       lateFlightChart.draw(425, 70, 500, 400);
       setLineGraphData(week,  mainMap.flightCompareTable);
       rect(46,585,270,150);
@@ -201,8 +213,8 @@ void draw()
       button2.draw();
       getEmission(mainMap.flightCompareTable);
       emissionCO2.setData(emissions, mainMap.flightCompareTable, "CO2 emission per airport (megatonnes)");
-      emissionCO2.draw(100, 70, 100);
-      cp5zoom.draw();
+      emissionCO2.draw(50, 70, 100, focus);
+      cp5focus.draw();
     }
   }
 }

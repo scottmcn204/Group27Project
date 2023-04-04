@@ -17,7 +17,7 @@ class chartBar{
   barChart.setAxisLabelColour(250);
   barChart.setAxisValuesColour(250);
   barChart.setCategoryAxisLabel(label);
-  barChart.setBarGap(4.2);
+  barChart.setBarGap(6);
  }
  
  void setData(float[] data, ArrayList<String> labels, String label){
@@ -40,6 +40,12 @@ class chartBar{
    barChart.setBarLabels(airports);
  }
  
+ void transposeGraph(){
+   barChart.transposeAxes(true);
+ }
+  void NotTransposedGraph(){
+   barChart.transposeAxes(false);
+ }
  
  void draw(int xpos, int ypos, int zoomer, int slider){
    barChart.draw(xpos, ypos, 600, 400);

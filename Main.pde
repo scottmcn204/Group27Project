@@ -14,6 +14,7 @@ int distances[];
 PFont myFont;
 float textXpos = 0;
 float textYpos = 0;
+float trees[];
 float arrivals[];
 float status[];
 float late[];
@@ -24,6 +25,7 @@ int zoom = 0;
 int date = 0;
 int focus = 0;
 BarChart chart;
+chartBar treesNeeded;
 chartBar emissionCO2;
 chartBar arrivalsAirports;
 int week = 0;
@@ -105,8 +107,8 @@ void slowLoad() {
 
   chart = new BarChart(this);
   arrivalsAirports = new chartBar(chart, "Number of arrivals per airport");
-  emissionCO2 = new chartBar(chart, "CO2 emission per airport (Mkg)");
-
+  emissionCO2 = new chartBar(chart, "estimated CO2 emission per airport (Mkg)");
+  treesNeeded = new chartBar(chart, "trees to offset carbon emission from airport");
 
   cp5zoom.addSlider("zoom")
     .setPosition(1025, 520)
@@ -207,7 +209,8 @@ void draw()
       text("Dashboard", 25, 30);
       button2.draw();
       statusPie.draw(60, 450);
-      arrivalsAirports.draw(900, 70, 300, zoom);
+      arrivalsAirports.NotTransposedGraph();
+      arrivalsAirports.draw(950, 70, 300, zoom);
       lateFlightChart.draw(425, 70, 500, 400);
       setLineGraphData(week, mainMap.flightCompareTable);
       rect(46, 585, 270, 150);
@@ -225,8 +228,12 @@ void draw()
       textFont(myFont, 16);
       button2.draw();
       getEmission(mainMap.flightCompareTable);
-      emissionCO2.setData(emissions, mainMap.flightCompareTable, "CO2 emission per airport (megatonnes)");
+      emissionCO2.setData(emissions, mainMap.flightCompareTable, "estimated CO2 emission per airport (megatonnes)");
+      emissionCO2.transposeGraph();
       emissionCO2.draw(50, 70, 50, focus);
+      treesNeeded.setData(trees, mainMap.flightCompareTable, "trees to offset carbon emission from airport (100 thousands)");
+      treesNeeded.NotTransposedGraph();
+      treesNeeded.draw(750, 70, 100, focus);
       cp5focus.draw();
     }
   }
@@ -419,6 +426,7 @@ void getData(ArrayList<String> airports) {
 }
 void getEmission(ArrayList<String> airports) {
   emissions = new float[airports.size()];
+  trees = new float[airports.size()];
   for (int i =0; i< flights.flights.size(); i++) {
     tempFlight = flights.flights.get(i);
 
@@ -426,10 +434,12 @@ void getEmission(ArrayList<String> airports) {
       tempFlight = flights.flights.get(i);
       if (tempFlight.originCity.equals(airports.get(j))) {
         emissions [j] += tempFlight.getCO2emission();
+        trees[j] += tempFlight.getTreesNeeded();
       }
     }
   }
   for (int i=0; i< airports.size(); i++) {
     emissions[i] = emissions[i] / 1000000;
+    trees[i] = trees[i] / 100000; 
   }
 }

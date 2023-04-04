@@ -73,13 +73,18 @@ class Flight {
      
      int seconds = (minutes * 60) + (hours * 3600);
      CO2 = (3.2 * seconds)*3.1;
+     
+     
    }
    else{
      CO2 = 0;
    }
-   
-   
    return CO2;
+ }
+ float getTreesNeeded(){
+   float CO2 = getCO2emission();
+   float trees = CO2 / 26.6; // trees needed
+   return trees;
  }
   
 }

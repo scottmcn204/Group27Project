@@ -1,4 +1,4 @@
-import org.gicentre.utils.stat.*; //<>// //<>//
+import org.gicentre.utils.stat.*; //<>// //<>// //<>//
 import controlP5.*;
 
 
@@ -62,7 +62,7 @@ void setup() {
     "Clear", color(255), myFont, 8);
   btnCO2 = new Button(1250, 650, 180, 40,
     "View CO2 emission", color(255), myFont, 9);
-
+  
   thread("slowLoad");
 }
 void slowLoad() {
@@ -155,12 +155,14 @@ void draw()
 {
   if (!doneLoading) {
     background(178, 210, 221);
+    surface.setTitle("Loading...");
     textFont(myFont, 50);
     fill(250);
     text("Loading...", SCREENX/2 - 90, SCREENY/2 - 100);
   } else {
     if (selectedScreen == 0) {
       background(178, 210, 221);
+      surface.setTitle("Map");
       textFont(myFont, 16);
       mainMap.draw();
       cp5Map.draw();
@@ -187,6 +189,7 @@ void draw()
     } else if (selectedScreen == 1){
       background(50);
       textFont(myFont, 16);
+      surface.setTitle("Dashboard");
       cp5.draw();
       cp5zoom.draw();
       fill(250);
@@ -209,11 +212,12 @@ void draw()
     }
     else {
       background(50);
+      surface.setTitle("CO2 Emissions");
       textFont(myFont, 16);
       button2.draw();
       getEmission(mainMap.flightCompareTable);
       emissionCO2.setData(emissions, mainMap.flightCompareTable, "CO2 emission per airport (megatonnes)");
-      emissionCO2.draw(50, 70, 100, focus);
+      emissionCO2.draw(50, 70, 50, focus);
       cp5focus.draw();
     }
   }

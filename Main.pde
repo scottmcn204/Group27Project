@@ -278,7 +278,10 @@ void mousePressed() {
     }else{
        event =  btnCO2.getEvent(mouseX, mouseY);
       if (event == 9) {
-        selectedScreen = 2;
+        if (mainMap.flightCompareTable.size() >= 1) {
+          selectedScreen = 2;
+        }
+        else println("You cannot access the CO2 screen without selecting flights!");
       }
      }
   } else if ((doneLoading && selectedScreen == 1) || (doneLoading && selectedScreen == 2)) {

@@ -40,6 +40,7 @@ class chartBar{
    barChart.setBarLabels(airports);
  }
  
+ 
  void draw(int xpos, int ypos, int zoomer, int slider){
    barChart.draw(xpos, ypos, 600, 400);
    barChart.setMaxValue(1000 + slider * zoomer);

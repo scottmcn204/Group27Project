@@ -110,6 +110,7 @@ class MapScreen
       } 
       else {
         aPin.mouseNotPressed();
+        println(mouseX, mouseY);
       }
     }
   }

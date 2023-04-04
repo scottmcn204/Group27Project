@@ -39,7 +39,7 @@ ListBox l;
 int selectedScreen = 0;
 Button button1, button2, btnCO2, clearButton;
 Gif planeAnimation;
-Gif planeAnimation2;
+PImage logo;
 void settings()
 {
   size(SCREENX, SCREENY);
@@ -47,7 +47,7 @@ void settings()
 void setup() {
   doneLoading = false;
   planeAnimation = new Gif(this, "planeFast.gif");
-  planeAnimation2 = new Gif(this, "planeSmall.gif");
+  logo = loadImage("logo.png");
   planeAnimation.play();
   background(178, 210, 221);
   myFont = createFont("Arial", 16);
@@ -154,7 +154,6 @@ void slowLoad() {
 
   mainMap.clearCompare();
 
-  planeAnimation2.play();
 
   doneLoading = true;
 }
@@ -182,9 +181,9 @@ void draw()
       text("Search:", 1250, 93);
       stroke(255);
       fill(255);
-      rect(1250, 375, 270, 150);
+      rect(1250, 375, 270, 150, 8, 8, 8, 8);
       fill(0);
-      image(planeAnimation2, 10, 10, 170, 150);
+      image(logo, 10, 10, 360, 150);
       if (searchResults != null) {
         for (int i = 0; (i < searchResults.size()); i++) {
           l.addItem(searchResults.get(i), p++);

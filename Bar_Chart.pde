@@ -40,8 +40,8 @@ class chartBar{
    barChart.setBarLabels(airports);
  }
  
- void draw(){
-   barChart.draw(900, 70, 600, 400);
-   barChart.setMaxValue(1000 + zoom * 300);
+ void draw(int xpos, int ypos, int zoomer){
+   barChart.draw(xpos, ypos, 600, 400);
+   barChart.setMaxValue(1000 + zoom * zoomer);
  }
 }

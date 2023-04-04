@@ -182,7 +182,7 @@ void draw()
       text("Dashboard", 25, 30);
       button2.draw();
       statusPie.draw(60, 450);
-      arrivalsAirports.draw();
+      arrivalsAirports.draw(900, 70, 300);
       lateFlightChart.draw(425, 70, 500, 400);
       setLineGraphData(week,  mainMap.flightCompareTable);
     }
@@ -192,7 +192,7 @@ void draw()
       button2.draw();
       getEmission(mainMap.flightCompareTable);
       emissionCO2.setData(emissions, mainMap.flightCompareTable, "CO2 emission per airport (megatonnes)");
-      emissionCO2.draw();
+      emissionCO2.draw(100, 70, 100);
       cp5zoom.draw();
     }
   }

@@ -47,6 +47,16 @@ class MapScreen
   void draw()
   {
     image (backgroundMap, 0, SCREENY - BAKCGROUND_HEIGHT, BACKGROUND_WIDTH, BAKCGROUND_HEIGHT );
+    noFill();
+    strokeWeight(16);
+    stroke(219, 191, 80);
+    rect(0, SCREENY - BAKCGROUND_HEIGHT, BACKGROUND_WIDTH, BAKCGROUND_HEIGHT);
+    
+    /*strokeWeight(4);
+    stroke(0);
+    rect( 4, SCREENY - BAKCGROUND_HEIGHT, BACKGROUND_WIDTH -9 , BAKCGROUND_HEIGHT - 8 );
+    */
+    strokeWeight(1);
     for (int i = 0; i < myPins.size(); i++) {
       Pin aPin = (Pin) myPins.get(i);
       aPin.draw();

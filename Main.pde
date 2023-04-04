@@ -1,4 +1,4 @@
-import org.gicentre.utils.stat.*; //<>// //<>// //<>//
+import org.gicentre.utils.stat.*; //<>// //<>// //<>// //<>//
 import controlP5.*;
 import gifAnimation.*;
 
@@ -37,8 +37,9 @@ ArrayList<String> searchResults;
 int p;
 ListBox l;
 int selectedScreen = 0;
-Button button1, button2,  btnCO2, clearButton;
+Button button1, button2, btnCO2, clearButton;
 Gif planeAnimation;
+Gif planeAnimation2;
 void settings()
 {
   size(SCREENX, SCREENY);
@@ -46,6 +47,7 @@ void settings()
 void setup() {
   doneLoading = false;
   planeAnimation = new Gif(this, "planeFast.gif");
+  planeAnimation2 = new Gif(this, "planeSmall.gif");
   planeAnimation.play();
   background(178, 210, 221);
   myFont = createFont("Arial", 16);
@@ -55,7 +57,7 @@ void setup() {
   cp5Map = new ControlP5(this);
   cp5.setAutoDraw(false);
   cp5zoom.setAutoDraw(false);
-   cp5focus.setAutoDraw(false);
+  cp5focus.setAutoDraw(false);
   cp5Map.setAutoDraw(false);
   searchResults = new ArrayList<String>();
   button1 = new Button(1250, 600, 180, 40,
@@ -66,7 +68,7 @@ void setup() {
     "Clear", color(255), myFont, 8);
   btnCO2 = new Button(1250, 650, 180, 40,
     "View CO2 emission", color(255), myFont, 9);
-  
+
   thread("slowLoad");
 }
 void slowLoad() {
@@ -104,7 +106,7 @@ void slowLoad() {
   chart = new BarChart(this);
   arrivalsAirports = new chartBar(chart, "Number of arrivals per airport");
   emissionCO2 = new chartBar(chart, "CO2 emission per airport (Mkg)");
-  
+
 
   cp5zoom.addSlider("zoom")
     .setPosition(1025, 520)
@@ -114,7 +116,7 @@ void slowLoad() {
     .setColorActive(color(#71A2A1))
     .setColorBackground(color(#425A5A))
     .setColorValue(color(0));
-    
+
   cp5focus.addSlider("focus")
     .setPosition(175, 520)
     .setRange(0, 100)
@@ -152,6 +154,8 @@ void slowLoad() {
 
   mainMap.clearCompare();
 
+  planeAnimation2.play();
+
   doneLoading = true;
 }
 
@@ -164,7 +168,6 @@ void draw()
     fill(250);
     text("Loading your Flights...", SCREENX/2 - 200, SCREENY/2 - 100);
     image(planeAnimation, 680, 300);
-    
   } else {
     if (selectedScreen == 0) {
       background(178, 210, 221);
@@ -179,8 +182,9 @@ void draw()
       text("Search:", 1250, 93);
       stroke(255);
       fill(255);
-      rect(1250,375,270,150);
+      rect(1250, 375, 270, 150);
       fill(0);
+      image(planeAnimation2, 10, 10, 170, 150);
       if (searchResults != null) {
         for (int i = 0; (i < searchResults.size()); i++) {
           l.addItem(searchResults.get(i), p++);
@@ -192,7 +196,7 @@ void draw()
           text(mainMap.flightCompareTable.get(i), 1250, 400 + (i * 20));
         }
       }
-    } else if (selectedScreen == 1){
+    } else if (selectedScreen == 1) {
       background(50);
       textFont(myFont, 16);
       surface.setTitle("Dashboard");
@@ -205,8 +209,8 @@ void draw()
       statusPie.draw(60, 450);
       arrivalsAirports.draw(900, 70, 300, zoom);
       lateFlightChart.draw(425, 70, 500, 400);
-      setLineGraphData(week,  mainMap.flightCompareTable);
-      rect(46,585,270,150);
+      setLineGraphData(week, mainMap.flightCompareTable);
+      rect(46, 585, 270, 150);
       fill(0);
       if (mainMap.flightCompareTable != null ) {
         for (int i = 0; (i < mainMap.flightCompareTable.size()); i++) {
@@ -215,8 +219,7 @@ void draw()
       }
       fill(255);
       text("Selected cities:", 46, 575);
-    }
-    else {
+    } else {
       background(50);
       surface.setTitle("CO2 Emissions");
       textFont(myFont, 16);
@@ -234,11 +237,10 @@ void controlEvent(ControlEvent theEvent) {
       search();
     }
     if (keyPressed == false) {
-      if (mainMap.flightCompareTable.size() < 6){
+      if (mainMap.flightCompareTable.size() < 6) {
         mainMap.flightCompareTable.add(searchResults.get((int)l.getValue()));
         mainMap.removeDuplicateAirports();
-      }
-      else println("Cannot add more than 6 cities!");
+      } else println("Cannot add more than 6 cities!");
     }
   }
 }
@@ -281,32 +283,29 @@ void mousePressed() {
       if (mainMap.flightCompareTable.size() >= 1) {
         selectedScreen = 1;
         getData(mainMap.flightCompareTable);
-        arrivalsAirports.setData(arrivals, mainMap.flightCompareTable,  "Number of arrivals per airport");
+        arrivalsAirports.setData(arrivals, mainMap.flightCompareTable, "Number of arrivals per airport");
         statusPie.changeData(status);
-      }
-      else println("You cannot access the Dashboard without selecting flights!");
-    }else{
-       event =  btnCO2.getEvent(mouseX, mouseY);
+      } else println("You cannot access the Dashboard without selecting flights!");
+    } else {
+      event =  btnCO2.getEvent(mouseX, mouseY);
       if (event == 9) {
         if (mainMap.flightCompareTable.size() >= 1) {
           selectedScreen = 2;
-        }
-        else println("You cannot access the CO2 screen without selecting flights!");
+        } else println("You cannot access the CO2 screen without selecting flights!");
       }
-     }
+    }
   } else if ((doneLoading && selectedScreen == 1) || (doneLoading && selectedScreen == 2)) {
     event = button2.getEvent(mouseX, mouseY);
-    if (event == 2){
+    if (event == 2) {
       selectedScreen = 0;
       mainMap.clearCompare();
     }
-    }
+  }
 
   if (doneLoading && selectedScreen == 0) {
     event = clearButton.getEvent(mouseX, mouseY);
     if (event == 8) mainMap.clearCompare();
   }
-  
 }
 void keyPressed() {
   if (key == 13 && selectedScreen == 0) {
@@ -314,90 +313,90 @@ void keyPressed() {
   }
 }
 void setLineGraphData(int week, ArrayList<String> airports) {
-   switch (week) {
-     case 1:
-       float days[] = new float[10];
-       for (int i = 1; i <= days.length; i++) days[i - 1] = i;
-       float totalDelayed[] = new float[10];
-       for (int j = 0; j < flights.flights.size(); j++) {
-           for (int k = 0; k < airports.size(); k++) {
-             Flight temp =flights.flights.get(j);
-            if (temp.originCity.equals(airports.get(k)))
-             for (int i = 0; i < 10; i++) {
-               if (temp.date == i + 1 && temp.isLate()){
-               
-                 totalDelayed[i]++;
-               }
-             }
-         }
-       }
-       lateFlightChart.setData(days, totalDelayed);
-       break;
-     case 2:
-       float days2[] = new float[7];
-       for (int i = 1; i <= days2.length; i++) days2[i - 1] = i + 10;
-       float totalDelayed2[] = new float[7];
-       for (int j = 0; j < flights.flights.size(); j++) {
-         for (int k = 0; k < airports.size(); k++) {
-            Flight temp =flights.flights.get(j);
-           if (temp.originCity.equals(airports.get(k))){
-           for (int i = 0; i < 7; i++) {
-             if (flights.flights.get(j).date == i + 11 && flights.flights.get(j).isLate()){
-             totalDelayed2[i]++;
-           }
-           }
-         }
-         }
-       }
-       lateFlightChart.setData(days2, totalDelayed2);
-       break;
-     case 3:
-       float days3[] = new float[7];
-       for (int i = 1; i <= days3.length; i++) days3[i - 1] = i + 17;
-       float totalDelayed3[] = new float[7];
-       for (int j = 0; j < flights.flights.size(); j++) {
-         for (int k = 0; k < airports.size(); k++) {
-             Flight temp =flights.flights.get(j);
-            if (temp.originCity.equals(airports.get(k))){
-         for (int i = 0; i < 7; i++) {
-           if (flights.flights.get(j).date == i + 18 && flights.flights.get(j).isLate()){
-             totalDelayed3[i]++;
-         }
-       }
+  switch (week) {
+  case 1:
+    float days[] = new float[10];
+    for (int i = 1; i <= days.length; i++) days[i - 1] = i;
+    float totalDelayed[] = new float[10];
+    for (int j = 0; j < flights.flights.size(); j++) {
+      for (int k = 0; k < airports.size(); k++) {
+        Flight temp =flights.flights.get(j);
+        if (temp.originCity.equals(airports.get(k)))
+          for (int i = 0; i < 10; i++) {
+            if (temp.date == i + 1 && temp.isLate()) {
+
+              totalDelayed[i]++;
             }
-         }
-       }
-       lateFlightChart.setData(days3, totalDelayed3);
-       break;
-     case 4:
-       float days4[] = new float[7];
-       for (int i = 1; i <= days4.length; i++) days4[i - 1] = i + 24;
-       float totalDelayed4[] = new float[7];
-       for (int j = 0; j < flights.flights.size(); j++) {
-         for (int k = 0; k < airports.size(); k++) {
-             Flight temp =flights.flights.get(j);
-            if (temp.originCity.equals(airports.get(k))){
-         for (int i = 0; i < 7; i++) {
-           if (flights.flights.get(j).date == i + 25 && flights.flights.get(j).isLate()){
-             totalDelayed4[i]++;
-         }
-         }
+          }
+      }
+    }
+    lateFlightChart.setData(days, totalDelayed);
+    break;
+  case 2:
+    float days2[] = new float[7];
+    for (int i = 1; i <= days2.length; i++) days2[i - 1] = i + 10;
+    float totalDelayed2[] = new float[7];
+    for (int j = 0; j < flights.flights.size(); j++) {
+      for (int k = 0; k < airports.size(); k++) {
+        Flight temp =flights.flights.get(j);
+        if (temp.originCity.equals(airports.get(k))) {
+          for (int i = 0; i < 7; i++) {
+            if (flights.flights.get(j).date == i + 11 && flights.flights.get(j).isLate()) {
+              totalDelayed2[i]++;
             }
-         }
-       }
-       lateFlightChart.setData(days4, totalDelayed4);
-       break;
-   }
+          }
+        }
+      }
+    }
+    lateFlightChart.setData(days2, totalDelayed2);
+    break;
+  case 3:
+    float days3[] = new float[7];
+    for (int i = 1; i <= days3.length; i++) days3[i - 1] = i + 17;
+    float totalDelayed3[] = new float[7];
+    for (int j = 0; j < flights.flights.size(); j++) {
+      for (int k = 0; k < airports.size(); k++) {
+        Flight temp =flights.flights.get(j);
+        if (temp.originCity.equals(airports.get(k))) {
+          for (int i = 0; i < 7; i++) {
+            if (flights.flights.get(j).date == i + 18 && flights.flights.get(j).isLate()) {
+              totalDelayed3[i]++;
+            }
+          }
+        }
+      }
+    }
+    lateFlightChart.setData(days3, totalDelayed3);
+    break;
+  case 4:
+    float days4[] = new float[7];
+    for (int i = 1; i <= days4.length; i++) days4[i - 1] = i + 24;
+    float totalDelayed4[] = new float[7];
+    for (int j = 0; j < flights.flights.size(); j++) {
+      for (int k = 0; k < airports.size(); k++) {
+        Flight temp =flights.flights.get(j);
+        if (temp.originCity.equals(airports.get(k))) {
+          for (int i = 0; i < 7; i++) {
+            if (flights.flights.get(j).date == i + 25 && flights.flights.get(j).isLate()) {
+              totalDelayed4[i]++;
+            }
+          }
+        }
+      }
+    }
+    lateFlightChart.setData(days4, totalDelayed4);
+    break;
+  }
 }
 
-void getData(ArrayList<String> airports){
-    arrivals = new float[airports.size()];
-    for (int i =0; i < 3; i++){
-      status[i] = 0;
-    }
-    totalArrivals = 0;
-  
-    for (int i =0; i< flights.flights.size(); i++) {
+void getData(ArrayList<String> airports) {
+  arrivals = new float[airports.size()];
+  for (int i =0; i < 3; i++) {
+    status[i] = 0;
+  }
+  totalArrivals = 0;
+
+  for (int i =0; i< flights.flights.size(); i++) {
     tempFlight = flights.flights.get(i);
 
     for (int j = 0; j < airports.size(); j++) {
@@ -414,13 +413,13 @@ void getData(ArrayList<String> airports){
       }
     }
   }
-    for (int i = 0; i< airports.size(); i++) {
+  for (int i = 0; i< airports.size(); i++) {
     totalArrivals += arrivals[i];
   }
 }
-void getEmission(ArrayList<String> airports){
-    emissions = new float[airports.size()];
-    for (int i =0; i< flights.flights.size(); i++) {
+void getEmission(ArrayList<String> airports) {
+  emissions = new float[airports.size()];
+  for (int i =0; i< flights.flights.size(); i++) {
     tempFlight = flights.flights.get(i);
 
     for (int j = 0; j < airports.size(); j++) {
@@ -430,8 +429,7 @@ void getEmission(ArrayList<String> airports){
       }
     }
   }
-  for (int i=0; i< airports.size();i++){
+  for (int i=0; i< airports.size(); i++) {
     emissions[i] = emissions[i] / 1000000;
   }
-  
 }

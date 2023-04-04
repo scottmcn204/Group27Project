@@ -49,7 +49,7 @@ class MapScreen
     image (backgroundMap, 0, SCREENY - BAKCGROUND_HEIGHT, BACKGROUND_WIDTH, BAKCGROUND_HEIGHT );
     noFill();
     strokeWeight(16);
-    stroke(219, 191, 80);
+    stroke(0, 45, 90);
     rect(0, SCREENY - BAKCGROUND_HEIGHT, BACKGROUND_WIDTH, BAKCGROUND_HEIGHT);
     
     /*strokeWeight(4);

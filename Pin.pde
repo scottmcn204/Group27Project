@@ -22,7 +22,7 @@ class Pin {
 
   void setup() {
     hasBeenPressed = false;
-    lineColor = color(0);
+    lineColor = color(0, 150, 255);
     circleX = lineX;
     circleY = (lineY)-LINE_LENGTH;//places circle ontop of line, creating pin
   }
@@ -33,7 +33,7 @@ class Pin {
     if (hasBeenPressed) {
       fill(fillColor);
     } else {
-      fill(255);
+      fill(255, 100, 0);
     }
     circle(circleX, circleY, CIRCLE_RADIUS);
   }
@@ -43,12 +43,12 @@ class Pin {
   }
 
   void mouseNotOver() {
-    lineColor = color(0);
+    lineColor = color(0, 150, 255);
   }
 
   void mousePress() {
     hasBeenPressed = true;
-    fillColor = color(210, 120, 90 );
+    fillColor = color(0, 45, 90);
     lineColor = color(0);
   }
   void  mouseNotPressed() {

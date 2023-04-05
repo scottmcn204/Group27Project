@@ -63,13 +63,13 @@ void setup() {
   cp5Map.setAutoDraw(false);
   searchResults = new ArrayList<String>();
   button1 = new Button(1250, 600, 180, 40,
-    "Compare Selected", color(255), myFont, 1);
+    "Compare Selected", color(0, 45, 90), myFont, 1);
   button2 = new Button(1300, 700, 180, 40,
     "Back To Map", color(255), myFont, 2);
   clearButton = new Button(1250, 550, 180, 40,
-    "Clear", color(255), myFont, 8);
+    "Clear", color(0, 45, 90), myFont, 8);
   btnCO2 = new Button(1250, 650, 180, 40,
-    "View CO2 emission", color(255), myFont, 9);
+    "View CO2 emission", color(0, 45, 90), myFont, 9);
 
   thread("slowLoad");
 }
@@ -179,13 +179,15 @@ void draw()
       button1.draw();
       clearButton.draw();
       btnCO2.draw();
+      fill(0, 45, 90);
       text("Selected cities:", 1250, 367);
       text("Search:", 1250, 93);
       stroke(255);
-      fill(255);
+      fill(0, 45, 90);
       rect(1250, 375, 270, 150, 8, 8, 8, 8);
       fill(0);
-      image(logo, 10, 10, 360, 150);
+      image(logo, 10, 10, 500, 154);
+      fill(255);
       if (searchResults != null) {
         for (int i = 0; (i < searchResults.size()); i++) {
           l.addItem(searchResults.get(i), p++);
@@ -194,7 +196,7 @@ void draw()
 
       if (mainMap.flightCompareTable != null ) {
         for (int i = 0; (i < mainMap.flightCompareTable.size()); i++) {
-          text(mainMap.flightCompareTable.get(i), 1250, 400 + (i * 20));
+          text(mainMap.flightCompareTable.get(i), 1270, 400 + (i * 20));
         }
       }
     } else if (selectedScreen == 1) {
@@ -439,6 +441,6 @@ void getEmission(ArrayList<String> airports) {
   }
   for (int i=0; i< airports.size(); i++) {
     emissions[i] = emissions[i] / 1000000;
-    trees[i] = trees[i] / 100000; 
+    trees[i] = trees[i] / 100000;
   }
 }

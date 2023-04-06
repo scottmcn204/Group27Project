@@ -1,4 +1,4 @@
-import org.gicentre.utils.stat.*; //<>// //<>// //<>// //<>// //<>// //<>//
+import org.gicentre.utils.stat.*; //<>// //<>// //<>// //<>// //<>// //<>// //<>//
 import controlP5.*;
 import gifAnimation.*;
 import uibooster.*;
@@ -41,8 +41,7 @@ int selectedScreen = 0;
 Button btnToDB, btnToMap, btnCO2, clearButton, btnInstructions;
 Gif planeAnimation;
 PImage logo;
-PImage tree;
-PImage halfTree;
+
 
 void settings()
 {
@@ -51,10 +50,6 @@ void settings()
 void setup() {
   doneLoading = false;
   planeAnimation = new Gif(this, "planeFast.gif");
-  tree = loadImage("pineTree.png");
-  tree.resize(30,0);
-  halfTree = loadImage("halftree.png");
-  halfTree.resize(15,0);
   logo = loadImage("logo.png");
   planeAnimation.play();
   background(178, 210, 221);
@@ -127,9 +122,9 @@ void slowLoad() {
     .setRange(0, 100)
     .setValue(100)
     .setSize(150, 40)
-    .setColorForeground(color(#AADEDC))
-    .setColorActive(color(#71A2A1))
-    .setColorBackground(color(#425A5A))
+    .setColorForeground(color(255, 100, 0))
+    .setColorActive(color(255, 100, 0))
+    .setColorBackground(color(0, 45, 90))
     .setColorValue(color(0));
 
   cp5focus.addSlider("focus")
@@ -137,9 +132,9 @@ void slowLoad() {
     .setRange(0, 100)
     .setValue(100)
     .setSize(150, 40)
-    .setColorForeground(color(#AADEDC))
-    .setColorActive(color(#71A2A1))
-    .setColorBackground(color(#425A5A))
+    .setColorForeground(color(255, 100, 0))
+    .setColorActive(color(255, 100, 0))
+    .setColorBackground(color(0, 45, 90))
     .setColorValue(color(0));
 
 
@@ -148,9 +143,9 @@ void slowLoad() {
     .setPosition(500, 520)
     .setRange(1, 4)
     .setSize(150, 40)
-    .setColorForeground(color(#AADEDC))
-    .setColorActive(color(#71A2A1))
-    .setColorBackground(color(#425A5A))
+    .setColorForeground(color(255, 100, 0))
+    .setColorActive(color(255, 100, 0))
+    .setColorBackground(color(0, 45, 90))
     .setColorValue(color(0));
 
   statusPie = new PieChart(status, 30, 100);
@@ -161,10 +156,10 @@ void slowLoad() {
   lateFlightChart.setMinY(0);
   lateFlightChart.setPointSize(7);
   lateFlightChart.setLineWidth(2.5);
-  lateFlightChart.setAxisLabelColour(250);
-  lateFlightChart.setAxisValuesColour(250);
-  lateFlightChart.setLineColour(color(#FF00A2));
-  lateFlightChart.setPointColour(color(255));
+  lateFlightChart.setAxisLabelColour(color(0, 45, 90));
+  lateFlightChart.setAxisValuesColour(color(0, 45, 90));
+  lateFlightChart.setLineColour(color(0, 150, 255));
+  lateFlightChart.setPointColour(color(255, 100, 0));
   lateFlightChart.setXAxisLabel("Days of Selected Week");
   lateFlightChart.setYAxisLabel("Number of Late Flights");
 
@@ -211,12 +206,13 @@ void draw()
         }
       }
     } else if (selectedScreen == 1) {
-      background(50);
+      background(178, 210, 221);
+      fill(0, 45, 90);
       textFont(myFont, 16);
       surface.setTitle("Dashboard");
       cp5.draw();
       cp5zoom.draw();
-      fill(250);
+      fill(0, 45, 90);
       textFont(myFont, 24);
       text("Dashboard", 25, 30);
       btnToMap.draw();
@@ -225,17 +221,19 @@ void draw()
       arrivalsAirports.draw(950, 70, 300, zoom);
       lateFlightChart.draw(425, 70, 500, 400);
       setLineGraphData(week, mainMap.flightCompareTable);
+      fill(0, 45, 90);
+      stroke(255);
       rect(46, 585, 270, 150, 8, 8, 8, 8);
-      fill(0);
+      fill(255);
       if (mainMap.flightCompareTable != null ) {
         for (int i = 0; (i < mainMap.flightCompareTable.size()); i++) {
           text(mainMap.flightCompareTable.get(i), 50, 610 + (i * 20));
         }
       }
-      fill(255);
+      fill(0, 45, 90);
       text("Selected cities:", 46, 575);
     } else {
-      background(50);
+      background(178, 210, 221);
       surface.setTitle("CO2 Emissions");
       textFont(myFont, 16);
       btnToMap.draw();
@@ -247,30 +245,17 @@ void draw()
       //treesNeeded.NotTransposedGraph();
       //treesNeeded.draw(750, 70, 50, focus);
       cp5focus.draw();
-      fill(255);
+      fill(0, 45, 90);
       textFont(myFont, 18);
       text("Trees needed to offset the carbon emission from airport (millions)", 750, 70);
       stroke(255);
       fill(255);
-      rect(750, 100, 470, (35*trees.length), 8, 8, 8, 8);
+      rect(750, 100, 470, (50*trees.length), 8, 8, 8, 8);
       for (int i =0; i < trees.length; i++){
         fill(0, 45, 90);
-        text( mainMap.flightCompareTable.get(i) + " Airport: " + nf(trees[i],0,2) + " million trees", 765, 130 +(30*i));
-        float treeNumber = trees[i];
-        int j =0;
-        while (treeNumber > 5){
-          image(tree, 750+(30*j), 350+(60*i));
-          j++;
-          treeNumber = treeNumber - 5;
-        }
-        if (int(treeNumber) > 0){
-          image(halfTree, 750+(30*j), 350+(60*i));
-        }
-        fill(255);
-        text(emissionCO2.airports[i], 710,380+(60*i));
+        text( mainMap.flightCompareTable.get(i) + " Airport: " + trees[i] + " million trees", 765, 130 +(30*i));
         
       }
-      
     }
   }
 }

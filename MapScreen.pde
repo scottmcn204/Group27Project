@@ -125,7 +125,7 @@ class MapScreen
     noFill();
     strokeWeight(16);
     stroke(0, 45, 90);
-    rect(0, SCREENY - BAKCGROUND_HEIGHT, BACKGROUND_WIDTH, BAKCGROUND_HEIGHT);
+    rect(0, SCREENY - BAKCGROUND_HEIGHT, BACKGROUND_WIDTH, BAKCGROUND_HEIGHT, 8, 8, 8, 8);
 
     /*strokeWeight(4);
      stroke(0);

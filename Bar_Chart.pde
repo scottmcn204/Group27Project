@@ -13,9 +13,9 @@ class chartBar{
   barChart.showValueAxis(true);
   barChart.showCategoryAxis(true);
   //barChart.setBarLabels(labels);
-  barChart.setBarColour(color(#C1E5B7));
-  barChart.setAxisLabelColour(250);
-  barChart.setAxisValuesColour(250);
+  barChart.setBarColour(color(0, 150, 255));
+  barChart.setAxisLabelColour(color(0, 45, 90));
+  barChart.setAxisValuesColour(color(0, 45, 90));
   barChart.setCategoryAxisLabel(label);
   barChart.setBarGap(6);
  }

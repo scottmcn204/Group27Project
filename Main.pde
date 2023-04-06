@@ -1,4 +1,4 @@
-import org.gicentre.utils.stat.*; //<>// //<>// //<>// //<>// //<>//
+import org.gicentre.utils.stat.*; //<>// //<>// //<>// //<>// //<>// //<>//
 import controlP5.*;
 import gifAnimation.*;
 import uibooster.*;
@@ -122,9 +122,9 @@ void slowLoad() {
     .setRange(0, 100)
     .setValue(100)
     .setSize(150, 40)
-    .setColorForeground(color(#AADEDC))
-    .setColorActive(color(#71A2A1))
-    .setColorBackground(color(#425A5A))
+    .setColorForeground(color(255, 100, 0))
+    .setColorActive(color(255, 100, 0))
+    .setColorBackground(color(0, 45, 90))
     .setColorValue(color(0));
 
   cp5focus.addSlider("focus")
@@ -143,9 +143,9 @@ void slowLoad() {
     .setPosition(500, 520)
     .setRange(1, 4)
     .setSize(150, 40)
-    .setColorForeground(color(#AADEDC))
-    .setColorActive(color(#71A2A1))
-    .setColorBackground(color(#425A5A))
+    .setColorForeground(color(255, 100, 0))
+    .setColorActive(color(255, 100, 0))
+    .setColorBackground(color(0, 45, 90))
     .setColorValue(color(0));
 
   statusPie = new PieChart(status, 30, 100);
@@ -156,10 +156,10 @@ void slowLoad() {
   lateFlightChart.setMinY(0);
   lateFlightChart.setPointSize(7);
   lateFlightChart.setLineWidth(2.5);
-  lateFlightChart.setAxisLabelColour(250);
-  lateFlightChart.setAxisValuesColour(250);
-  lateFlightChart.setLineColour(color(#FF00A2));
-  lateFlightChart.setPointColour(color(255));
+  lateFlightChart.setAxisLabelColour(color(0, 45, 90));
+  lateFlightChart.setAxisValuesColour(color(0, 45, 90));
+  lateFlightChart.setLineColour(color(0, 150, 255));
+  lateFlightChart.setPointColour(color(255, 100, 0));
   lateFlightChart.setXAxisLabel("Days of Selected Week");
   lateFlightChart.setYAxisLabel("Number of Late Flights");
 
@@ -206,12 +206,13 @@ void draw()
         }
       }
     } else if (selectedScreen == 1) {
-      background(50);
+      background(178, 210, 221);
+      fill(0, 45, 90);
       textFont(myFont, 16);
       surface.setTitle("Dashboard");
       cp5.draw();
       cp5zoom.draw();
-      fill(250);
+      fill(0, 45, 90);
       textFont(myFont, 24);
       text("Dashboard", 25, 30);
       btnToMap.draw();
@@ -220,14 +221,16 @@ void draw()
       arrivalsAirports.draw(950, 70, 300, zoom);
       lateFlightChart.draw(425, 70, 500, 400);
       setLineGraphData(week, mainMap.flightCompareTable);
+      fill(0, 45, 90);
+      stroke(255);
       rect(46, 585, 270, 150, 8, 8, 8, 8);
-      fill(0);
+      fill(255);
       if (mainMap.flightCompareTable != null ) {
         for (int i = 0; (i < mainMap.flightCompareTable.size()); i++) {
           text(mainMap.flightCompareTable.get(i), 50, 610 + (i * 20));
         }
       }
-      fill(255);
+      fill(0, 45, 90);
       text("Selected cities:", 46, 575);
     } else {
       background(50);

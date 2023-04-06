@@ -103,6 +103,10 @@ void slowLoad() {
   p = 0;
 
   searchResults.addAll(flights.airports);
+
+  for (int i = 0; (i < searchResults.size()); i++) {
+    l.addItem(searchResults.get(i), p++);
+  }
   mainMap.setup();
 
   chart = new BarChart(this);
@@ -190,11 +194,7 @@ void draw()
       fill(0);
       image(logo, 10, 10, 500, 154);
       fill(255);
-      if (searchResults != null) {
-        for (int i = 0; (i < searchResults.size()); i++) {
-          l.addItem(searchResults.get(i), p++);
-        }
-      }
+
 
       if (mainMap.flightCompareTable != null ) {
         for (int i = 0; (i < mainMap.flightCompareTable.size()); i++) {
@@ -261,6 +261,12 @@ void search() {
   for (int i = 0; (i < flights.airports.size()); i++) {
     if (flights.airports.get(i).toLowerCase().contains(cp5Map.get(Textfield.class, " ").getText().toLowerCase())) {
       searchResults.add(flights.airports.get(i));
+    }
+  }
+  p = 0;
+  if (searchResults != null) {
+    for (int i = 0; (i < searchResults.size()); i++) {
+      l.addItem(searchResults.get(i), p++);
     }
   }
 }

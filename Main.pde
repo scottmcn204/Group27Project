@@ -1,4 +1,4 @@
-import org.gicentre.utils.stat.*; //<>// //<>// //<>// //<>// //<>//
+import org.gicentre.utils.stat.*; //<>// //<>// //<>// //<>// //<>// //<>//
 import controlP5.*;
 import gifAnimation.*;
 import uibooster.*;
@@ -41,7 +41,8 @@ int selectedScreen = 0;
 Button btnToDB, btnToMap, btnCO2, clearButton, btnInstructions;
 Gif planeAnimation;
 PImage logo;
-
+PImage tree;
+PImage halfTree;
 
 void settings()
 {
@@ -50,6 +51,10 @@ void settings()
 void setup() {
   doneLoading = false;
   planeAnimation = new Gif(this, "planeFast.gif");
+  tree = loadImage("pineTree.png");
+  tree.resize(30,0);
+  halfTree = loadImage("halftree.png");
+  halfTree.resize(15,0);
   logo = loadImage("logo.png");
   planeAnimation.play();
   background(178, 210, 221);
@@ -247,12 +252,23 @@ void draw()
       text("Trees needed to offset the carbon emission from airport (millions)", 750, 70);
       stroke(255);
       fill(255);
-      rect(750, 100, 470, (50*trees.length), 8, 8, 8, 8);
+      rect(750, 100, 470, (35*trees.length), 8, 8, 8, 8);
       for (int i =0; i < trees.length; i++){
         fill(0, 45, 90);
         text( mainMap.flightCompareTable.get(i) + " Airport: " + trees[i] + " million trees", 765, 130 +(30*i));
+        float treeNumber = trees[i];
+        int j =0;
+        while (treeNumber > 5){
+          image(tree, 765+(30*j), 350+(60*i));
+          j++;
+          treeNumber = treeNumber - 5;
+        }
+        if (treeNumber > 0){
+          image(halfTree, 765+(30*j), 350+(60*i));
+        }
         
       }
+      
     }
   }
 }

@@ -37,7 +37,7 @@ ArrayList<String> searchResults;
 int p;
 ListBox l;
 int selectedScreen = 0;
-Button btnToDB, btnToMap, btnCO2, clearButton, btnInstructions;
+Button btnToDB, btnToMap, btnCO2, clearButton, btnInstructions, btnCO2ToDB, btnToCO2;
 Gif planeAnimation;
 PImage logo;
 PImage tree;
@@ -77,7 +77,10 @@ void setup() {
     "View CO2 emission", color(0, 45, 90), myFont, 9);
   btnInstructions = new Button(1090, 145, 100, 35,
     "Help", color(0, 45, 90), myFont, 7);
-
+  btnToCO2 = new Button(1100, 700, 180, 40,
+    "To CO2 Page", color(0, 45, 90), myFont, 3);
+  btnCO2ToDB = new Button(1100, 700, 180, 40,
+    "To Dashboard", color(0, 45, 90), myFont, 4);
   thread("slowLoad");
 }
 void slowLoad() {
@@ -211,14 +214,15 @@ void draw()
     } else if (selectedScreen == 1) {
       background(170, 211, 223);
       fill(0, 45, 90);
+      textFont(myFont, 24);
+      text("Dashboard", 25, 30);
       textFont(myFont, 16);
       surface.setTitle("Dashboard");
       cp5.draw();
       cp5zoom.draw();
       fill(0, 45, 90);
-      textFont(myFont, 24);
-      text("Dashboard", 25, 30);
       btnToMap.draw();
+      btnToCO2.draw();
       statusPie.draw(60, 450);
       arrivalsAirports.NotTransposedGraph();
       arrivalsAirports.draw(950, 70, 300, zoom);
@@ -240,6 +244,7 @@ void draw()
       surface.setTitle("CO2 Emissions");
       textFont(myFont, 16);
       btnToMap.draw();
+      btnCO2ToDB.draw();
       getEmission(mainMap.flightCompareTable);
       emissionCO2.setData(emissions, mainMap.flightCompareTable, "estimated CO2 emission per airport (megatonnes)");
       emissionCO2.transposeGraph();
@@ -324,10 +329,16 @@ void mouseMoved() {
     int event = btnToMap.getEvent(mouseX, mouseY);
     if (event == 2) btnToMap.hovered = true;
     else btnToMap.hovered = false;
+    event = btnToCO2.getEvent(mouseX, mouseY);
+    if (event == 3) btnToCO2.hovered = true;
+    else btnToCO2.hovered = false;
   } else if (doneLoading && selectedScreen == 2) {
     int event = btnToMap.getEvent(mouseX, mouseY);
     if (event == 2) btnToMap.hovered = true;
     else btnToMap.hovered = false;
+    event = btnCO2ToDB.getEvent(mouseX, mouseY);
+    if (event == 4) btnCO2ToDB.hovered = true;
+    else btnCO2ToDB.hovered = false;
   }
 }
 
@@ -355,12 +366,22 @@ void mousePressed() {
         " on the map or by searching and/or selecting from the list. Use Compare Selected to see stats or" +
         " view the Environmental Report.");
     }
-  } else if ((doneLoading && selectedScreen == 1) || (doneLoading && selectedScreen == 2)) {
+  } else if (doneLoading && selectedScreen == 1) {
     event = btnToMap.getEvent(mouseX, mouseY);
     if (event == 2) {
       selectedScreen = 0;
       mainMap.clearCompare();
     }
+    event = btnToCO2.getEvent(mouseX, mouseY);
+    if (event == 3) selectedScreen = 2;
+  } else if (doneLoading && selectedScreen == 2) {
+    event = btnToMap.getEvent(mouseX, mouseY);
+    if (event == 2) {
+      selectedScreen = 0;
+      mainMap.clearCompare();
+    }
+    event = btnCO2ToDB.getEvent(mouseX, mouseY);
+    if (event == 4) selectedScreen = 1;
   }
 
   if (doneLoading && selectedScreen == 0) {

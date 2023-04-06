@@ -38,7 +38,7 @@ ArrayList<String> searchResults;
 int p;
 ListBox l;
 int selectedScreen = 0;
-Button button1, button2, btnCO2, clearButton;
+Button btnToDB, btnToMap, btnCO2, clearButton, btnInstructions;
 Gif planeAnimation;
 PImage logo;
 
@@ -62,14 +62,16 @@ void setup() {
   cp5focus.setAutoDraw(false);
   cp5Map.setAutoDraw(false);
   searchResults = new ArrayList<String>();
-  button1 = new Button(1250, 600, 180, 40,
+  btnToDB = new Button(1250, 600, 180, 40,
     "Compare Selected", color(0, 45, 90), myFont, 1);
-  button2 = new Button(1300, 700, 180, 40,
+  btnToMap = new Button(1300, 700, 180, 40,
     "Back To Map", color(255), myFont, 2);
   clearButton = new Button(1250, 550, 180, 40,
     "Clear", color(0, 45, 90), myFont, 8);
   btnCO2 = new Button(1250, 650, 180, 40,
     "View CO2 emission", color(0, 45, 90), myFont, 9);
+  btnInstructions = new Button(1090, 145, 100, 35,
+    "Help", color(0, 45, 90), myFont, 7);
 
   thread("slowLoad");
 }
@@ -176,9 +178,10 @@ void draw()
       textFont(myFont, 16);
       mainMap.draw();
       cp5Map.draw();
-      button1.draw();
+      btnToDB.draw();
       clearButton.draw();
       btnCO2.draw();
+      btnInstructions.draw();
       fill(0, 45, 90);
       text("Selected cities (max 6):", 1250, 367);
       text("Search:", 1250, 93);
@@ -208,7 +211,7 @@ void draw()
       fill(250);
       textFont(myFont, 24);
       text("Dashboard", 25, 30);
-      button2.draw();
+      btnToMap.draw();
       statusPie.draw(60, 450);
       arrivalsAirports.NotTransposedGraph();
       arrivalsAirports.draw(950, 70, 300, zoom);
@@ -227,7 +230,7 @@ void draw()
       background(50);
       surface.setTitle("CO2 Emissions");
       textFont(myFont, 16);
-      button2.draw();
+      btnToMap.draw();
       getEmission(mainMap.flightCompareTable);
       emissionCO2.setData(emissions, mainMap.flightCompareTable, "estimated CO2 emission per airport (megatonnes)");
       emissionCO2.transposeGraph();
@@ -266,19 +269,22 @@ void search() {
 void mouseMoved() {
   if (doneLoading && selectedScreen == 0) {
     mainMap.getHoverEvent();
-    int event = button1.getEvent(mouseX, mouseY);
-    if (event == 1) button1.hovered = true;
-    else button1.hovered = false;
+    int event = btnToDB.getEvent(mouseX, mouseY);
+    if (event == 1) btnToDB.hovered = true;
+    else btnToDB.hovered = false;
     event = clearButton.getEvent(mouseX, mouseY);
     if (event == 8) clearButton.hovered = true;
     else clearButton.hovered = false;
     event =  btnCO2.getEvent(mouseX, mouseY);
     if (event == 9)  btnCO2.hovered = true;
     else  btnCO2.hovered = false;
+    event =  btnInstructions.getEvent(mouseX, mouseY);
+    if (event == 7)  btnInstructions.hovered = true;
+    else  btnInstructions.hovered = false;
   } else if (doneLoading && selectedScreen == 1) {
-    int event = button2.getEvent(mouseX, mouseY);
-    if (event == 2) button2.hovered = true;
-    else button2.hovered = false;
+    int event = btnToMap.getEvent(mouseX, mouseY);
+    if (event == 2) btnToMap.hovered = true;
+    else btnToMap.hovered = false;
   }
 }
 
@@ -286,7 +292,7 @@ void mousePressed() {
   int event;
   if (doneLoading && selectedScreen == 0) {
     mainMap.getMousePress();
-    event = button1.getEvent(mouseX, mouseY);
+    event = btnToDB.getEvent(mouseX, mouseY);
     if (event == 1) {
       if (mainMap.flightCompareTable.size() >= 1) {
         selectedScreen = 1;
@@ -301,9 +307,13 @@ void mousePressed() {
           selectedScreen = 2;
         } else new UiBooster().showWarningDialog("You cannot access CO2 emission information without selecting cities!", "WARN");
       }
+      event = btnInstructions.getEvent(mouseX, mouseY);
+      if (event == 7) new UiBooster().showInfoDialog("Select up to 6 cities by selecting from the pins" +
+        " on the map or by searching and/or selecting from the list. Use Compare Selected to see stats or" +
+        " view the Environmental Report.");
     }
   } else if ((doneLoading && selectedScreen == 1) || (doneLoading && selectedScreen == 2)) {
-    event = button2.getEvent(mouseX, mouseY);
+    event = btnToMap.getEvent(mouseX, mouseY);
     if (event == 2) {
       selectedScreen = 0;
       mainMap.clearCompare();

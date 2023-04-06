@@ -1,4 +1,4 @@
-//import org.gicentre.utils.spatial.*;    // For map projections //<>//
+//import org.gicentre.utils.spatial.*;    // For map projections //<>// //<>//
 
 class MapScreen
 {
@@ -24,34 +24,48 @@ class MapScreen
     pin2 = new Pin(892.5, 595, 2);// ATL
     pin3 = new Pin( 805, 428.75, 3);//ORD
     pin4 = new Pin(562.625, 462, 4);//DEN
+    pin5 = new Pin(934,562,5); // CLT
     pin6 = new Pin( 350, 595, 6);//LAX
-    pin7 = new Pin(962, 763, 7); //MIA
-    pin8 = new Pin(1063, 448, 8); // JFK
-    pin9 = new Pin(912, 413, 9); // DTW
-    pin10 = new Pin(1112, 415, 10); // BOS
-    pin11 = new Pin(279, 518, 11); // SFO
-    pin12 = new Pin(753, 347, 12); // MSP
-    pin13 = new Pin(451, 441, 13); // SLC
-    pin14 = new Pin(1043, 466, 14); // PHL
-    pin15 = new Pin(963, 746, 15); // FLL
-    pin16 = new Pin(924, 719, 16); // TMP
-    pin17 = new Pin(683, 677, 17); // AUS
-    pin18 = new Pin(861, 548, 18); // BNA
-    pin19 = new Pin(1020, 481, 19); // BWI
-    pin20 = new Pin(1005, 489, 20); // IAD
-    pin21 = new Pin(365, 617, 21); // SAN
-    pin22 = new Pin(276, 331, 21); // PDX
+    pin7 = new Pin(281, 268, 7); // SEA
+    pin8 = new Pin(1062, 430, 8); // LGA
+    pin9 = new Pin(463, 617, 9); // PHX
+    //pin10 = new Pin(1056, 450, 10); //EWR
+    pin11 = new Pin(951, 717, 11); // MCO
+    pin12 = new Pin(718, 670, 12); // IAH
+    pin13 = new Pin(1011, 497, 13); //DCA
+    pin14 = new Pin(397, 548, 14); // LAS
+  
+    pin15 = new Pin(962, 763, 15); //MIA
+    pin16 = new Pin(1093, 438, 16); // JFK
+    pin17 = new Pin(912, 413, 17); // DTW
+    pin18 = new Pin(1112, 400, 18); // BOS
+    pin19 = new Pin(279, 518, 19); // SFO
+    pin20 = new Pin(753, 347, 20); // MSP
+    pin21 = new Pin(451, 441, 21); // SLC
+    pin22 = new Pin(1037, 465, 22); // PHL
+    //pin23 = new Pin(963, 746, 23); // FLL
+    pin24 = new Pin(928, 746, 24); // TPA
+    pin25 = new Pin(683, 677, 25); // AUS
+    pin26 = new Pin(861, 548, 26); // BNA
+    
+    //pin27 = new Pin(993, 460, 27); // BWI
+    
+   // pin28 = new Pin(1005, 489, 28); // IAD
+    pin29 = new Pin(365, 617, 29); // SAN
+    pin30 = new Pin(276, 331, 30); // PDX
 
 
     myPins.add(pin1);
     myPins.add(pin2);
     myPins.add(pin3);
     myPins.add(pin4);
+    myPins.add(pin5);
     myPins.add(pin6);
+    
     myPins.add(pin7);
     myPins.add(pin8);
     myPins.add(pin9);
-    myPins.add(pin10);
+   // myPins.add(pin10);
     myPins.add(pin11);
     myPins.add(pin12);
     myPins.add(pin13);
@@ -64,6 +78,15 @@ class MapScreen
     myPins.add(pin20);
     myPins.add(pin21);
     myPins.add(pin22);
+    //myPins.add(pin23);
+    myPins.add(pin24);
+    
+    myPins.add(pin25);
+    myPins.add(pin26);
+   // myPins.add(pin27);
+   // myPins.add(pin28);
+    myPins.add(pin29);
+    myPins.add(pin30);
     readData();
     //WebMercator map = new WebMercator();
 

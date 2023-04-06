@@ -24,7 +24,7 @@ class MapScreen
     pin2 = new Pin(892.5, 595, 2);// ATL
     pin3 = new Pin( 805, 428.75, 3);//ORD
     pin4 = new Pin(562.625, 462, 4);//DEN
-    pin5 = new Pin(934,562,5); // CLT
+    pin5 = new Pin(934, 562, 5); // CLT
     pin6 = new Pin( 350, 595, 6);//LAX
     pin7 = new Pin(281, 268, 7); // SEA
     pin8 = new Pin(1062, 430, 8); // LGA
@@ -34,7 +34,7 @@ class MapScreen
     pin12 = new Pin(718, 670, 12); // IAH
     pin13 = new Pin(1011, 497, 13); //DCA
     pin14 = new Pin(397, 548, 14); // LAS
-  
+
     pin15 = new Pin(962, 763, 15); //MIA
     pin16 = new Pin(1093, 438, 16); // JFK
     pin17 = new Pin(912, 413, 17); // DTW
@@ -47,10 +47,10 @@ class MapScreen
     pin24 = new Pin(928, 746, 24); // TPA
     pin25 = new Pin(683, 677, 25); // AUS
     pin26 = new Pin(861, 548, 26); // BNA
-    
+
     //pin27 = new Pin(993, 460, 27); // BWI
-    
-   // pin28 = new Pin(1005, 489, 28); // IAD
+
+    // pin28 = new Pin(1005, 489, 28); // IAD
     pin29 = new Pin(365, 617, 29); // SAN
     pin30 = new Pin(276, 331, 30); // PDX
 
@@ -61,11 +61,11 @@ class MapScreen
     myPins.add(pin4);
     myPins.add(pin5);
     myPins.add(pin6);
-    
+
     myPins.add(pin7);
     myPins.add(pin8);
     myPins.add(pin9);
-   // myPins.add(pin10);
+    // myPins.add(pin10);
     myPins.add(pin11);
     myPins.add(pin12);
     myPins.add(pin13);
@@ -80,11 +80,11 @@ class MapScreen
     myPins.add(pin22);
     //myPins.add(pin23);
     myPins.add(pin24);
-    
+
     myPins.add(pin25);
     myPins.add(pin26);
-   // myPins.add(pin27);
-   // myPins.add(pin28);
+    // myPins.add(pin27);
+    // myPins.add(pin28);
     myPins.add(pin29);
     myPins.add(pin30);
     readData();
@@ -158,6 +158,118 @@ class MapScreen
         case 2:
           if (flightCompareTable.size() < 6)
             flightCompareTable.add("Atlanta, GA");
+          break;
+        case 3:
+          if (flightCompareTable.size() < 6)
+            flightCompareTable.add("Chicago, IL");
+          break;
+        case 4:
+          if (flightCompareTable.size() < 6)
+            flightCompareTable.add("Denver, CO");
+          break;
+        case 5:
+          if (flightCompareTable.size() < 6)
+            flightCompareTable.add("Charlotte, NC");
+          break;
+        case 6:
+          if (flightCompareTable.size() < 6)
+            flightCompareTable.add("Los Angeles, CA");
+          break;
+        case 7:
+          if (flightCompareTable.size() < 6)
+            flightCompareTable.add("Seattle, WA");
+          break;
+        case 8:
+          if (flightCompareTable.size() < 6)
+            flightCompareTable.add("New York, NY");
+          break;
+        case 9:
+          if (flightCompareTable.size() < 6)
+            flightCompareTable.add("Phoenix, AZ");
+          break;
+        case 10:
+          if (flightCompareTable.size() < 6)
+            flightCompareTable.add("Newark, NJ");
+          break;
+        case 11:
+          if (flightCompareTable.size() < 6)
+            flightCompareTable.add("Orlando, FL");
+          break;
+        case 12:
+          if (flightCompareTable.size() < 6)
+            flightCompareTable.add("Houston, TX");
+          break;
+        case 13:
+          if (flightCompareTable.size() < 6)
+            flightCompareTable.add("Washington, DC");
+          break;
+        case 14:
+          if (flightCompareTable.size() < 6)
+            flightCompareTable.add("Dallas/Fort Worth, TX");
+          break;
+        case 15:
+          if (flightCompareTable.size() < 6)
+            flightCompareTable.add("Miami, FL");
+          break;
+        case 16:
+          if (flightCompareTable.size() < 6)
+            flightCompareTable.add("New York, NY");
+          break;
+        case 17:
+          if (flightCompareTable.size() < 6)
+            flightCompareTable.add("Detroit, MI");
+          break;
+        case 18:
+          if (flightCompareTable.size() < 6)
+            flightCompareTable.add("Boston, MA");
+          break;
+        case 19:
+          if (flightCompareTable.size() < 6)
+            flightCompareTable.add("San Francisco, CA");
+          break;
+        case 20:
+          if (flightCompareTable.size() < 6)
+            flightCompareTable.add("Minneapolis, MN");
+          break;
+        case 21:
+          if (flightCompareTable.size() < 6)
+            flightCompareTable.add("Salt Lake City, UT");
+          break;
+        case 22:
+          if (flightCompareTable.size() < 6)
+            flightCompareTable.add("Philadelphia, PA");
+          break;
+        case 23:
+          if (flightCompareTable.size() < 6)
+            flightCompareTable.add("Fort Lauderdale, FL");
+          break;
+        case 24:
+          if (flightCompareTable.size() < 6)
+            flightCompareTable.add("Tampa, FL");
+          break;
+        case 25:
+          if (flightCompareTable.size() < 6)
+            flightCompareTable.add("Austin, TX");
+          break;
+        case 26:
+          if (flightCompareTable.size() < 6)
+            flightCompareTable.add("Nashville, TN");
+          break;
+        case 27:
+          if (flightCompareTable.size() < 6)
+            flightCompareTable.add("Baltimore, MD");
+          break;
+        case 28:
+          if (flightCompareTable.size() < 6)
+            flightCompareTable.add("Washington, DC");
+          break;
+        case 29:
+          if (flightCompareTable.size() < 6)
+            flightCompareTable.add("San Angelo, TX");
+          break;
+        case 30:
+          if (flightCompareTable.size() < 6)
+            flightCompareTable.add("Portland, OR");
           break;
         default:
           println("no");

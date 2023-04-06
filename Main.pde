@@ -113,6 +113,7 @@ void slowLoad() {
   cp5zoom.addSlider("zoom")
     .setPosition(1025, 520)
     .setRange(0, 100)
+    .setValue(100)
     .setSize(150, 40)
     .setColorForeground(color(#AADEDC))
     .setColorActive(color(#71A2A1))
@@ -122,6 +123,7 @@ void slowLoad() {
   cp5focus.addSlider("focus")
     .setPosition(175, 520)
     .setRange(0, 100)
+    .setValue(100)
     .setSize(150, 40)
     .setColorForeground(color(#AADEDC))
     .setColorActive(color(#71A2A1))
@@ -234,7 +236,7 @@ void draw()
       emissionCO2.draw(50, 70, 50, focus);
       treesNeeded.setData(trees, mainMap.flightCompareTable, "trees to offset carbon emission from airport (100 thousands)");
       treesNeeded.NotTransposedGraph();
-      treesNeeded.draw(750, 70, 100, focus);
+      treesNeeded.draw(750, 70, 50, focus);
       cp5focus.draw();
     }
   }

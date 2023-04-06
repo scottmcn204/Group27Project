@@ -27,7 +27,7 @@ class MapScreen
     pin5 = new Pin(934, 562, 5); // CLT
     pin6 = new Pin( 350, 595, 6);//LAX
     pin7 = new Pin(281, 268, 7); // SEA
-    pin8 = new Pin(1062, 430, 8); // LGA
+    pin8 = new Pin(1062, 440, 8); // LGA
     pin9 = new Pin(463, 617, 9); // PHX
     //pin10 = new Pin(1056, 450, 10); //EWR
     pin11 = new Pin(951, 717, 11); // MCO
@@ -36,7 +36,7 @@ class MapScreen
     pin14 = new Pin(397, 548, 14); // LAS
 
     pin15 = new Pin(962, 763, 15); //MIA
-    pin16 = new Pin(1093, 438, 16); // JFK
+   // pin16 = new Pin(1093, 438, 16); // JFK
     pin17 = new Pin(912, 413, 17); // DTW
     pin18 = new Pin(1112, 400, 18); // BOS
     pin19 = new Pin(279, 518, 19); // SFO
@@ -71,7 +71,7 @@ class MapScreen
     myPins.add(pin13);
     myPins.add(pin14);
     myPins.add(pin15);
-    myPins.add(pin16);
+   // myPins.add(pin16);
     myPins.add(pin17);
     myPins.add(pin18);
     myPins.add(pin19);

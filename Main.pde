@@ -105,6 +105,10 @@ void slowLoad() {
   p = 0;
 
   searchResults.addAll(flights.airports);
+
+  for (int i = 0; (i < searchResults.size()); i++) {
+    l.addItem(searchResults.get(i), p++);
+  }
   mainMap.setup();
 
   chart = new BarChart(this);
@@ -115,6 +119,7 @@ void slowLoad() {
   cp5zoom.addSlider("zoom")
     .setPosition(1025, 520)
     .setRange(0, 100)
+    .setValue(100)
     .setSize(150, 40)
     .setColorForeground(color(#AADEDC))
     .setColorActive(color(#71A2A1))
@@ -124,6 +129,7 @@ void slowLoad() {
   cp5focus.addSlider("focus")
     .setPosition(175, 520)
     .setRange(0, 100)
+    .setValue(100)
     .setSize(150, 40)
     .setColorForeground(color(#AADEDC))
     .setColorActive(color(#71A2A1))
@@ -191,11 +197,7 @@ void draw()
       fill(0);
       image(logo, 10, 10, 500, 154);
       fill(255);
-      if (searchResults != null) {
-        for (int i = 0; (i < searchResults.size()); i++) {
-          l.addItem(searchResults.get(i), p++);
-        }
-      }
+
 
       if (mainMap.flightCompareTable != null ) {
         for (int i = 0; (i < mainMap.flightCompareTable.size()); i++) {
@@ -237,7 +239,7 @@ void draw()
       emissionCO2.draw(50, 70, 50, focus);
       treesNeeded.setData(trees, mainMap.flightCompareTable, "trees to offset carbon emission from airport (100 thousands)");
       treesNeeded.NotTransposedGraph();
-      treesNeeded.draw(750, 70, 100, focus);
+      treesNeeded.draw(750, 70, 50, focus);
       cp5focus.draw();
     }
   }
@@ -262,6 +264,12 @@ void search() {
   for (int i = 0; (i < flights.airports.size()); i++) {
     if (flights.airports.get(i).toLowerCase().contains(cp5Map.get(Textfield.class, " ").getText().toLowerCase())) {
       searchResults.add(flights.airports.get(i));
+    }
+  }
+  p = 0;
+  if (searchResults != null) {
+    for (int i = 0; (i < searchResults.size()); i++) {
+      l.addItem(searchResults.get(i), p++);
     }
   }
 }

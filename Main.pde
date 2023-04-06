@@ -1,8 +1,7 @@
 import org.gicentre.utils.stat.*; //<>// //<>// //<>// //<>// //<>//
 import controlP5.*;
 import gifAnimation.*;
-
-
+import uibooster.*;
 //7/8 downscale from 1800
 final int SCREENX = 1575;
 final int SCREENY = 787;
@@ -42,6 +41,7 @@ int selectedScreen = 0;
 Button button1, button2, btnCO2, clearButton;
 Gif planeAnimation;
 PImage logo;
+
 void settings()
 {
   size(SCREENX, SCREENY);
@@ -156,7 +156,7 @@ void slowLoad() {
 
   mainMap.clearCompare();
 
-
+  new UiBooster().createNotification("You can now use the program", "Flights are ready");
   doneLoading = true;
 }
 
@@ -180,7 +180,7 @@ void draw()
       clearButton.draw();
       btnCO2.draw();
       fill(0, 45, 90);
-      text("Selected cities:", 1250, 367);
+      text("Selected cities (max 6):", 1250, 367);
       text("Search:", 1250, 93);
       stroke(255);
       fill(0, 45, 90);
@@ -248,7 +248,7 @@ void controlEvent(ControlEvent theEvent) {
       if (mainMap.flightCompareTable.size() < 6) {
         mainMap.flightCompareTable.add(searchResults.get((int)l.getValue()));
         mainMap.removeDuplicateAirports();
-      } else println("Cannot add more than 6 cities!");
+      } else new UiBooster().showWarningDialog("Cannot add more than 6 cities!", "WARN");
     }
   }
 }
@@ -293,13 +293,13 @@ void mousePressed() {
         getData(mainMap.flightCompareTable);
         arrivalsAirports.setData(arrivals, mainMap.flightCompareTable, "Number of arrivals per airport");
         statusPie.changeData(status);
-      } else println("You cannot access the Dashboard without selecting flights!");
+      } else new UiBooster().showWarningDialog("You cannot access the Dashboard without selecting cities!", "WARN");
     } else {
       event =  btnCO2.getEvent(mouseX, mouseY);
       if (event == 9) {
         if (mainMap.flightCompareTable.size() >= 1) {
           selectedScreen = 2;
-        } else println("You cannot access the CO2 screen without selecting flights!");
+        } else new UiBooster().showWarningDialog("You cannot access CO2 emission information without selecting cities!", "WARN");
       }
     }
   } else if ((doneLoading && selectedScreen == 1) || (doneLoading && selectedScreen == 2)) {

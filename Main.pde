@@ -1,4 +1,4 @@
-import org.gicentre.utils.stat.*; //<>// //<>// //<>// //<>// //<>// //<>//
+import org.gicentre.utils.stat.*; //<>// //<>// //<>// //<>// //<>// //<>// //<>//
 import controlP5.*;
 import gifAnimation.*;
 import uibooster.*;
@@ -132,9 +132,9 @@ void slowLoad() {
     .setRange(0, 100)
     .setValue(100)
     .setSize(150, 40)
-    .setColorForeground(color(#AADEDC))
-    .setColorActive(color(#71A2A1))
-    .setColorBackground(color(#425A5A))
+    .setColorForeground(color(255, 100, 0))
+    .setColorActive(color(255, 100, 0))
+    .setColorBackground(color(0, 45, 90))
     .setColorValue(color(0));
 
 
@@ -233,7 +233,7 @@ void draw()
       fill(0, 45, 90);
       text("Selected cities:", 46, 575);
     } else {
-      background(50);
+      background(178, 210, 221);
       surface.setTitle("CO2 Emissions");
       textFont(myFont, 16);
       btnToMap.draw();
@@ -245,7 +245,7 @@ void draw()
       //treesNeeded.NotTransposedGraph();
       //treesNeeded.draw(750, 70, 50, focus);
       cp5focus.draw();
-      fill(255);
+      fill(0, 45, 90);
       textFont(myFont, 18);
       text("Trees needed to offset the carbon emission from airport (millions)", 750, 70);
       stroke(255);

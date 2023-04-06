@@ -49,7 +49,7 @@ void settings()
 }
 void setup() {
   doneLoading = false;
-  planeAnimation = new Gif(this, "planeFast.gif");
+  planeAnimation = new Gif(this, "planeLoading.gif");
   tree = loadImage("pineTree.png");
   tree.resize(30,0);
   halfTree = loadImage("halftree.png");
@@ -175,15 +175,15 @@ void slowLoad() {
 void draw()
 {
   if (!doneLoading) {
-    background(178, 210, 221);
+    background(204, 234, 247);
     surface.setTitle("Loading...");
     textFont(myFont, 50);
-    fill(250);
-    text("Loading your Flights...", SCREENX/2 - 200, SCREENY/2 - 100);
-    image(planeAnimation, 680, 300);
+    fill(255);
+    image(planeAnimation, 410, 200);
+    text("Loading your Flights...", SCREENX/2 - 250, SCREENY/2 - 100);
   } else {
     if (selectedScreen == 0) {
-      background(178, 210, 221);
+      background(170, 211, 223);
       surface.setTitle("Map");
       textFont(myFont, 16);
       mainMap.draw();
@@ -209,7 +209,7 @@ void draw()
         }
       }
     } else if (selectedScreen == 1) {
-      background(178, 210, 221);
+      background(170, 211, 223);
       fill(0, 45, 90);
       textFont(myFont, 16);
       surface.setTitle("Dashboard");
@@ -236,7 +236,7 @@ void draw()
       fill(0, 45, 90);
       text("Selected cities:", 46, 575);
     } else {
-      background(178, 210, 221);
+      background(170, 211, 223);
       surface.setTitle("CO2 Emissions");
       textFont(myFont, 16);
       btnToMap.draw();

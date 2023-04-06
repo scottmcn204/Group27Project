@@ -1,4 +1,4 @@
-import org.gicentre.utils.stat.*; //<>// //<>// //<>// //<>// //<>// //<>// //<>//
+import org.gicentre.utils.stat.*; //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>//
 import controlP5.*;
 import gifAnimation.*;
 import uibooster.*;
@@ -24,7 +24,6 @@ int zoom = 0;
 int date = 0;
 int focus = 0;
 BarChart chart;
-chartBar treesNeeded;
 chartBar emissionCO2;
 chartBar arrivalsAirports;
 int week = 0;
@@ -41,7 +40,8 @@ int selectedScreen = 0;
 Button btnToDB, btnToMap, btnCO2, clearButton, btnInstructions;
 Gif planeAnimation;
 PImage logo;
-
+PImage tree;
+PImage halfTree;
 
 void settings()
 {
@@ -50,6 +50,10 @@ void settings()
 void setup() {
   doneLoading = false;
   planeAnimation = new Gif(this, "planeFast.gif");
+  tree = loadImage("pineTree.png");
+  tree.resize(30,0);
+  halfTree = loadImage("halftree.png");
+  halfTree.resize(15,0);
   logo = loadImage("logo.png");
   planeAnimation.play();
   background(178, 210, 221);
@@ -115,7 +119,6 @@ void slowLoad() {
   chart = new BarChart(this);
   arrivalsAirports = new chartBar(chart, "Number of arrivals per airport");
   emissionCO2 = new chartBar(chart, "estimated CO2 emission per airport (Mkg)");
-  treesNeeded = new chartBar(chart, "trees to offset carbon emission from airport");
 
   cp5zoom.addSlider("zoom")
     .setPosition(1025, 520)
@@ -241,22 +244,35 @@ void draw()
       emissionCO2.setData(emissions, mainMap.flightCompareTable, "estimated CO2 emission per airport (megatonnes)");
       emissionCO2.transposeGraph();
       emissionCO2.draw(50, 70, 50, focus);
-      //treesNeeded.setData(trees, mainMap.flightCompareTable, "trees to offset carbon emission from airport (100 thousands)");
-      //treesNeeded.NotTransposedGraph();
-      //treesNeeded.draw(750, 70, 50, focus);
       cp5focus.draw();
       fill(0, 45, 90);
       textFont(myFont, 18);
-      text("Trees needed to offset the carbon emission from airport (millions)", 750, 70);
+      text("Trees needed to offset the carbon emission from airport", 750, 70);
+      image(tree,1295,100);
+      text(" : 5 million trees", 1320, 125);
+      image(halfTree, 1295, 160);
+      text(" : < 5 million trees", 1320, 185);
       stroke(255);
       fill(255);
-      rect(750, 100, 470, (50*trees.length), 8, 8, 8, 8);
+      rect(750, 100, 470, (35*trees.length), 8, 8, 8, 8);
       for (int i =0; i < trees.length; i++){
         fill(0, 45, 90);
-        text( mainMap.flightCompareTable.get(i) + " Airport: " + trees[i] + " million trees", 765, 130 +(30*i));
+        text( mainMap.flightCompareTable.get(i) + " Airport: " + nf(trees[i],0,2) + " million trees", 765, 130 +(30*i));
+        float treeNumber = trees[i];
+        int j =0;
+        while (treeNumber > 5){
+          image(tree, 750+(30*j), 350+(60*i));
+          j++;
+          treeNumber = treeNumber - 5;
+        }
+        if (int(treeNumber) > 0){
+          image(halfTree, 750+(30*j), 350+(60*i));
+        }
+        fill(0, 45, 90);
+        text(emissionCO2.airports[i], 710,380+(60*i));
         
       }
-    }
+    }   
   }
 }
 void controlEvent(ControlEvent theEvent) {
@@ -305,6 +321,10 @@ void mouseMoved() {
     if (event == 7)  btnInstructions.hovered = true;
     else  btnInstructions.hovered = false;
   } else if (doneLoading && selectedScreen == 1) {
+    int event = btnToMap.getEvent(mouseX, mouseY);
+    if (event == 2) btnToMap.hovered = true;
+    else btnToMap.hovered = false;
+  } else if (doneLoading && selectedScreen == 2) {
     int event = btnToMap.getEvent(mouseX, mouseY);
     if (event == 2) btnToMap.hovered = true;
     else btnToMap.hovered = false;

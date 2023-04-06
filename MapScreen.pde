@@ -52,7 +52,16 @@ class MapScreen
 
     // pin28 = new Pin(1005, 489, 28); // IAD
     pin29 = new Pin(365, 617, 29); // SAN
-    pin30 = new Pin(276, 331, 30); // PDX
+    //pin30 = new Pin(700, 611.625 30); // DAL
+    pin31 = new Pin(276, 331, 31); // PDX
+    pin32 = new Pin(379, 366, 32); // BOI
+    pin33 = new Pin(595, 373, 33); //RAP
+    pin34 = new Pin(623,297, 34); //BIS
+    pin35 = new Pin(1129, 362, 35);//PWM
+    pin36 = new Pin(543, 573, 36);//ABQ
+    pin37 = new Pin(707, 546, 37); // TUL
+    pin38 = new Pin(122, 299, 38); //ANC
+    pin39 = new Pin(84, 681, 39); //HNL
 
 
     myPins.add(pin1);
@@ -86,7 +95,17 @@ class MapScreen
     // myPins.add(pin27);
     // myPins.add(pin28);
     myPins.add(pin29);
-    myPins.add(pin30);
+    //myPins.add(pin30);
+    myPins.add(pin31);
+    myPins.add(pin32);
+    myPins.add(pin33);
+    myPins.add(pin34);
+    myPins.add(pin35);
+    myPins.add(pin36);
+    myPins.add(pin37);
+    myPins.add(pin38);
+    myPins.add(pin39);
+    
     readData();
     //WebMercator map = new WebMercator();
 
@@ -236,9 +255,33 @@ class MapScreen
           case 29:
               flightCompareTable.add("San Angelo, TX");
             break;
-          case 30:
+          case 31:
               flightCompareTable.add("Portland, OR");
             break;
+          case 32:
+             flightCompareTable.add("Boise, ID");
+             break;
+          case 33:
+               flightCompareTable.add("Rapid City, SD");
+               break;
+          case 34:
+              flightCompareTable.add("Bismarck/Mandan, ND");
+               break;
+          case 35:
+              flightCompareTable.add("Portland, ME");
+              break;
+          case 36:
+              flightCompareTable.add("Albuquerque, NM");
+              break;
+          case 37:
+              flightCompareTable.add("Tulsa, OK");
+              break;
+          case 38:
+              flightCompareTable.add("Anchorage, AK");
+              break;
+          case 39:
+              flightCompareTable.add("Honolulu, HI");
+              break;
           default:
             println("N/A");
           }

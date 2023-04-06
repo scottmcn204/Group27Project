@@ -42,6 +42,7 @@ Button button1, button2, btnCO2, clearButton;
 Gif planeAnimation;
 PImage logo;
 
+
 void settings()
 {
   size(SCREENX, SCREENY);
@@ -234,10 +235,21 @@ void draw()
       emissionCO2.setData(emissions, mainMap.flightCompareTable, "estimated CO2 emission per airport (megatonnes)");
       emissionCO2.transposeGraph();
       emissionCO2.draw(50, 70, 50, focus);
-      treesNeeded.setData(trees, mainMap.flightCompareTable, "trees to offset carbon emission from airport (100 thousands)");
-      treesNeeded.NotTransposedGraph();
-      treesNeeded.draw(750, 70, 50, focus);
+      //treesNeeded.setData(trees, mainMap.flightCompareTable, "trees to offset carbon emission from airport (100 thousands)");
+      //treesNeeded.NotTransposedGraph();
+      //treesNeeded.draw(750, 70, 50, focus);
       cp5focus.draw();
+      fill(255);
+      textFont(myFont, 18);
+      text("Trees needed to offset the carbon emission from airport (millions)", 750, 70);
+      stroke(255);
+      fill(255);
+      rect(750, 100, 470, (50*trees.length), 8, 8, 8, 8);
+      for (int i =0; i < trees.length; i++){
+        fill(0, 45, 90);
+        text( mainMap.flightCompareTable.get(i) + " Airport: " + trees[i] + " million trees", 765, 130 +(30*i));
+        
+      }
     }
   }
 }
@@ -443,6 +455,7 @@ void getEmission(ArrayList<String> airports) {
   }
   for (int i=0; i< airports.size(); i++) {
     emissions[i] = emissions[i] / 1000000;
-    trees[i] = trees[i] / 100000;
+    trees[i] = trees[i] / 1000000;
   }
+  
 }

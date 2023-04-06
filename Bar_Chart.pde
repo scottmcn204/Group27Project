@@ -40,6 +40,7 @@ class chartBar{
    barChart.setBarLabels(airports);
  }
  
+ 
  void transposeGraph(){
    barChart.transposeAxes(true);
  }

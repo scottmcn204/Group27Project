@@ -3,6 +3,7 @@ import controlP5.*;
 
 class chartBar{       
   BarChart barChart;
+  String[] airports;
   
   chartBar(BarChart chart, String label){
   barChart = chart;
@@ -22,7 +23,7 @@ class chartBar{
  
  void setData(float[] data, ArrayList<String> labels, String label){
     barChart.setCategoryAxisLabel(label);
-   String[] airports = new String[labels.size()];
+   airports = new String[labels.size()];
    for (int i = 0; i < labels.size(); i++){
      boolean found = false;
      int count = 0;

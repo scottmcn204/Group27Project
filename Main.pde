@@ -255,17 +255,19 @@ void draw()
       rect(750, 100, 470, (35*trees.length), 8, 8, 8, 8);
       for (int i =0; i < trees.length; i++){
         fill(0, 45, 90);
-        text( mainMap.flightCompareTable.get(i) + " Airport: " + trees[i] + " million trees", 765, 130 +(30*i));
+        text( mainMap.flightCompareTable.get(i) + " Airport: " + nf(trees[i],0,2) + " million trees", 765, 130 +(30*i));
         float treeNumber = trees[i];
         int j =0;
         while (treeNumber > 5){
-          image(tree, 765+(30*j), 350+(60*i));
+          image(tree, 750+(30*j), 350+(60*i));
           j++;
           treeNumber = treeNumber - 5;
         }
-        if (treeNumber > 0){
-          image(halfTree, 765+(30*j), 350+(60*i));
+        if (int(treeNumber) > 0){
+          image(halfTree, 750+(30*j), 350+(60*i));
         }
+        fill(255);
+        text(emissionCO2.airports[i], 710,380+(60*i));
         
       }
       

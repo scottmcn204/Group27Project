@@ -381,7 +381,12 @@ void mousePressed() {
       mainMap.clearCompare();
     }
     event = btnCO2ToDB.getEvent(mouseX, mouseY);
-    if (event == 4) selectedScreen = 1;
+    if (event == 4) {
+      selectedScreen = 1;
+      getData(mainMap.flightCompareTable);
+      arrivalsAirports.setData(arrivals, mainMap.flightCompareTable, "Number of arrivals per airport");
+      statusPie.changeData(status);
+    }
   }
 
   if (doneLoading && selectedScreen == 0) {

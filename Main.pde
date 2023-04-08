@@ -270,7 +270,7 @@ void draw()
           j++;
           treeNumber = treeNumber - 5;
         }
-        if (int(treeNumber) > 0){
+        if (treeNumber > 0){
           image(halfTree, 750+(30*j), 350+(60*i));
         }
         fill(0, 45, 90);

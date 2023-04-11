@@ -3,6 +3,7 @@ import controlP5.*;
 
 class chartBar{       
   BarChart barChart;
+  String[] airports;
   
   chartBar(BarChart chart, String label){
   barChart = chart;
@@ -13,16 +14,16 @@ class chartBar{
   barChart.showValueAxis(true);
   barChart.showCategoryAxis(true);
   //barChart.setBarLabels(labels);
-  barChart.setBarColour(color(#C1E5B7));
-  barChart.setAxisLabelColour(250);
-  barChart.setAxisValuesColour(250);
+  barChart.setBarColour(color(0, 150, 255));
+  barChart.setAxisLabelColour(color(0, 45, 90));
+  barChart.setAxisValuesColour(color(0, 45, 90));
   barChart.setCategoryAxisLabel(label);
   barChart.setBarGap(6);
  }
  
  void setData(float[] data, ArrayList<String> labels, String label){
     barChart.setCategoryAxisLabel(label);
-   String[] airports = new String[labels.size()];
+   airports = new String[labels.size()];
    for (int i = 0; i < labels.size(); i++){
      boolean found = false;
      int count = 0;
@@ -39,6 +40,7 @@ class chartBar{
    barChart.setData(data);
    barChart.setBarLabels(airports);
  }
+ 
  
  void transposeGraph(){
    barChart.transposeAxes(true);

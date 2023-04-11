@@ -1,4 +1,4 @@
-//import org.gicentre.utils.spatial.*;    // For map projections //<>// //<>// //<>//
+//import org.gicentre.utils.spatial.*;    // For map projections
 import uibooster.*;
 class MapScreen
 {
@@ -52,7 +52,9 @@ class MapScreen
 
     // pin28 = new Pin(1005, 489, 28); // IAD
     pin29 = new Pin(365, 617, 29); // SAN
+
     //pin30 = new Pin(700, 611.625 30); // DAL
+
     pin31 = new Pin(276, 331, 31); // PDX
     pin32 = new Pin(379, 366, 32); // BOI
     pin33 = new Pin(595, 373, 33); //RAP
@@ -96,7 +98,9 @@ class MapScreen
     // myPins.add(pin28);
     myPins.add(pin29);
     //myPins.add(pin30);
+
     myPins.add(pin31);
+
     myPins.add(pin32);
     myPins.add(pin33);
     myPins.add(pin34);
@@ -105,7 +109,6 @@ class MapScreen
     myPins.add(pin37);
     myPins.add(pin38);
     myPins.add(pin39);
-    
     readData();
     //WebMercator map = new WebMercator();
 
@@ -125,7 +128,7 @@ class MapScreen
     noFill();
     strokeWeight(16);
     stroke(0, 45, 90);
-    rect(0, SCREENY - BAKCGROUND_HEIGHT, BACKGROUND_WIDTH, BAKCGROUND_HEIGHT);
+    rect(0, SCREENY - BAKCGROUND_HEIGHT, BACKGROUND_WIDTH, BAKCGROUND_HEIGHT, 8, 8, 8, 8);
 
     /*strokeWeight(4);
      stroke(0);

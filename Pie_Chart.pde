@@ -15,7 +15,7 @@ class PieChart{
                     
     myPieChart.getColor().setBackground(color(255, 100));
     myPieChart.addDataSet("flights");
-    myPieChart.setColors("flights", color(0, 45, 90), color(255, 100, 0), color(0, 150, 255));
+    myPieChart.setColors("flights", color(#3BE8E6), color(#FFAF1A), color(#20396A));
     myPieChart.setData("flights", data);    
   }
   
@@ -25,21 +25,21 @@ class PieChart{
   
   void draw(int xPos, int yPos){
     stroke(0);
-    fill(0, 45, 90);
+    fill(#3BE8E6);
     rect(xPos,yPos,20,20);
-    fill(0, 45, 90);
+    fill(250);
     textFont(myFont, 16);
 
     text(("on time (" + int(status[0]) + " out of " + totalArrivals + ")"), xPos + 30,yPos + 15);
-    fill(255, 100, 0);
+    fill(#FFAF1A);
     rect(xPos,yPos + 30,20,20);
-    fill(0, 45, 90);
+    fill(250);
 
     text(("diverted (" + int(status[1]) + " out of " + totalArrivals + ")"), xPos + 30, yPos + 45);
 
-    fill(0, 150, 255);
+    fill(#20396A);
     rect(xPos,yPos +  60,20,20);
-    fill(0, 45, 90);
+    fill(250);
     text(("cancelled (" + int(status[2]) + " out of " + totalArrivals + ")"), xPos + 30, yPos +75);
   }
   

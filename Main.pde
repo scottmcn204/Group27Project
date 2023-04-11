@@ -121,7 +121,7 @@ void slowLoad() {
     .setColorValue(color(0));
 
   cp5focus.addSlider("focus")
-    .setPosition(150, 580)
+    .setPosition(175, 520)
     .setRange(0, 100)
     .setValue(100)
     .setSize(150, 40)
@@ -228,22 +228,15 @@ void draw()
     } else {
       background(50);
       surface.setTitle("CO2 Emissions");
-      fill(0, 45, 90);
-      textFont(myFont, 24);
-      text("Carbon Emission Summary", 25, 30);
       textFont(myFont, 16);
       button2.draw();
       getEmission(mainMap.flightCompareTable);
-      emissionCO2.setData(emissions, mainMap.flightCompareTable, "estimated CO2 emission per airport departures  (megatonnes)");
+      emissionCO2.setData(emissions, mainMap.flightCompareTable, "estimated CO2 emission per airport (megatonnes)");
       emissionCO2.transposeGraph();
-<<<<<<< Updated upstream
       emissionCO2.draw(50, 70, 50, focus);
       treesNeeded.setData(trees, mainMap.flightCompareTable, "trees to offset carbon emission from airport (100 thousands)");
       treesNeeded.NotTransposedGraph();
       treesNeeded.draw(750, 70, 50, focus);
-=======
-      emissionCO2.draw(50, 120, 50, focus);
->>>>>>> Stashed changes
       cp5focus.draw();
     }
   }

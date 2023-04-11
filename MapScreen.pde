@@ -1,4 +1,4 @@
-//import org.gicentre.utils.spatial.*;    // For map projections
+//import org.gicentre.utils.spatial.*;    // For map projections //<>//
 import uibooster.*;
 class MapScreen
 {
@@ -27,7 +27,7 @@ class MapScreen
     pin5 = new Pin(934, 562, 5); // CLT
     pin6 = new Pin( 350, 595, 6);//LAX
     pin7 = new Pin(281, 268, 7); // SEA
-    pin8 = new Pin(1062, 440, 8); // LGA
+    pin8 = new Pin(1062, 435, 8); // LGA
     pin9 = new Pin(463, 617, 9); // PHX
     //pin10 = new Pin(1056, 450, 10); //EWR
     pin11 = new Pin(951, 717, 11); // MCO
@@ -51,7 +51,7 @@ class MapScreen
     //pin27 = new Pin(993, 460, 27); // BWI
 
     // pin28 = new Pin(1005, 489, 28); // IAD
-    pin29 = new Pin(365, 617, 29); // SAN
+    //pin29 = new Pin(365, 617, 29); // SAN
 
     //pin30 = new Pin(700, 611.625 30); // DAL
 
@@ -96,7 +96,7 @@ class MapScreen
     myPins.add(pin26);
     // myPins.add(pin27);
     // myPins.add(pin28);
-    myPins.add(pin29);
+   // myPins.add(pin29);
     //myPins.add(pin30);
 
     myPins.add(pin31);
@@ -256,7 +256,7 @@ class MapScreen
               flightCompareTable.add("Washington, DC");
             break;
           case 29:
-              flightCompareTable.add("San Angelo, TX");
+              flightCompareTable.add("San Diego, CA");
             break;
           case 31:
               flightCompareTable.add("Portland, OR");

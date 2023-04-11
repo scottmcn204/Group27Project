@@ -1,4 +1,4 @@
-//Please install the below libraries before running: //<>//
+//Please install the below libraries before running: //<>// //<>//
 import org.gicentre.utils.stat.*;
 import controlP5.*;
 import gifAnimation.*;
@@ -250,7 +250,7 @@ void draw()
       emissionCO2.setData(emissions, mainMap.flightCompareTable, "estimated CO2 emission per airport (megatonnes)");
       emissionCO2.transposeGraph();
       emissionCO2.draw(50, 70, 50, focus);
-<<<<<<< HEAD
+/*<<<<<<< HEAD
       treesNeeded.setData(trees, mainMap.flightCompareTable, "trees to offset carbon emission from airport (100 thousands)");
       treesNeeded.NotTransposedGraph();
       treesNeeded.draw(750, 70, 50, focus);
@@ -262,6 +262,7 @@ void draw()
 =======
 >>>>>>> 79520ddaf91bf16a0a833d48e656c2c8a03c153b
 >>>>>>> parent of 76e70a6 (Revert "polish")
+*/
       cp5focus.draw();
       fill(0, 45, 90);
       textFont(myFont, 18);

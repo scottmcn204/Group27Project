@@ -408,7 +408,7 @@ void setLineGraphData(int week, ArrayList<String> airports) {
     for (int j = 0; j < flights.flights.size(); j++) {
       for (int k = 0; k < airports.size(); k++) {
         Flight temp =flights.flights.get(j);
-        if (temp.originCity.equals(airports.get(k)))
+        if (temp.destinationCity.equals(airports.get(k)))
           for (int i = 0; i < 10; i++) {
             if (temp.date == i + 1 && temp.isLate()) {
 
@@ -426,7 +426,7 @@ void setLineGraphData(int week, ArrayList<String> airports) {
     for (int j = 0; j < flights.flights.size(); j++) {
       for (int k = 0; k < airports.size(); k++) {
         Flight temp =flights.flights.get(j);
-        if (temp.originCity.equals(airports.get(k))) {
+        if (temp.destinationCity.equals(airports.get(k))) {
           for (int i = 0; i < 7; i++) {
             if (flights.flights.get(j).date == i + 11 && flights.flights.get(j).isLate()) {
               totalDelayed2[i]++;
@@ -444,7 +444,7 @@ void setLineGraphData(int week, ArrayList<String> airports) {
     for (int j = 0; j < flights.flights.size(); j++) {
       for (int k = 0; k < airports.size(); k++) {
         Flight temp =flights.flights.get(j);
-        if (temp.originCity.equals(airports.get(k))) {
+        if (temp.destinationCity.equals(airports.get(k))) {
           for (int i = 0; i < 7; i++) {
             if (flights.flights.get(j).date == i + 18 && flights.flights.get(j).isLate()) {
               totalDelayed3[i]++;
@@ -462,7 +462,7 @@ void setLineGraphData(int week, ArrayList<String> airports) {
     for (int j = 0; j < flights.flights.size(); j++) {
       for (int k = 0; k < airports.size(); k++) {
         Flight temp =flights.flights.get(j);
-        if (temp.originCity.equals(airports.get(k))) {
+        if (temp.destinationCity.equals(airports.get(k))) {
           for (int i = 0; i < 7; i++) {
             if (flights.flights.get(j).date == i + 25 && flights.flights.get(j).isLate()) {
               totalDelayed4[i]++;
@@ -488,7 +488,7 @@ void getData(ArrayList<String> airports) {
 
     for (int j = 0; j < airports.size(); j++) {
       tempFlight = flights.flights.get(i);
-      if (tempFlight.originCity.equals(airports.get(j))) {
+      if (tempFlight.destinationCity.equals(airports.get(j))) {
         arrivals[j] += 1;
         if (tempFlight.diverted) {
           status[1] += 1;

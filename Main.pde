@@ -493,13 +493,13 @@ void getData(ArrayList<String> airports) {
     for (int j = 0; j < airports.size(); j++) {
       tempFlight = flights.flights.get(i);
       if (tempFlight.destinationCity.equals(airports.get(j))) {
-        arrivals[j] += 1;
         if (tempFlight.diverted) {
           status[1] += 1;
         } else if (tempFlight.cancelled) {
           status[2] += 1;
         } else {
           status[0] += 1;
+          arrivals[j] += 1;
         }
       }
     }

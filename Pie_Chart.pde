@@ -30,7 +30,7 @@ class PieChart{
     fill(0, 45, 90);
     textFont(myFont, 16);
 
-    text(("on time (" + int(status[0]) + " out of " + totalArrivals + ")"), xPos + 30,yPos + 15);
+    text(("arrived (" + int(status[0]) + " out of " + totalArrivals + ")"), xPos + 30,yPos + 15);
     fill(255, 100, 0);
     rect(xPos,yPos + 30,20,20);
     fill(0, 45, 90);

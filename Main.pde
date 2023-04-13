@@ -33,7 +33,7 @@ PieChart statusPie;
 Flights flights;
 XYChart lateFlightChart;
 boolean doneLoading;
-int totalArrivals;
+int totalFlights;
 ArrayList<String> searchResults;
 int p;
 ListBox l;
@@ -488,7 +488,7 @@ void getData(ArrayList<String> airports) {
   for (int i =0; i < 3; i++) {
     status[i] = 0;
   }
-  totalArrivals = 0;
+  totalFlights = 0;
 
   for (int i =0; i< flights.flights.size(); i++) {
     tempFlight = flights.flights.get(i);
@@ -496,19 +496,19 @@ void getData(ArrayList<String> airports) {
     for (int j = 0; j < airports.size(); j++) {
       tempFlight = flights.flights.get(i);
       if (tempFlight.destinationCity.equals(airports.get(j))) {
-        arrivals[j] += 1;
         if (tempFlight.diverted) {
           status[1] += 1;
         } else if (tempFlight.cancelled) {
           status[2] += 1;
         } else {
           status[0] += 1;
+          arrivals[j] += 1;
         }
       }
     }
   }
-  for (int i = 0; i< airports.size(); i++) {
-    totalArrivals += arrivals[i];
+  for (int i = 0; i< 3; i++) {
+    totalFlights += status[i];
   }
 }
 void getEmission(ArrayList<String> airports) {

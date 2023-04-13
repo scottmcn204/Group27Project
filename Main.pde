@@ -132,7 +132,8 @@ void slowLoad() {
     .setColorForeground(color(255, 100, 0))
     .setColorActive(color(255, 100, 0))
     .setColorBackground(color(0, 45, 90))
-    .setColorValue(color(0));
+    .setColorValue(color(255))
+    .setColorLabel(color(0));
 
   cp5focus.addSlider("focus")
     .setPosition(175, 520)
@@ -142,7 +143,8 @@ void slowLoad() {
     .setColorForeground(color(255, 100, 0))
     .setColorActive(color(255, 100, 0))
     .setColorBackground(color(0, 45, 90))
-    .setColorValue(color(0));
+    .setColorValue(color(255))
+    .setColorLabel(color(0));
 
 
   cp5.addSlider("week")
@@ -153,7 +155,8 @@ void slowLoad() {
     .setColorForeground(color(255, 100, 0))
     .setColorActive(color(255, 100, 0))
     .setColorBackground(color(0, 45, 90))
-    .setColorValue(color(0));
+    .setColorValue(color(255))
+    .setColorLabel(color(0));
 
   statusPie = new PieChart(status, 30, 100);
 

@@ -1,5 +1,4 @@
-//import org.gicentre.utils.spatial.*;    // For map projections //<>//
-import uibooster.*;
+import uibooster.*; //<>//
 class MapScreen
 {
   ArrayList<Pin> myPins;

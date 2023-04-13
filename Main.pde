@@ -320,10 +320,15 @@ void search() {
     }
   }
 }
-
+/**
+ * mouseMoved method
+ * Enables buttons per screen to enter their hovered state
+ *   once the mouse is present over them (using Button's getEvent).
+ * Also enables pins on the map to be hovered over in a similar manner.
+ */
 void mouseMoved() {
   if (doneLoading && selectedScreen == 0) {
-    mainMap.getHoverEvent();
+    mainMap.getHoverEvent(); //pin hovering
     int event = btnToDB.getEvent(mouseX, mouseY);
     if (event == 1) btnToDB.hovered = true;
     else btnToDB.hovered = false;
@@ -336,6 +341,7 @@ void mouseMoved() {
     event =  btnInstructions.getEvent(mouseX, mouseY);
     if (event == 7)  btnInstructions.hovered = true;
     else  btnInstructions.hovered = false;
+    
   } else if (doneLoading && selectedScreen == 1) {
     int event = btnToMap.getEvent(mouseX, mouseY);
     if (event == 2) btnToMap.hovered = true;
@@ -343,6 +349,7 @@ void mouseMoved() {
     event = btnToCO2.getEvent(mouseX, mouseY);
     if (event == 3) btnToCO2.hovered = true;
     else btnToCO2.hovered = false;
+    
   } else if (doneLoading && selectedScreen == 2) {
     int event = btnToMap.getEvent(mouseX, mouseY);
     if (event == 2) btnToMap.hovered = true;

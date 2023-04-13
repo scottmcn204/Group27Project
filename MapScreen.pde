@@ -293,7 +293,7 @@ class MapScreen
         mainMap.removeDuplicateAirports();
       } else {
         aPin.mouseNotPressed();
-        println(mouseX, mouseY);
+        //println(mouseX, mouseY);
       }
     }
   }

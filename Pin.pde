@@ -39,7 +39,7 @@ class Pin {
   }
   void mouseOver() {
     lineColor = color(255);
-    println("HOVER"+event);
+    //println("HOVER"+event);
   }
 
   void mouseNotOver() {

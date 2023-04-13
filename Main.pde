@@ -1,48 +1,52 @@
-//Please install the below libraries before running: //<>// //<>// //<>//
+//NOTE: Please install the below libraries before running: //<>//
 import org.gicentre.utils.stat.*;
 import controlP5.*;
 import gifAnimation.*;
 import uibooster.*;
-//7/8 downscale from 1800
+
+//set constants and variables used throughout the program
 final int SCREENX = 1575;
 final int SCREENY = 787;
-Table table;
-MapScreen mainMap;
-Flight tempFlight;
-int times[];
-int distances[];
+boolean doneLoading;
+int selectedScreen = 0;
+Table table; //used to read from csv
+Flights flights; //dataset object
+MapScreen mainMap; //objecct for map-specific functions
+Flight tempFlight; //temporary processing of one flight
+
+//visual elements:
+Button btnToDB, btnToMap, btnCO2, clearButton, btnInstructions, btnCO2ToDB, btnToCO2;
+Gif planeAnimation;
+PImage logo;
+PImage tree;
+PImage halfTree;
+ControlP5 cp5, cp5Map, cp5zoom, cp5focus; //cp5 objects
 PFont myFont;
-float textXpos = 0;
-float textYpos = 0;
+ListBox listBox; //to show search results
+
+//arrays holding data shown in graphs:
 float trees[];
 float arrivals[];
 float status[];
 float late[];
 String dests[];
 float emissions[];
-ControlP5 cp5, cp5Map, cp5zoom, cp5focus;
+int totalFlights; //used for pie chart
+
+//slider value init:
 int zoom = 0;
-int date = 0;
 int focus = 0;
-BarChart chart;
+int week = 0;
+
+//declaring charts:
+BarChart chart; //BarChart object used as template for Bar_Chart class
 chartBar emissionCO2;
 chartBar arrivalsAirports;
-int week = 0;
-BarChart barChart;
 PieChart statusPie;
-Flights flights;
 XYChart lateFlightChart;
-boolean doneLoading;
-int totalFlights;
-ArrayList<String> searchResults;
-int p;
-ListBox l;
-int selectedScreen = 0;
-Button btnToDB, btnToMap, btnCO2, clearButton, btnInstructions, btnCO2ToDB, btnToCO2;
-Gif planeAnimation;
-PImage logo;
-PImage tree;
-PImage halfTree;
+
+ArrayList<String> searchResults; //to store search results
+int p; //used as a counter
 
 void settings()
 {
@@ -102,7 +106,7 @@ void slowLoad() {
     .setColor(color(255));
   textFont(font);
 
-  l = cp5Map.addListBox("results")
+  listBox = cp5Map.addListBox("results")
     .setPosition(1250, 150)
     .setSize(300, 200)
     .setItemHeight(25)
@@ -116,7 +120,7 @@ void slowLoad() {
   searchResults.addAll(flights.airports);
 
   for (int i = 0; (i < searchResults.size()); i++) {
-    l.addItem(searchResults.get(i), p++);
+    listBox.addItem(searchResults.get(i), p++);
   }
   mainMap.setup();
 
@@ -294,7 +298,7 @@ void controlEvent(ControlEvent theEvent) {
     }
     if (keyPressed == false) {
       if (mainMap.flightCompareTable.size() < 6) {
-        mainMap.flightCompareTable.add(searchResults.get((int)l.getValue()));
+        mainMap.flightCompareTable.add(searchResults.get((int)listBox.getValue()));
         mainMap.removeDuplicateAirports();
       } else new UiBooster().showWarningDialog("Cannot add more than 6 cities!", "WARN");
     }
@@ -303,7 +307,7 @@ void controlEvent(ControlEvent theEvent) {
 
 void search() {
   searchResults.removeAll(searchResults);
-  l.clear();
+  listBox.clear();
   for (int i = 0; (i < flights.airports.size()); i++) {
     if (flights.airports.get(i).toLowerCase().contains(cp5Map.get(Textfield.class, " ").getText().toLowerCase())) {
       searchResults.add(flights.airports.get(i));
@@ -312,7 +316,7 @@ void search() {
   p = 0;
   if (searchResults != null) {
     for (int i = 0; (i < searchResults.size()); i++) {
-      l.addItem(searchResults.get(i), p++);
+      listBox.addItem(searchResults.get(i), p++);
     }
   }
 }

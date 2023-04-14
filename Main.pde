@@ -38,8 +38,8 @@ int week = 0;
 
 //declaring charts:
 BarChart chart; //BarChart object used as template for Bar_Chart class
-chartBar emissionCO2;
-chartBar arrivalsAirports;
+ChartBar emissionCO2;
+ChartBar arrivalsAirports;
 PieChart statusPie;
 XYChart lateFlightChart;
 
@@ -107,7 +107,7 @@ void slowLoad() {
   
   //set up controlP5 elements:
   PFont font = createFont("arial", 20);
-  cp5Map.addTextfield(" ")
+  cp5Map.addTextfield(" ") //search bar setup
     .setPosition(1250, 100)
     .setSize(300, 50)
     .setFont(font)
@@ -165,8 +165,8 @@ void slowLoad() {
   mainMap.setup();
   //set up pie, bar and line graphs
   chart = new BarChart(this);
-  arrivalsAirports = new chartBar(chart, "Number of arrivals per airport");
-  emissionCO2 = new chartBar(chart, "estimated CO2 emission per airport (Mkg)");
+  arrivalsAirports = new ChartBar(chart, "Number of arrivals per airport");
+  emissionCO2 = new ChartBar(chart, "estimated CO2 emission per airport (Mkg)");
   statusPie = new PieChart(status, 30, 100);
   lateFlightChart = new XYChart(this);
   lateFlightChart.showXAxis(true);
@@ -298,6 +298,11 @@ void draw()
     }   
   }
 }
+/**
+ * controlEvent method
+ * Used to implement searching.
+ * Adds city to the selected user cities list if its limit of 6 has not been reached.
+ */
 void controlEvent(ControlEvent theEvent) {
   if (selectedScreen == 0) {
     if (theEvent.isAssignableFrom(Textfield.class)) {
@@ -311,7 +316,11 @@ void controlEvent(ControlEvent theEvent) {
     }
   }
 }
-
+/**
+ * search method
+ * Searches through all cities given text input.
+ * Adds results to listBox below search bar.
+ */
 void search() {
   searchResults.removeAll(searchResults);
   listBox.clear();
@@ -366,32 +375,40 @@ void mouseMoved() {
     else btnCO2ToDB.hovered = false;
   }
 }
-
+/**
+ * mousePressed method
+ * Used to implement much of the program's functionality.
+ * Gets events from buttons, sets graph data etc.
+ */
 void mousePressed() {
   int event;
-  if (doneLoading && selectedScreen == 0) {
-    mainMap.getMousePress();
+  if (doneLoading && selectedScreen == 0) { //mapp screen actions
+    mainMap.getMousePress(); //to select pins
+    event = clearButton.getEvent(mouseX, mouseY);
+    if (event == 8) mainMap.clearCompare(); //"Clear" button functionality of Map
     event = btnToDB.getEvent(mouseX, mouseY);
     if (event == 1) {
-      if (mainMap.flightCompareTable.size() >= 1) {
+      if (mainMap.flightCompareTable.size() >= 1) { //show Dashboard if user selects 1 or more cities, show error msg otherwise
         selectedScreen = 1;
-        getData(mainMap.flightCompareTable);
+        //populate graphs on Dashboard:
+        getData(mainMap.flightCompareTable); 
         arrivalsAirports.setData(arrivals, mainMap.flightCompareTable, "Number of arrivals per airport");
         statusPie.changeData(status);
       } else new UiBooster().showWarningDialog("You cannot access the Dashboard without selecting cities!", "WARN");
-    } else {
+    } else { //show CO2 page if user selects 1 or more cities, show error msg otherwise
       event =  btnCO2.getEvent(mouseX, mouseY);
       if (event == 9) {
         if (mainMap.flightCompareTable.size() >= 1) {
           selectedScreen = 2;
         } else new UiBooster().showWarningDialog("You cannot access CO2 emission information without selecting cities!", "WARN");
       }
+      //help button functionality:
       event = btnInstructions.getEvent(mouseX, mouseY);
       if (event == 7) new UiBooster().showInfoDialog("Select up to 6 cities by selecting from the pins" +
         " on the map or by searching and/or selecting from the list. Use Compare Selected to see stats or" +
         " view the Environmental Report.");
     }
-  } else if (doneLoading && selectedScreen == 1) {
+  } else if (doneLoading && selectedScreen == 1) { //going from DB to CO2 page or Map
     event = btnToMap.getEvent(mouseX, mouseY);
     if (event == 2) {
       selectedScreen = 0;
@@ -399,7 +416,7 @@ void mousePressed() {
     }
     event = btnToCO2.getEvent(mouseX, mouseY);
     if (event == 3) selectedScreen = 2;
-  } else if (doneLoading && selectedScreen == 2) {
+  } else if (doneLoading && selectedScreen == 2) { //going from CO2 page to DB or Map
     event = btnToMap.getEvent(mouseX, mouseY);
     if (event == 2) {
       selectedScreen = 0;
@@ -413,17 +430,23 @@ void mousePressed() {
       statusPie.changeData(status);
     }
   }
-
-  if (doneLoading && selectedScreen == 0) {
-    event = clearButton.getEvent(mouseX, mouseY);
-    if (event == 8) mainMap.clearCompare();
-  }
 }
+/**
+ * keyPressed method
+ * Searches when user presses Enter key.
+ * See search function
+ */
 void keyPressed() {
   if (key == 13 && selectedScreen == 0) {
     search();
   }
 }
+/**
+ * setLineGraphData method
+ * Populates the late flight line graph with appropriate data.
+ * @param week the week of Jan 2022 selected from the slider
+ * @param airports the list of user-selected cities
+ */
 void setLineGraphData(int week, ArrayList<String> airports) {
   switch (week) {
   case 1:
@@ -500,7 +523,11 @@ void setLineGraphData(int week, ArrayList<String> airports) {
     break;
   }
 }
-
+/**
+ * getData method
+ * Populates the total flights bar graph and status pie chart of Dashboard with appropriate data.
+ * @param airports the list of user-selected cities
+ */
 void getData(ArrayList<String> airports) {
   arrivals = new float[airports.size()];
   for (int i =0; i < 3; i++) {
@@ -529,6 +556,11 @@ void getData(ArrayList<String> airports) {
     totalFlights += status[i];
   }
 }
+/**
+ * getEmission method
+ * Populates the emissions and trees arrays with appropriate data.
+ * @param airports the list of user-selected cities
+ */
 void getEmission(ArrayList<String> airports) {
   emissions = new float[airports.size()];
   trees = new float[airports.size()];
@@ -547,5 +579,4 @@ void getEmission(ArrayList<String> airports) {
     emissions[i] = emissions[i] / 1000000;
     trees[i] = trees[i] / 1000000;
   }
-  
 }

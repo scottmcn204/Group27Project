@@ -22,7 +22,7 @@ class Flight {
   boolean cancelled;
   boolean diverted;
   int distance;
-
+  //Flight class init -> Scott McNally
   Flight(String date, String airlineCarrier, int flightNumber, String originAirport, String originCity,
     String originState, int originWAC, String destinationAirport, String destinationCity, String destinationState,
     int destinationWAC, int CRSDepartureTime, int actualDepartureTime, int CRSArrivalTime, int actualArrivalTime, boolean cancelled,

@@ -1,26 +1,30 @@
 import org.gicentre.utils.stat.*;   
 import controlP5.*;
-
+/**
+* The PieChart Class is used to implement the pie chart found
+*   on the dashboard page of the program.
+* Using controlP5's Chart
+*/
 class PieChart{
   
-  Chart myPieChart;
+  Chart pieChart;
   
   PieChart(float[] data, int xPos, int yPos){
-    myPieChart = cp5.addChart("pie")
+    pieChart = cp5.addChart("pie")
                     .setPosition(xPos, yPos)
                     .setSize(300, 300)
                     .setRange(0, 1000)
                     .setView(Chart.PIE)
                     .setCaptionLabel("DIVERTED");
                     
-    myPieChart.getColor().setBackground(color(255, 100));
-    myPieChart.addDataSet("flights");
-    myPieChart.setColors("flights", color(0, 45, 90), color(255, 100, 0), color(0, 150, 255));
-    myPieChart.setData("flights", data);    
+    pieChart.getColor().setBackground(color(255, 100));
+    pieChart.addDataSet("flights");
+    pieChart.setColors("flights", color(0, 45, 90), color(255, 100, 0), color(0, 150, 255));
+    pieChart.setData("flights", data);    
   }
   
   void changeData(float[] data){
-    myPieChart.setData("flights", data);
+    pieChart.setData("flights", data);
   }
   
   void draw(int xPos, int yPos){

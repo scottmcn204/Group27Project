@@ -1,4 +1,10 @@
-import uibooster.*; //<>// //<>//
+/** //<>//
+* The MapScreen Class is used to display an array of Pins as well as the backgroundMap image 
+* It provides each pin with their discrete coordinates as well as their respective events;
+* For each event there is a respective city attached to it, causing the event trigger to 
+* add a city to the main city ArrayList.
+*/
+import uibooster.*; //<>//
 class MapScreen
 {
   ArrayList<Pin> myPins;
@@ -17,8 +23,7 @@ class MapScreen
       pin11, pin12, pin13, pin14, pin15, pin16, pin17, pin18, pin19,
       pin20, pin21, pin22, pin23, pin24, pin25, pin26, pin27, pin28,
       pin29, pin30, pin31, pin32, pin33, pin34, pin35, pin36, pin37,
-      pin38, pin39, pin40, pin41, pin42, pin43, pin44, pin45, pin46,
-      pin47, pin48, pin49, pin50;
+      pin38, pin39;
     pin1 = new Pin( 693, 611.625, 1);//DFW
     pin2 = new Pin(892.5, 595, 2);// ATL
     pin3 = new Pin( 805, 428.75, 3);//ORD

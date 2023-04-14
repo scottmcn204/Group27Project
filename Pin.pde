@@ -1,3 +1,8 @@
+/**
+* The Pin Class is used to represent a single pin on the MapScreen class.
+* It is given discrete coordinates and a specific event from the MapScreen class.
+* Contains a constructor along with methods to know when a mouse has clicked or hovered over it. 
+*/
 class Pin {
 
   final float CIRCLE_RADIUS = 15;

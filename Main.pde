@@ -84,6 +84,9 @@ void setup() {
     "To Dashboard", color(0, 45, 90), myFont, 4);
   thread("slowLoad");
 }
+
+//Initialising on the background thread -> Scott McNally
+
 void slowLoad() {
   mainMap = new MapScreen();
   flights = new Flights();
@@ -93,6 +96,8 @@ void slowLoad() {
 
 
   PFont font = createFont("arial", 20);
+  
+  // Search bar setup -> Scott McNally
 
   cp5Map.addTextfield(" ")
     .setPosition(1250, 100)

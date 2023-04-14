@@ -1,3 +1,4 @@
+
 class Flight {
   int date; //day only since month-year are the same
   String airlineCarrier;
@@ -17,6 +18,7 @@ class Flight {
   boolean cancelled;
   boolean diverted;
   int distance;
+//Flight class init -> Scott McNally
 
   Flight(String date, String airlineCarrier, int flightNumber, String originAirport, String originCity,
    String originState, int originWAC, String destinationAirport, String destinationCity, String destinationState,

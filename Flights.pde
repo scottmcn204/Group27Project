@@ -2,7 +2,7 @@ class Flights {
   ArrayList<Flight> flights = new ArrayList<Flight>();
   ArrayList<String> airports = new ArrayList<String>();
   Flights() {
-    table = loadTable("data/flights_full.csv", "header");
+    Table table = loadTable("data/flights_full.csv", "header");
     println(table.getRowCount() + " total rows in table");
     for (TableRow row : table.rows()) {
       boolean cancelled, diverted;

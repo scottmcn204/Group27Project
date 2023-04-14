@@ -1,4 +1,4 @@
-import uibooster.*; //<>//
+import uibooster.*; //<>// //<>//
 class MapScreen
 {
   ArrayList<Pin> myPins;

@@ -9,7 +9,6 @@ final int SCREENX = 1575;
 final int SCREENY = 787;
 boolean doneLoading;
 int selectedScreen = 0;
-Table table; //used to read from csv
 Flights flights; //dataset object
 MapScreen mainMap; //objecct for map-specific functions
 Flight tempFlight; //temporary processing of one flight
@@ -27,9 +26,8 @@ ListBox listBox; //to show search results
 //arrays holding data shown in graphs:
 float trees[];
 float arrivals[];
-float status[];
+float status[]; //arrived, diverted or cancelled
 float late[];
-String dests[];
 float emissions[];
 int totalFlights; //used for pie chart
 
@@ -52,8 +50,16 @@ void settings()
 {
   size(SCREENX, SCREENY);
 }
+/**
+ * setup method
+ * Initializes variables needed throughout the program including GUI elements
+ *   and calls method slowLoad asynchronously so that the loading screen is visible.
+ */
 void setup() {
   doneLoading = false;
+  searchResults = new ArrayList<String>();
+  
+  //visual elements:
   planeAnimation = new Gif(this, "planeLoading.gif");
   tree = loadImage("pineTree.png");
   tree.resize(30,0);
@@ -71,7 +77,6 @@ void setup() {
   cp5zoom.setAutoDraw(false);
   cp5focus.setAutoDraw(false);
   cp5Map.setAutoDraw(false);
-  searchResults = new ArrayList<String>();
   btnToDB = new Button(1250, 600, 180, 40,
     "Compare Selected", color(0, 45, 90), myFont, 1);
   btnToMap = new Button(1300, 700, 180, 40,
@@ -86,26 +91,30 @@ void setup() {
     "To CO2 Page", color(0, 45, 90), myFont, 3);
   btnCO2ToDB = new Button(1100, 700, 180, 40,
     "To Dashboard", color(0, 45, 90), myFont, 4);
-  thread("slowLoad");
+  
+  thread("slowLoad"); //continue loading data asynchronously
 }
+/**
+ * slowLoad method
+ * (runs as thread) loads all data from csv of flights anc sets up additional
+ *   UI elements. Fires a UiBooster notification when complete.
+ */
 void slowLoad() {
   mainMap = new MapScreen();
-  flights = new Flights();
-  dests = new String[] {"ABQ", "ADQ", "ALB", "ANC", "ATL"};
+  flights = new Flights(); //constructor method will load in all flights from csv
   status = new float[3]; // 0 = on time, 1 = diverted, 2 = cancelled
-
-
-
+  p = 0; //initialise counter
+  
+  //set up controlP5 elements:
   PFont font = createFont("arial", 20);
-
   cp5Map.addTextfield(" ")
     .setPosition(1250, 100)
     .setSize(300, 50)
     .setFont(font)
     .setFocus(true)
     .setColor(color(255));
+    
   textFont(font);
-
   listBox = cp5Map.addListBox("results")
     .setPosition(1250, 150)
     .setSize(300, 200)
@@ -115,19 +124,7 @@ void slowLoad() {
     .setColorForeground(color(255, 100, 0))
     .setColorValueLabel(color(0))
     .setColorLabel(color(0));
-  p = 0;
-
-  searchResults.addAll(flights.airports);
-
-  for (int i = 0; (i < searchResults.size()); i++) {
-    listBox.addItem(searchResults.get(i), p++);
-  }
-  mainMap.setup();
-
-  chart = new BarChart(this);
-  arrivalsAirports = new chartBar(chart, "Number of arrivals per airport");
-  emissionCO2 = new chartBar(chart, "estimated CO2 emission per airport (Mkg)");
-
+    
   cp5zoom.addSlider("zoom")
     .setPosition(1025, 520)
     .setRange(0, 100)
@@ -150,9 +147,7 @@ void slowLoad() {
     .setColorValue(color(255))
     .setColorLabel(color(0));
 
-
   cp5.addSlider("week")
-
     .setPosition(500, 520)
     .setRange(1, 4)
     .setSize(150, 40)
@@ -161,9 +156,18 @@ void slowLoad() {
     .setColorBackground(color(0, 45, 90))
     .setColorValue(color(255))
     .setColorLabel(color(0));
-
+  //populate map screen list of results:
+  searchResults.addAll(flights.airports);
+  for (int i = 0; (i < searchResults.size()); i++) {
+    listBox.addItem(searchResults.get(i), p++);
+  }
+  
+  mainMap.setup();
+  //set up pie, bar and line graphs
+  chart = new BarChart(this);
+  arrivalsAirports = new chartBar(chart, "Number of arrivals per airport");
+  emissionCO2 = new chartBar(chart, "estimated CO2 emission per airport (Mkg)");
   statusPie = new PieChart(status, 30, 100);
-
   lateFlightChart = new XYChart(this);
   lateFlightChart.showXAxis(true);
   lateFlightChart.showYAxis(true);
@@ -177,15 +181,19 @@ void slowLoad() {
   lateFlightChart.setXAxisLabel("Days of Selected Week");
   lateFlightChart.setYAxisLabel("Number of Late Flights");
 
-  mainMap.clearCompare();
-
+  mainMap.clearCompare(); //clear list of selected airports
+  //done, notify the user and set flag:
   new UiBooster().createNotification("You can now use the program", "Flights are ready");
   doneLoading = true;
 }
-
+/**
+ * draw method
+ * Draws all appropriate components depending on which screen is selected.
+ * Will present loading screen if program has not finished loading yet.
+ */
 void draw()
 {
-  if (!doneLoading) {
+  if (!doneLoading) { //show loading screen
     background(204, 234, 247);
     surface.setTitle("Loading...");
     textFont(myFont, 50);
@@ -193,7 +201,7 @@ void draw()
     image(planeAnimation, 410, 200);
     text("Loading your Flights...", SCREENX/2 - 250, SCREENY/2 - 100);
   } else {
-    if (selectedScreen == 0) {
+    if (selectedScreen == 0) { //show main-map screen
       background(170, 211, 223);
       surface.setTitle("Map");
       textFont(myFont, 16);
@@ -213,13 +221,12 @@ void draw()
       image(logo, 10, 10, 500, 154);
       fill(255);
 
-
-      if (mainMap.flightCompareTable != null ) {
+      if (mainMap.flightCompareTable != null ) { //draw selected cities as a separate list
         for (int i = 0; (i < mainMap.flightCompareTable.size()); i++) {
           text(mainMap.flightCompareTable.get(i), 1270, 400 + (i * 20));
         }
       }
-    } else if (selectedScreen == 1) {
+    } else if (selectedScreen == 1) { //show dashboard
       background(170, 211, 223);
       fill(0, 45, 90);
       textFont(myFont, 24);
@@ -240,14 +247,14 @@ void draw()
       stroke(255);
       rect(46, 585, 270, 150, 8, 8, 8, 8);
       fill(255);
-      if (mainMap.flightCompareTable != null ) {
+      if (mainMap.flightCompareTable != null ) { //draw selected cities
         for (int i = 0; (i < mainMap.flightCompareTable.size()); i++) {
           text(mainMap.flightCompareTable.get(i), 50, 610 + (i * 20));
         }
       }
       fill(0, 45, 90);
       text("Selected cities:", 46, 575);
-    } else {
+    } else { //show environmental report / CO2 page
       background(170, 211, 223);
       surface.setTitle("CO2 Emissions");
       fill(0, 45, 90);
@@ -271,7 +278,7 @@ void draw()
       stroke(255);
       fill(255);
       rect(750, 100, 470, (35*trees.length), 8, 8, 8, 8);
-      for (int i =0; i < trees.length; i++){
+      for (int i =0; i < trees.length; i++){ //generate pictograph and list of needed trees to offset emissions
         fill(0, 45, 90);
         text( mainMap.flightCompareTable.get(i) + " Airport: " + nf(trees[i],0,2) + " million trees", 765, 130 +(30*i));
         float treeNumber = trees[i];
